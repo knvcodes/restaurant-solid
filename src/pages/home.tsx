@@ -1,32 +1,26 @@
-import { createSignal } from 'solid-js';
+import { createSignal } from "solid-js";
+import { Popover } from "@kobalte/core/popover";
+import "./style.css";
 
 export default function Home() {
   const [count, setCount] = createSignal(0);
 
   return (
-    <section class="bg-gray-100 text-gray-700 p-8">
-      <h1 class="text-2xl font-bold">Home</h1>
-      <p class="mt-4">This is the home page.</p>
-
-      <div class="flex items-center space-x-2">
-        <button
-          type="button"
-          class="border rounded-lg px-2 border-gray-900"
-          onClick={() => setCount(count() - 1)}
-        >
-          -
-        </button>
-
-        <output class="p-10px">Count: {count()}</output>
-
-        <button
-          type="button"
-          class="border rounded-lg px-2 border-gray-900"
-          onClick={() => setCount(count() + 1)}
-        >
-          +
-        </button>
-      </div>
-    </section>
+    <Popover>
+      <Popover.Trigger class="popover__trigger">Learn more</Popover.Trigger>
+      <Popover.Portal>
+        <Popover.Content class="popover__content">
+          <Popover.Arrow />
+          <div class="popover__header">
+            <Popover.Title class="popover__title">About Kobalte</Popover.Title>
+            <Popover.CloseButton class="popover__close-button"></Popover.CloseButton>
+          </div>
+          <Popover.Description class="popover__description">
+            A UI toolkit for building accessible web apps and design systems
+            with SolidJS.
+          </Popover.Description>
+        </Popover.Content>
+      </Popover.Portal>
+    </Popover>
   );
 }
