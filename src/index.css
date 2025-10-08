@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 /*
   The default border color has changed to `currentcolor` in Tailwind CSS v4,
@@ -16,4 +17,9 @@
   ::file-selector-button {
     border-color: var(--color-gray-200, currentcolor);
   }
+
+   /* Apply Poppins globally */
+  html {
+    font-family: 'Poppins', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+  }  
 }
