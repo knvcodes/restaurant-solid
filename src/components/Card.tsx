@@ -1,6 +1,9 @@
+import { FaSolidStar } from "solid-icons/fa";
+import { FiStar } from "solid-icons/fi";
+
 export default function Card() {
   return (
-    <div class="flex h-[300px] bg-white/60 border-b border-gray-200/60 dark:border-gray-400/40  overflow-hidden pb-12">
+    <div class="card">
       <div class="flex-shrink-0 h-full w-1/3">
         <img
           src="https://plus.unsplash.com/premium_photo-1661883237884-263e8de8869b?q=80&w=1189&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -15,12 +18,17 @@ export default function Card() {
           150 Chop House Street
         </p>
         <p class="text-sm text-gray-500 dark:text-gray-400">London</p>
-
-        <div class="mt-4">
-          <button class="px-3 py-1.5 text-sm font-medium rounded-lg bg-gray-900 text-white hover:bg-gray-800 transition-colors">
-            View Details
-          </button>
+        <div class="flex gap-2 my-2">
+          <FaSolidStar />
+          <FaSolidStar />
+          <FaSolidStar />
+          <FaSolidStar />
+          <FiStar />
         </div>
+
+        <button class="px-3 py-1.5 text-sm font-medium rounded-lg bg-gray-900 text-white hover:bg-gray-800 transition-colors">
+          View Details
+        </button>
       </div>
     </div>
   );

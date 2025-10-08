@@ -13,3 +13,5 @@ installed kobalte for components
 day 3
 
 make card design for listing
+added icon library
+maybe use diasyUI in future

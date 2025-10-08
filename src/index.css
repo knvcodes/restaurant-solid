@@ -1,6 +1,6 @@
-@import 'tailwindcss';
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-
+@import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+@import "./styles/components.css";
 /*
   The default border color has changed to `currentcolor` in Tailwind CSS v4,
   so we've added these compatibility styles to make sure everything still
@@ -18,8 +18,9 @@
     border-color: var(--color-gray-200, currentcolor);
   }
 
-   /* Apply Poppins globally */
+  /* Apply Poppins globally */
   html {
-    font-family: 'Poppins', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-  }  
+    font-family: "Poppins", ui-sans-serif, system-ui, -apple-system,
+      BlinkMacSystemFont;
+  }
 }
