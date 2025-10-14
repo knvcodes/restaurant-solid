@@ -3,6 +3,7 @@ import "./style.css";
 import Card from "../components/Card";
 import api from "../utils/axios";
 import { IResponse } from "../types";
+import SearchBar from "../components/SearchBar";
 
 export default function Home() {
   onMount(async () => {
@@ -12,6 +13,7 @@ export default function Home() {
 
   return (
     <div>
+      <SearchBar />
       <Card />
     </div>
   );
