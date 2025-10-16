@@ -1,4 +1,5 @@
 import { createSignal } from "solid-js";
+import { Button } from "@kobalte/core/button";
 
 export default function Header() {
   const [isOpen, setIsOpen] = createSignal(false);
@@ -24,6 +25,8 @@ export default function Header() {
               Settings
             </a>
           </nav>
+
+          <Button>Log In</Button>
 
           {/* Mobile Button on right */}
           <button
