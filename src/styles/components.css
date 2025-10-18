@@ -1,4 +1,4 @@
 /* components */
 .card {
-  @apply flex h-[300px] bg-white/60 border-b border-gray-200/60 dark:border-gray-400/40  overflow-hidden pb-12;
+  @apply flex h-[300px] bg-transparent border-b border-gray-200/60 dark:border-gray-400/40  overflow-hidden pb-12;
 }
