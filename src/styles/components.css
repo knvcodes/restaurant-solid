@@ -1,4 +1,8 @@
 /* components */
 .card {
-  @apply flex h-[300px] bg-transparent border-b border-gray-200/60 dark:border-gray-400/40  overflow-hidden pb-12;
+  @apply rounded-2xl flex h-[var(--card-h)] bg-transparent border-b border-gray-200/60 dark:border-gray-400/40  overflow-hidden mb-12 w-[var(--card-w)];
+}
+
+.card-details {
+  @apply ml-auto relative flex-1 p-4 flex flex-col justify-center z-20 bg-white/50  max-w-[400px];
 }

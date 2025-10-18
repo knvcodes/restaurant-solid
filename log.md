@@ -24,3 +24,9 @@ install mongodb and mongoose on backend
 day 5
 intergrate backend for restaurant listing
 add axios
+
+day 6
+
+new design for header
+new design for card
+use css variables

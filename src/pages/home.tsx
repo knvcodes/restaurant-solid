@@ -14,17 +14,9 @@ export default function Home() {
   return (
     <div>
       <SearchBar />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
+      <div class="flex flex-col items-center border">
+        <Card />
+      </div>
     </div>
   );
 }

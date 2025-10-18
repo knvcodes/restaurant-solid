@@ -24,3 +24,10 @@
       BlinkMacSystemFont;
   }
 }
+
+/*custom css variables  */
+
+:root {
+  --card-w: 700px;
+  --card-h: 450px;
+}
