@@ -5,11 +5,18 @@ import api from "../utils/axios";
 import { IResponse } from "../types";
 import SearchBar from "../components/SearchBar";
 
-export default function Home() {
+export default function MyRestaurants() {
   onMount(async () => {
     const response: IResponse = await api.get("/restaurants/list");
     console.info("resposne", response);
   });
 
-  return <div>This is home</div>;
+  return (
+    <div>
+      <SearchBar />
+      <div class="flex flex-col items-center border">
+        <Card />
+      </div>
+    </div>
+  );
 }

@@ -15,13 +15,13 @@ export default function Header() {
 
           {/* Desktop Nav (centered absolutely) */}
           <nav class="hidden md:flex space-x-6 text-gray-700 font-medium absolute left-1/2 -translate-x-1/2">
-            <a href="#" class="hover:text-indigo-600 transition">
+            <a href="/" class="hover:text-indigo-600 transition">
               Home
             </a>
-            <a href="#" class="hover:text-indigo-600 transition">
+            <a href="myrestaurants" class="hover:text-indigo-600 transition">
               My Restaurants
             </a>
-            <a href="#" class="hover:text-indigo-600 transition">
+            <a href="settings" class="hover:text-indigo-600 transition">
               Settings
             </a>
           </nav>
@@ -63,13 +63,16 @@ export default function Header() {
       {isOpen() && (
         <div class="md:hidden bg-white border-t border-gray-200">
           <nav class="px-4 py-3 space-y-2 text-gray-700 font-medium">
-            <a href="#" class="block hover:text-indigo-600 transition">
+            <a href="/" class="block hover:text-indigo-600 transition">
               Home
             </a>
-            <a href="#" class="block hover:text-indigo-600 transition">
+            <a
+              href="myrestaurants"
+              class="block hover:text-indigo-600 transition"
+            >
               My Restaurants
             </a>
-            <a href="#" class="block hover:text-indigo-600 transition">
+            <a href="settings" class="block hover:text-indigo-600 transition">
               Settings
             </a>
           </nav>
