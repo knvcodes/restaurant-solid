@@ -4,15 +4,18 @@ import bg from "./assets/foodbg.svg";
 
 const App: ParentComponent = (props) => {
   return (
-    <div class="flex flex-col   h-screen max-h-screen">
+    <div class="flex flex-col relative min-h-screen bg-teal-100">
       <div
-        class="absolute h-screen  w-screen"
+        class="absolute h-full w-screen border border-black"
         style={{
+          "background-color": "black",
           "background-image": `url(${bg})`,
-          "background-size": "auto 500px",
-          filter: "blur(2px)", // blur here
-          opacity: 0.1, // dull/faded here
-          "background-blend-mode": "color-burn",
+          "background-size": "1000px",
+          "background-repeat": "repeat",
+          filter:
+            "invert(80%) sepia(100%) hue-rotate(200deg) saturate(200%) blur(2px)",
+          opacity: 0.1,
+          "background-blend-mode": "screen",
         }}
       ></div>
       <Header />

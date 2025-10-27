@@ -30,3 +30,9 @@ day 6
 new design for header
 new design for card
 use css variables
+addded navigation in header
+
+day 7
+
+fixed bg ui looks
+fixed sizing of cards

@@ -14,7 +14,19 @@ export default function MyRestaurants() {
   return (
     <div>
       <SearchBar />
-      <div class="flex flex-col items-center border">
+      <div class="flex mx-auto flex-wrap gap-24 items-center">
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
         <Card />
       </div>
     </div>

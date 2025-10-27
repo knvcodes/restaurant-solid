@@ -5,7 +5,7 @@ export default function Header() {
   const [isOpen, setIsOpen] = createSignal(false);
 
   return (
-    <header class="bg-white shadow-md sticky top-0 mt-8 mx-48 rounded-4xl z-50">
+    <header class="bg-white sticky top-0 mt-8 mx-48 rounded-4xl z-50">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16 relative">
           {/* Logo on left */}

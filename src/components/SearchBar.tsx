@@ -28,7 +28,7 @@ export default function SearchBar() {
     <input
       type="text"
       placeholder="Search your restaurants..."
-      class="mb-12 search__input rounded-xl p-2 px-4 border border-gray-200/60 w-full"
+      class="mb-12 search__input rounded-xl p-2 px-4 bg-white border border-gray-200/60 w-full"
     />
   );
 }

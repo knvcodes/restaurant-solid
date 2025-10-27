@@ -1,8 +1,8 @@
 /* components */
 .card {
-  @apply rounded-2xl flex h-[var(--card-h)] bg-transparent border-b border-gray-200/60 dark:border-gray-400/40  overflow-hidden mb-12 w-[var(--card-w)];
+  @apply rounded-2xl flex flex-1 h-[var(--card-h)] bg-transparent border-b border-gray-200/60 dark:border-gray-400/40  overflow-hidden mb-12 min-w-[var(--card-w)];
 }
 
 .card-details {
-  @apply ml-auto relative flex-1 p-4 flex flex-col justify-center z-20 bg-white/50  max-w-[400px];
+  @apply ml-auto relative flex-1 bg-gradient-to-br from-white to-transparent  p-4 flex flex-col justify-center z-20  max-w-[300px];
 }

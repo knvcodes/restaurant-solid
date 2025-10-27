@@ -10,15 +10,15 @@ export default function Card() {
         <img
           src={randomImageUrls[generateRandomImageUrl(randomImageUrls.length)]}
           alt="Avatar"
-          class="h-full w-full object-cover"
+          class="h-full w-full object-fill"
         />
       </div>
 
       <div class="card-details">
         <h2 class="text-3xl font-semibold mt-auto">Brooklyn Chop House</h2>
-        <p class="text-sm  mt-1">150 Chop House Street</p>
-        <p class="text-sm text-gray-500 dark:text-gray-400">London</p>
-        <div class="flex gap-2 my-2">
+        <p class="text-sm  mt-2">150 Chop House Street</p>
+        <p class="text-sm text-gray-800 underline mt-4">London</p>
+        <div class="flex gap-2 my-4">
           <FaSolidStar />
           <FaSolidStar />
           <FaSolidStar />
