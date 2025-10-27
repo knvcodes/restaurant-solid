@@ -10,7 +10,7 @@ export default function Card() {
         <img
           src={randomImageUrls[generateRandomImageUrl(randomImageUrls.length)]}
           alt="Avatar"
-          class="h-full w-full object-fill"
+          class="h-full w-full object-cover"
         />
       </div>
 
