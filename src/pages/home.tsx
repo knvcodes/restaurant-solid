@@ -3,6 +3,7 @@ import "./style.css";
 // images
 import welcome from "../assets/welcome.jpg";
 import reservation from "../assets/reservation.jpg";
+import cuisines from "../assets/cuisines.jpg";
 
 // components
 import ImageWithText from "../components/home/ImageWithText";
@@ -32,6 +33,11 @@ export default function Home() {
           }}
         ></div>
       </div>
+      <ImageWithText
+        imageUrl={cuisines}
+        headline="Your Gateway to Global Flavors"
+        subtext="Dine in, reserve your table, or order for takeaway — all your favorite cuisines in one app."
+      />
     </div>
   );
 }
