@@ -4,8 +4,8 @@ import { CustomSlider } from "../custom/CustomSlider";
 
 export default function Filters() {
   return (
-    <div class="flex sticky flex-col p-12 flex-1 min-w-[400px] border-r-[1px] gap-4 border-black/15 mr-24">
-      <div class="text-2xl text-white mb-12">Filters</div>
+    <div class="flex fixed flex-col py-12 flex-1 pr-12 w-[400px] border-r-[1px] gap-4 border-black/15">
+      <div class="text-2xl mb-12">Filters</div>
       <div>
         <CustomSlider label="Price range" />
       </div>
