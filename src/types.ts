@@ -27,4 +27,5 @@ export interface ICardProps {
   name: string;
   address: string;
   city: string;
+  onClick: () => void;
 }

@@ -7,9 +7,12 @@ import SearchBar from "../components/SearchBar";
 import Filters from "../components/myRestaurants/Filters";
 import bg from "../assets/foodbg.svg";
 import { generateAddress } from "../utils/helpers";
+import { useNavigate } from "@solidjs/router";
 
 export default function MyRestaurants() {
   const [restaurants, setrestaurants] = createSignal<IRestaurant[] | []>([]);
+
+  const navigate = useNavigate();
 
   // fetching all restaurants
   onMount(async () => {
@@ -19,6 +22,11 @@ export default function MyRestaurants() {
     console.info("resposne", response.data.data);
     setrestaurants(response.data.data);
   });
+
+  function gotoDetailsPage(id: string) {
+    console.log(id);
+    navigate(`/myRestaurants/${id}`);
+  }
 
   return (
     <div class="min-h-screen">
@@ -39,6 +47,9 @@ export default function MyRestaurants() {
             {restaurants().length > 0 &&
               restaurants().map((restaurantItem: IRestaurant) => (
                 <Card
+                  onClick={() => {
+                    gotoDetailsPage(restaurantItem.restaurant_id);
+                  }}
                   name={restaurantItem.name}
                   city={restaurantItem.borough}
                   address={generateAddress(restaurantItem)}

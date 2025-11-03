@@ -6,17 +6,22 @@ import { ICardProps } from "../types";
 import { Separator } from "@kobalte/core/separator";
 
 export default function Card(props: ICardProps) {
-  const { name = "Brooklynn Stake House", address, city } = props;
+  const {
+    name = "Brooklynn Stake House",
+    address,
+    city,
+    onClick = () => {},
+  } = props;
   return (
     <>
-      <div class="card relative">
+      <div class="card relative" onclick={onClick}>
         <div class="absolute inset-0">
           <img
             src={
               randomImageUrls[generateRandomImageUrl(randomImageUrls.length)]
             }
             alt="Avatar"
-            class="h-full w-full object-cover"
+            class="h-full w-full object-cover pointer-events-none"
           />
         </div>
 

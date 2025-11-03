@@ -42,3 +42,4 @@ day 8
 fix and change home page UI
 changed the header UI
 intergrate listing of restaurants from backend
+create restaurant detail page
