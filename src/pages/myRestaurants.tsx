@@ -5,6 +5,7 @@ import api from "../utils/axios";
 import { IResponse } from "../types";
 import SearchBar from "../components/SearchBar";
 import Filters from "../components/myRestaurants/Filters";
+import bg from "../assets/foodbg.svg";
 
 export default function MyRestaurants() {
   // fetching all restaurants
@@ -14,24 +15,35 @@ export default function MyRestaurants() {
   });
 
   return (
-    <div class="flex bg-black rounded-3xl mt-48 w-5/6 mx-auto">
-      <Filters />
-      <div class="bg-black flex flex-col pt-12 px-12">
-        <SearchBar />
-        <div class="flex mx-auto flex-wrap gap-8 items-center">
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
+    <div>
+      <div
+        class="absolute h-full w-full"
+        style={{
+          "background-image": `url(${bg})`,
+          "background-size": "500px",
+          "background-repeat": "repeat",
+          opacity: 0.1,
+        }}
+      ></div>
+      <div class="flex relative mt-20 w-5/6 mx-auto bg-white">
+        <Filters />
+        <div class="flex flex-col pt-12 px-12">
+          <SearchBar />
+          <div class="flex mx-auto flex-wrap gap-8 items-center">
+            <Card />
+            <Card />
+            <Card />
+            <Card />
+            <Card />
+            <Card />
+            <Card />
+            <Card />
+            <Card />
+            <Card />
+            <Card />
+            <Card />
+            <Card />
+          </div>
         </div>
       </div>
     </div>

@@ -1,20 +1,37 @@
-import { createSignal } from "solid-js";
+import { createMemo, createSignal } from "solid-js";
 import { Button } from "@kobalte/core/button";
+import { useLocation } from "@solidjs/router";
 
 export default function Header() {
   const [isOpen, setIsOpen] = createSignal(false);
 
+  // logic to change font of header
+  const location = useLocation();
+
+  console.log("lc", location.pathname);
+
+  // Determine classes based on route
+  const textColor = createMemo(() => {
+    switch (location.pathname) {
+      case "/":
+        return "text-white";
+
+      default:
+        return "text-black border-b-1 w-full bg-white/80";
+    }
+  });
+
   return (
-    <header class="bg-white/70 fixed top-12 left-1/2 -translate-x-1/2 min-w-[1200px] rounded-4xl z-50 shadow-lg backdrop-blur-md">
+    <header
+      class={`fixed left-1/2 -translate-x-1/2 min-w-[1200px] z-50 backdrop-blur-md ${textColor()}`}
+    >
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16 relative">
           {/* Logo on left */}
-          <div class="flex-shrink-0 text-2xl font-bold text-indigo-600">
-            MyBrand
-          </div>
+          <div class="flex-shrink-0 text-2xl font-bold ">MyBrand</div>
 
           {/* Desktop Nav (centered absolutely) */}
-          <nav class="hidden md:flex space-x-6 text-gray-700 font-medium absolute left-1/2 -translate-x-1/2">
+          <nav class="hidden md:flex space-x-6  font-medium absolute left-1/2 -translate-x-1/2">
             <a href="/" class="hover:text-indigo-600 transition">
               Home
             </a>
@@ -30,7 +47,7 @@ export default function Header() {
 
           {/* Mobile Button on right */}
           <button
-            class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-indigo-600 focus:outline-none"
+            class="md:hidden inline-flex items-center justify-center p-2 rounded-md  hover:text-indigo-600 focus:outline-none"
             onClick={() => setIsOpen(!isOpen())}
           >
             <svg

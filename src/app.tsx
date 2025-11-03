@@ -4,8 +4,8 @@ import bg from "./assets/foodbg.svg";
 
 const App: ParentComponent = (props) => {
   return (
-    <div class="flex flex-col relative min-h-screen bg-black">
-      <div
+    <div class="flex flex-col relative min-h-screen bg-white">
+      {/* <div
         class="absolute h-full w-screen"
         style={{
           "background-image": `url(${bg})`,
@@ -13,7 +13,7 @@ const App: ParentComponent = (props) => {
           "background-repeat": "repeat",
           opacity: 0.1,
         }}
-      ></div>
+      ></div> */}
       <Header />
       <main class="h-full z-10">
         <Suspense>{props.children}</Suspense>

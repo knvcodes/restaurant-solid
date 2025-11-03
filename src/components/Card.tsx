@@ -15,7 +15,7 @@ export default function Card() {
       </div>
 
       <div class="card-details">
-        <h2 class="text-3xl font-semibold mt-auto">Brooklyn Chop House</h2>
+        <h2 class="text-3xl font-semibold">Brooklyn Chop House</h2>
         <p class="text-sm  mt-2">150 Chop House Street</p>
         <p class="text-sm text-gray-800 underline mt-4">London</p>
         <div class="flex gap-2 my-4">
@@ -25,10 +25,6 @@ export default function Card() {
           <FaSolidStar />
           <FiStar />
         </div>
-
-        <button class="mt-auto px-3 py-1.5 text-sm font-medium rounded-lg bg-gray-900 text-white hover:bg-gray-800 transition-colors">
-          View Details
-        </button>
       </div>
     </div>
   );

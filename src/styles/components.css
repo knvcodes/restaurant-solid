@@ -4,5 +4,5 @@
 }
 
 .card-details {
-  @apply ml-auto relative flex-1 bg-gradient-to-br from-white to-transparent  p-4 flex flex-col justify-center z-20  max-w-[300px];
+  @apply ml-auto relative flex-1 bg-gradient-to-b from-white/80 via-white/60 backdrop-blur-xs to-transparent p-4 flex flex-col justify-center z-20  max-w-[300px];
 }
