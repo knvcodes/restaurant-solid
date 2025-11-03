@@ -1,9 +1,6 @@
-import { Search } from "@kobalte/core/search";
 import { createEffect, createSignal } from "solid-js";
 
 export default function SearchBar() {
-  const [emoji, setEmoji] = createSignal();
-
   const [search, setSearch] = createSignal();
 
   // access value by search()
@@ -13,22 +10,11 @@ export default function SearchBar() {
     console.log("sd", search());
   });
 
-  interface x {
-    label: string;
-    value: string;
-  }
-
-  const optionsS: x[] = [
-    { label: "Apple", value: "apple" },
-    { label: "Banana", value: "banana" },
-    { label: "Cherry", value: "cherry" },
-  ];
-
   return (
     <input
       type="text"
       placeholder="Search your restaurants..."
-      class="mb-12 search__input rounded-xl p-2 px-4 bg-white border border-gray-200/60 w-full"
+      class="mb-12 search__input p-2 px-4 bg-white border-b border-gray-200/60 w-full"
     />
   );
 }

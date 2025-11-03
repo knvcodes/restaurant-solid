@@ -41,7 +41,7 @@ export default function MyRestaurants() {
       ></div>
       <div class="flex relative mt-20 px-12 w-5/6 mx-auto bg-white">
         <Filters />
-        <div class="flex flex-col pt-12 w-[1000px] ml-[450px]">
+        <div class="flex flex-col pt-12 w-[1000px] ml-[420px]">
           <SearchBar />
           <div class="flex mx-auto flex-wrap gap-4 items-center">
             {restaurants().length > 0 &&

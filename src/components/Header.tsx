@@ -35,7 +35,7 @@ export default function Header() {
             <a href="/" class="hover:text-indigo-600 transition">
               Home
             </a>
-            <a href="myrestaurants" class="hover:text-indigo-600 transition">
+            <a href="/myrestaurants" class="hover:text-indigo-600 transition">
               My Restaurants
             </a>
             <a href="settings" class="hover:text-indigo-600 transition">

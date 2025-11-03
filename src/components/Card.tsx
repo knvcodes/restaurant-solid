@@ -4,6 +4,7 @@ import { generateRandomImageUrl } from "../utils/helpers";
 import { randomImageUrls } from "../utils/staticData";
 import { ICardProps } from "../types";
 import { Separator } from "@kobalte/core/separator";
+import { CustomBadge } from "./custom/CustomBadge";
 
 export default function Card(props: ICardProps) {
   const {
@@ -28,7 +29,9 @@ export default function Card(props: ICardProps) {
         <div class="card-details">
           <h2 class="text-3xl font-semibold">{name}</h2>
           <p class="text-sm mt-2 text-black/80">{address}</p>
-          <p class="text-sm underline mt-4 font-medium">{city}</p>
+          <p class="mt-4">
+            <CustomBadge label={city} />
+          </p>
           <div class="flex gap-2 my-4">
             <FaSolidStar />
             <FaSolidStar />
