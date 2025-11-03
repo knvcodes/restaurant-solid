@@ -36,3 +36,7 @@ day 7
 
 fixed bg ui looks
 fixed sizing of cards
+
+day 8
+
+fix and change home page UI

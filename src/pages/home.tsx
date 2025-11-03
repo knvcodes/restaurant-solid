@@ -1,28 +1,36 @@
-import { onMount } from "solid-js";
 import "./style.css";
-import Card from "../components/Card";
-import api from "../utils/axios";
-import { IResponse } from "../types";
-import SearchBar from "../components/SearchBar";
 
+// images
 import welcome from "../assets/welcome.jpg";
+import reservation from "../assets/reservation.jpg";
+
+// components
+import ImageWithText from "../components/home/ImageWithText";
+import HeroContent from "../components/home/HeroContent";
 
 export default function Home() {
-  onMount(async () => {
-    const response: IResponse = await api.get("/restaurants/list");
-    console.info("resposne", response);
-  });
-
   return (
-    <div class="bg-white">
-      <div class="relative flex justify-center items-center min-h-screen px-24 overflow-hidden">
-        <div class="absolute top-0 left-0 right-0">
-          <img src={welcome} alt="" class="w-full h-full object-cover" />
-        </div>
-
-        <div class="ml-auto z-10 text-white text-6xl p-6 rounded-lg w-[500px] bg-gradient-to-l from-black">
-          Great meals start with great choices...
-        </div>
+    <div class={`h-screen `}>
+      <ImageWithText
+        imageUrl={welcome}
+        headline="Great meals start with great choices..."
+        subtext="Find your next favorite restaurant, explore mouthwatering menus, and
+            reserve a table in seconds."
+      />
+      <div class="bg-black h-screen flex items-center gap-24 text-white">
+        <HeroContent
+          headline={"Elevate Your Dining Experience"}
+          subtext={
+            "From street food to fine dining — discover and reserve with confidence."
+          }
+        />
+        <div
+          class="w-[3200px] aspect-[16/9] bg-no-repeat bg-center"
+          style={{
+            "background-image": `url(${reservation})`,
+            "background-size": "contain",
+          }}
+        ></div>
       </div>
     </div>
   );
