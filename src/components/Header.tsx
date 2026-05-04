@@ -8,8 +8,6 @@ export default function Header() {
   // logic to change font of header
   const location = useLocation();
 
-  console.log("lc", location.pathname);
-
   // Determine classes based on route
   const textColor = createMemo(() => {
     switch (location.pathname) {

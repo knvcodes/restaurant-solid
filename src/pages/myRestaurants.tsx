@@ -16,15 +16,13 @@ export default function MyRestaurants() {
 
   // fetching all restaurants
   onMount(async () => {
-    const response: IResponse<IRestaurant[]> = await api.get(
-      "/restaurants/list"
-    );
+    const response: IResponse<IRestaurant[]> =
+      await api.get("/restaurants/list");
     console.info("resposne", response.data.data);
     setrestaurants(response.data.data);
   });
 
   function gotoDetailsPage(id: string) {
-    console.log(id);
     navigate(`/myRestaurants/${id}`);
   }
 

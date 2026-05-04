@@ -19,9 +19,9 @@ export default function RestaurantDetails() {
   // fetching all restaurants
   onMount(async () => {
     const response: IResponse<IRestaurant> = await api.get(
-      `/restaurants/${params.slug}`
+      `/restaurants/${params.slug}`,
     );
-    console.info("resposne", response.data.data);
+    console.info("RestaurantDetails", response.data.data);
     setrestaurant(response.data.data);
   });
 
