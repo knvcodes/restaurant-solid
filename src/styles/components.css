@@ -1,10 +1,15 @@
 /* components */
 .card {
-  @apply flex flex-1 h-[var(--card-h)] bg-transparent overflow-hidden min-w-[var(--card-w)];
+  @apply flex flex-1 h-[var(--card-h)] bg-transparent overflow-hidden sm:min-w-auto lg:min-w-[var(--card-w)];
 }
 
 .card-details {
-  @apply ml-auto relative flex-1 bg-gradient-to-b from-white/80 via-white/60 backdrop-blur-xs to-transparent p-4 flex flex-col justify-center z-20 max-w-[300px];
+  /* @apply relative flex-1 p-4 flex flex-col ml-auto sm:mt-auto justify-center md:justify-end z-20 md:max-w-[300px] sm:max-w-full sm:w-full; */
+  @apply relative flex flex-col p-4 ml-0 sm:ml-auto w-full sm:w-auto max-w-full md:max-w-[var(--card-details-max-w)] justify-end sm:justify-center h-min sm:h-auto mt-auto sm:mt-0;
+}
+
+.gradient-glass {
+  @apply bg-gradient-to-b from-white/80 via-white/60 backdrop-blur-xs to-transparent;
 }
 
 .separator {

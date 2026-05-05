@@ -37,11 +37,11 @@ export default function MyRestaurants() {
           opacity: 0.1,
         }}
       ></div>
-      <div class="flex relative mt-20 px-12 w-5/6 mx-auto bg-white">
-        <Filters />
-        <div class="flex flex-col pt-12 w-[1000px] ml-[420px]">
+      <div class="relative mt-20 lg:px-12 md:px-0 lg:w-5/6 sm:w-full mx-auto bg-white">
+        {/* <Filters /> */}
+        <div class="flex flex-col pt-12">
           <SearchBar />
-          <div class="flex mx-auto flex-wrap gap-4 items-center">
+          <div class="grid xl:grid-cols-2 lg:grid-cols-1 gap-4">
             {restaurants().length > 0 &&
               restaurants().map((restaurantItem: IRestaurant) => (
                 <Card

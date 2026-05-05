@@ -26,7 +26,7 @@ export default function Card(props: ICardProps) {
           />
         </div>
 
-        <div class="card-details">
+        <div class="card-details gradient-glass">
           <h2 class="text-3xl font-semibold">{name}</h2>
           <p class="text-sm mt-2 text-black/80">{address}</p>
           <p class="mt-4">
@@ -41,7 +41,7 @@ export default function Card(props: ICardProps) {
           </div>
         </div>
       </div>
-      <Separator class="separator" />
+      {/* <Separator class="separator" /> */}
     </>
   );
 }
