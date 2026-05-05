@@ -26,6 +26,14 @@ export default function MyRestaurants() {
     navigate(`/myRestaurants/${id}`);
   }
 
+  async function onSearchChange(value: string) {
+    const response: IResponse<IRestaurant[]> = await api.get(
+      `/restaurants/list?search=${value}`,
+    );
+    console.info("onSearchChange response", response.data.data);
+    setrestaurants(response.data.data);
+  }
+
   return (
     <div class="min-h-screen">
       <div
@@ -40,7 +48,7 @@ export default function MyRestaurants() {
       <div class="relative mt-20 lg:px-12 md:px-0 lg:w-5/6 sm:w-full mx-auto bg-white">
         {/* <Filters /> */}
         <div class="flex flex-col pt-12">
-          <SearchBar />
+          <SearchBar onChange={onSearchChange} />
           <div class="grid xl:grid-cols-2 lg:grid-cols-1 gap-4">
             {restaurants().length > 0 &&
               restaurants().map((restaurantItem: IRestaurant) => (
