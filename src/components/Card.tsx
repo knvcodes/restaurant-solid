@@ -3,7 +3,6 @@ import { FiStar } from "solid-icons/fi";
 import { generateRandomImageUrl } from "../utils/helpers";
 import { randomImageUrls } from "../utils/staticData";
 import { ICardProps } from "../types";
-import { Separator } from "@kobalte/core/separator";
 import { CustomBadge } from "./custom/CustomBadge";
 
 export default function Card(props: ICardProps) {
