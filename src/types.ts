@@ -5,24 +5,6 @@ export interface IResponse<T = unknown> {
   };
 }
 
-// export interface IRestaurant {
-//   address: {
-//     building: string;
-//     coord: [number, number]; // longitude, latitude
-//     street: string;
-//     zipcode: string;
-//   };
-//   borough: string;
-//   cuisine: string;
-//   grades: {
-//     date: string; // ISO date string
-//     grade: string;
-//     score: number;
-//   }[];
-//   name: string;
-//   restaurant_id: string;
-// }
-
 export interface ICardProps {
   name: string;
   address: string;
@@ -40,11 +22,12 @@ export interface IRestaurant {
   cancellationFee: CancellationFee;
   deliveryFee: CancellationFee;
   deliveryHours: DeliveryHours;
+  description: string;
   minimumDelivery: CancellationFee;
   openDays: DeliveryHours;
 }
 
-interface DeliveryHours {
+export interface DeliveryHours {
   from: string;
   to: string;
 }
