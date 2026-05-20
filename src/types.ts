@@ -50,3 +50,13 @@ interface Address {
   street: string;
   zipcode: string;
 }
+
+// USER
+
+export type UserRole = "admin" | "owner" | "customer";
+
+export interface User {
+  id: string;
+  email: string;
+  role: UserRole;
+}

@@ -1,4 +1,6 @@
 /* components */
+
+/* card component */
 .card {
   @apply flex flex-1 h-[var(--card-h)] bg-transparent overflow-hidden sm:min-w-auto lg:min-w-[var(--card-w)] hover:shadow-xl;
 }
@@ -11,6 +13,7 @@
   @apply text-gray-400;
 }
 
+/* res description */
 .cuisine {
   @apply bg-amber-200 text-xl px-2;
 }
@@ -19,10 +22,25 @@
   @apply text-sm bg-black text-white px-2;
 }
 
+.title {
+  @apply text-xl text-white font-semibold;
+}
+
 .subTitle {
   @apply font-semibold text-gray-400;
 }
 
+/* input fields */
+
+.inputField {
+  @apply bg-[rgba(0,0,0,0.2)] border-0 px-4 py-2 text-white my-2 rounded-md w-full;
+}
+
+button {
+  @apply bg-black text-white px-4 py-2 rounded-md;
+}
+
+/* effects */
 .gradient-glass {
   @apply bg-gradient-to-b from-white/80 via-white/60 backdrop-blur-xs to-transparent;
 }
