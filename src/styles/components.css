@@ -40,6 +40,10 @@ button {
   @apply bg-black text-white px-4 py-2 rounded-md;
 }
 
+.button-y {
+  @apply bg-yellow-500 text-black font-semibold px-4 py-2 rounded-md;
+}
+
 /* effects */
 .gradient-glass {
   @apply bg-gradient-to-b from-white/80 via-white/60 backdrop-blur-xs to-transparent;
