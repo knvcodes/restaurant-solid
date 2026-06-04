@@ -17,11 +17,8 @@ import { FiStar } from "solid-icons/fi";
 
 export default function RestaurantDetails() {
   const params = useParams();
-  console.log(params.slug);
 
   const [restaurant, setrestaurant] = createSignal<IRestaurant | null>(null);
-
-  console.log("restaurant()===>", restaurant());
 
   // fetching all restaurants
   onMount(async () => {

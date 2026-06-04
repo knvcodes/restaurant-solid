@@ -1,4 +1,4 @@
-import { createSignal, onMount } from "solid-js";
+import { createEffect, createSignal, onMount } from "solid-js";
 import "./style.css";
 import Card from "../components/Card";
 import api from "../utils/axios";
@@ -18,7 +18,6 @@ export default function MyRestaurants() {
   onMount(async () => {
     const response: IResponse<IRestaurant[]> =
       await api.get("/restaurants/list");
-    console.info("resposne", response.data.data);
     setrestaurants(response.data.data);
   });
 
@@ -30,7 +29,6 @@ export default function MyRestaurants() {
     const response: IResponse<IRestaurant[]> = await api.get(
       `/restaurants/list?search=${value}`,
     );
-    console.info("onSearchChange response", response.data.data);
     setrestaurants(response.data.data);
   }
 
