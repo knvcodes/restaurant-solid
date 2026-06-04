@@ -9,8 +9,7 @@ import { useLocation } from "@solidjs/router";
 
 const App: ParentComponent = (props) => {
   const location = useLocation();
-
-  const isAdminRoute = () => location.pathname.startsWith("/admin");
+  const isAdminRoute =  location.pathname.startsWith("/admin");
 
   return (
     <div class="flex flex-col relative min-h-screen bg-white">

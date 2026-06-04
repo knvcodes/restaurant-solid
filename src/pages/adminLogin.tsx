@@ -12,7 +12,7 @@ export default function AdminLogin() {
   const [email, setEmail] = createSignal<string>("");
   const [password, setPassword] = createSignal<string>("");
 
-  const handleSubmit = (: ) => {
+  const handleSubmit = ( ) => {
     
   }
 
