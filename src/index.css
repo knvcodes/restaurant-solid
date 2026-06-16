@@ -37,6 +37,11 @@
   --card-h: 450px;
 
   --card-details-max-w: 300px;
+
+  --dish-card-max-w: 1000px;
+  --dish-card-h: 200px;
+
+  --selection-col: gray-800;
 }
 
 /* utilities */

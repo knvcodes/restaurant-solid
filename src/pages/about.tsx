@@ -1,9 +1,6 @@
 import { Suspense } from "solid-js";
-import AboutData from "./about.data";
 
 export default function About() {
-  const name = AboutData();
-
   return (
     <section class="bg-pink-100 text-gray-700 p-8">
       <h1 class="text-2xl font-bold">About</h1>
@@ -13,7 +10,7 @@ export default function About() {
       <p>
         <span>We love</span>
         <Suspense fallback={<span>...</span>}>
-          <span>&nbsp;{name()}</span>
+          <span>&nbsp;{"something"}</span>
         </Suspense>
       </p>
     </section>

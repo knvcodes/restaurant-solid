@@ -13,6 +13,7 @@ export interface ICardProps {
 }
 
 export interface IRestaurant {
+  id: string;
   address: Address;
   borough: string;
   cuisine: string;
@@ -25,6 +26,27 @@ export interface IRestaurant {
   description: string;
   minimumDelivery: CancellationFee;
   openDays: DeliveryHours;
+  dishes: IDish[];
+}
+
+interface IServing {
+  title: string;
+  value: number;
+  price: number;
+  currency: string;
+  _id: string;
+}
+
+export interface IDish {
+  id: string;
+  name: string;
+  description: string;
+  tags: string[];
+  metadata: Record<string, string | number>;
+  supplements: string[];
+
+  serving: IServing[];
+  restaurantId: string;
 }
 
 export interface DeliveryHours {

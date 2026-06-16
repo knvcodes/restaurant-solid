@@ -23,11 +23,30 @@
 }
 
 .title {
-  @apply text-xl text-white font-semibold;
+  @apply text-4xl text-white font-semibold;
+}
+
+.heading-2 {
+  @apply text-3xl font-semibold;
 }
 
 .subTitle {
   @apply font-semibold text-gray-400;
+}
+
+.label {
+  @apply text-gray-600 font-semibold;
+}
+
+/* dish */
+
+.dish-card {
+  @apply py-4 mr-auto w-full max-w-[var(--dish-card-max-w)] h-[var(--dish-card-h)] flex gap-4;
+  @apply hover:translate-x-2 hover:bg-gray-200 px-4 hover:scale-105 hover:cursor-pointer;
+
+  .title {
+    @apply font-semibold text-2xl text-black mb-2;
+  }
 }
 
 /* input fields */
@@ -56,4 +75,12 @@ button {
 .separator[data-orientation="horizontal"] {
   height: 1px;
   width: 100%;
+}
+
+.verticle-list {
+  @apply flex flex-col;
+}
+
+.horizontal-list {
+  @apply flex;
 }

@@ -2,10 +2,9 @@ import { lazy } from "solid-js";
 import type { RouteDefinition } from "@solidjs/router";
 
 import Home from "./pages/home";
-import AboutData from "./pages/about.data";
-import MyRestaurants from "./pages/myRestaurants";
-import RestaurantDetails from "./pages/restaurantDetails";
-import AdminLogin from "./pages/adminLogin";
+import Restaurants from "./pages/customers/restaurant/restaurants";
+import RestaurantDetails from "./pages/customers/restaurant/restaurantDetails";
+import AdminLogin from "./pages/admin/auth/adminLogin";
 
 import ProtectedRoute from "./components/ProtectedRoutes";
 
@@ -21,25 +20,27 @@ export const routes: RouteDefinition[] = [
     path: "/",
     component: Home,
   },
+  // {
+  //   path: "/about",
+  //   component: lazy(() => import("./pages/about")),
+  //   load: AboutData,
+  // },
   {
-    path: "/about",
-    component: lazy(() => import("./pages/about")),
-    load: AboutData,
+    path: "/restaurants",
+    component: lazy(() => import("./pages/customers/restaurant/restaurants")),
+    load: Restaurants,
   },
   {
-    path: "/myrestaurants",
-    component: lazy(() => import("./pages/myRestaurants")),
-    load: MyRestaurants,
-  },
-  {
-    path: "/myrestaurants/:slug",
-    component: lazy(() => import("./pages/restaurantDetails")),
+    path: "/restaurants/:slug",
+    component: lazy(
+      () => import("./pages/customers/restaurant/restaurantDetails"),
+    ),
     load: RestaurantDetails,
   },
 
   {
     path: "/admin/login",
-    component: lazy(() => import("./pages/adminLogin")),
+    component: lazy(() => import("./pages/admin/auth/adminLogin")),
     load: AdminLogin,
   },
 
