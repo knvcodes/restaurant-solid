@@ -1,0 +1,12 @@
+.modal {
+  @apply p-4 bg-white flex flex-col rounded-md;
+  @apply w-[var(--modal-w)] min-h-[var(--modal-h)];
+
+  .button-y {
+    @apply mt-auto font-bold;
+  }
+}
+
+.modal-overlay {
+  @apply bg-black/50 backdrop-blur-sm absolute z-50 h-screen w-screen;
+}

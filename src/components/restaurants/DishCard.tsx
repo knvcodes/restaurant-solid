@@ -3,13 +3,16 @@ import { IDish } from "../../types";
 import { generateRandomImageUrl } from "../../utils/helpers";
 import { randomDishUrls } from "../../utils/staticData";
 
-export default function DishCard(props: { dish: IDish }) {
-  const { dish } = props;
+interface DishCardProps {
+  dish: IDish;
+  onClick?: () => void;
+}
 
-  console.info("dish:===>", dish);
+export default function DishCard(props: DishCardProps) {
+  const { dish, onClick = () => {} } = props;
 
   return (
-    <div class="dish-card">
+    <div class="dish-card" onclick={onClick}>
       <div>
         <img
           src={randomDishUrls[generateRandomImageUrl(randomDishUrls.length)]}

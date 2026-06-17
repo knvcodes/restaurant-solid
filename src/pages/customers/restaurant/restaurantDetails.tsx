@@ -8,17 +8,19 @@ import {
   generateOpenHours,
   generateRandomImageUrl,
 } from "../../../utils/helpers";
-import { randomDishUrls, randomImageUrls } from "../../../utils/staticData";
+import { randomImageUrls } from "../../../utils/staticData";
 import { useParams } from "@solidjs/router";
 import { FaSolidStar } from "solid-icons/fa";
 import { FiStar } from "solid-icons/fi";
 import { foodbg } from "../../../assets/assets";
 import DishCard from "../../../components/restaurants/DishCard";
+import { CustomModal } from "../../../components/custom/CustomModal";
 
 export default function RestaurantDetails() {
   const params = useParams();
 
   const [restaurant, setrestaurant] = createSignal<IRestaurant | null>(null);
+  const [isModalOpen, setisModalOpen] = createSignal<boolean>(false);
 
   // fetching all restaurants
   onMount(async () => {
@@ -26,7 +28,6 @@ export default function RestaurantDetails() {
       `/restaurants/${params.slug}`,
     );
 
-    console.info("response.data.data:===>", response.data.data);
     setrestaurant(response.data.data);
   });
 
@@ -127,6 +128,16 @@ export default function RestaurantDetails() {
                   {(dish) => <DishCard dish={dish} />}
                 </For>
               </div>
+            </Show>
+
+            <Show when={isModalOpen()}>
+              <CustomModal
+                title={"asd"}
+                description="asd"
+                rightBtnText="asdsd"
+                rightBtnFn={() => {}}
+                onClose={() => {}}
+              />
             </Show>
           </div>
         </div>

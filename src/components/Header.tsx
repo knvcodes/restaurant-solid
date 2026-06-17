@@ -1,12 +1,19 @@
-import { createMemo, createSignal } from "solid-js";
+import { createMemo, createSignal, Show } from "solid-js";
 import { Button } from "@kobalte/core/button";
 import { useLocation } from "@solidjs/router";
+import { LoginModal } from "./auth/LoginModal";
+import api from "../utils/axios";
+import { LoginPayload } from "../types";
+import { login, register } from "../service/auth/auth.service";
 
 export default function Header() {
   const [isOpen, setIsOpen] = createSignal(false);
 
   // logic to change font of header
   const location = useLocation();
+
+  // login modal
+  const [isLoginModalOpen, setisLoginModalOpen] = createSignal(false);
 
   // Determine classes based on route
   const textColor = createMemo(() => {
@@ -19,9 +26,21 @@ export default function Header() {
     }
   });
 
+  // handle login
+  const handleLogin = async (payload: LoginPayload) => {
+    // const response = await login(payload);
+    const response = await register({
+      ...payload,
+      name: "john",
+      role: "customer",
+      isOAuth: false,
+    });
+    console.info("response:===>", response);
+  };
+
   return (
     <header
-      class={`fixed left-1/2 -translate-x-1/2 min-w-[1200px] z-50 backdrop-blur-md ${textColor()}`}
+      class={`fixed left-1/2 -translate-x-1/2 min-w-[1200px] z-10 backdrop-blur-md ${textColor()}`}
     >
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16 relative">
@@ -29,7 +48,7 @@ export default function Header() {
           <div class="flex-shrink-0 text-2xl font-bold ">MyBrand</div>
 
           {/* Desktop Nav (centered absolutely) */}
-          <nav class="hidden md:flex space-x-6  font-medium absolute left-1/2 -translate-x-1/2">
+          <nav class="hidden md:flex gap-4">
             <a href="/" class="hover:text-indigo-600 transition">
               Home
             </a>
@@ -41,7 +60,7 @@ export default function Header() {
             </a>
           </nav>
 
-          <Button>Log In</Button>
+          <Button onclick={() => setisLoginModalOpen(true)}>Log In</Button>
 
           {/* Mobile Button on right */}
           <button
@@ -93,6 +112,14 @@ export default function Header() {
           </nav>
         </div>
       )}
+
+      {/* login modal */}
+      <Show when={isLoginModalOpen()}>
+        <LoginModal
+          onClose={() => setisLoginModalOpen(false)}
+          onLogin={handleLogin}
+        />
+      </Show>
     </header>
   );
 }

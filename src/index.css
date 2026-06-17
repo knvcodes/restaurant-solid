@@ -9,6 +9,7 @@
 /* components */
 @import "./styles/Card/card.css";
 @import "./styles/DishCard/dishCard.css";
+@import "./styles/Modal/modal.css";
 
 @layer base {
   *,
@@ -39,6 +40,9 @@
 
   --dish-card-max-w: 1000px;
   --dish-card-h: 200px;
+
+  --modal-w: 500px;
+  --modal-h: 200px;
 
   --selection-col: gray-800;
 }

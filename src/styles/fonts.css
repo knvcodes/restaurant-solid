@@ -6,6 +6,10 @@
   @apply text-3xl font-semibold;
 }
 
+.heading-3 {
+  @apply text-2xl font-semibold;
+}
+
 .subTitle {
   @apply font-semibold text-gray-400;
 }

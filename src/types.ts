@@ -82,3 +82,16 @@ export interface User {
   email: string;
   role: UserRole;
 }
+
+// SERVICE
+
+export interface LoginPayload {
+  email: string;
+  password: string;
+}
+
+export interface RegisterPayload extends LoginPayload {
+  name: string;
+  role: string;
+  isOAuth: boolean;
+}

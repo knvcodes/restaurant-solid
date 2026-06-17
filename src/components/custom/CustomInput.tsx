@@ -1,3 +1,6 @@
+import { Show } from "solid-js";
+import { EyeIcon, EyeOffIcon } from "../icons/EyeIcons";
+
 type FieldType = "text" | "number" | "password";
 type valueType = string | number | string[] | undefined;
 
@@ -7,28 +10,47 @@ export default function CustomInput(props: {
   type?: FieldType;
   placeholder?: string;
   onChange: (value: string) => void;
+  togglePassword?: () => void;
+  isPasswordVisible?: boolean;
+  showEye?: boolean;
 }) {
   const {
     placeholder = "",
-    type,
     onChange = () => {},
+    togglePassword = () => {},
     value = "",
+    showEye = false,
     title,
   } = props;
 
   return (
     <div class="w-full">
       {title && <div>{title}</div>}
-      <input
-        type={type || "text"}
-        value={value}
-        placeholder={placeholder || ""}
-        class="inputField"
-        onInput={(e) => {
-          const newValue = e.currentTarget.value;
-          onChange(newValue);
-        }}
-      />
+      <div class="relative">
+        <input
+          type={props.type || "text"}
+          value={value}
+          placeholder={placeholder || ""}
+          class="inputField"
+          onInput={(e) => {
+            const newValue = e.currentTarget.value;
+            onChange(newValue);
+          }}
+        />
+        <Show when={showEye && props.isPasswordVisible}>
+          <EyeIcon
+            class="absolute right-3 top-1/2 -translate-y-1/2"
+            onClick={togglePassword}
+          />
+        </Show>
+
+        <Show when={showEye && !props.isPasswordVisible}>
+          <EyeOffIcon
+            class="absolute right-3 top-1/2 -translate-y-1/2"
+            onClick={togglePassword}
+          />
+        </Show>
+      </div>
     </div>
   );
 }

@@ -3,7 +3,7 @@ import { createStore } from "solid-js/store";
 export type UserRole = "admin" | "owner" | "customer";
 
 // Initialize store
-export const [store, setStore] = createStore({
+export const [userStore, setuserStore] = createStore({
   users: [
     {
       id: 0,

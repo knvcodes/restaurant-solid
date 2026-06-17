@@ -54,3 +54,23 @@ export function formatDateTime(timeString: string) {
     hour12: true,
   });
 }
+
+export const getErrorMessage = (error: unknown): string => {
+  // Axios error
+  if (typeof error === "object" && error !== null) {
+    const err = error as any;
+
+    // Server returned error response
+    if (err.response?.data?.message || err.response?.data?.error) {
+      return err.response.data.message || err.response?.data?.error;
+    }
+
+    // Axios error message (e.g., "Request failed with status code 404")
+    if (err.message) {
+      return err.message;
+    }
+  }
+
+  // Fallback
+  return "Something went wrong";
+};
