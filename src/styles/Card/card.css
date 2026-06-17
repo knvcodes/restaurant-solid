@@ -1,0 +1,8 @@
+/* card component */
+.card {
+  @apply flex flex-1 h-[var(--card-h)] bg-transparent overflow-hidden sm:min-w-auto lg:min-w-[var(--card-w)] hover:shadow-xl;
+}
+
+.card-details {
+  @apply relative flex flex-col p-4 ml-0 sm:ml-auto w-full sm:w-auto max-w-full md:max-w-[var(--card-details-max-w)] justify-end sm:justify-center h-min sm:h-auto mt-auto sm:mt-0;
+}

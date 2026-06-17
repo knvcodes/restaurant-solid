@@ -1,0 +1,13 @@
+/* input fields */
+
+.inputField {
+  @apply bg-[rgba(0,0,0,0.2)] border-0 px-4 py-2 text-white my-2 rounded-md w-full;
+}
+
+button {
+  @apply bg-black text-white px-4 py-2 rounded-md;
+}
+
+.button-y {
+  @apply bg-yellow-500 text-black font-semibold px-4 py-2 rounded-md;
+}

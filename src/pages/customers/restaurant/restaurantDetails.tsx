@@ -82,41 +82,42 @@ export default function RestaurantDetails() {
                 <div class="subTitle">{restaurantObj().borough}</div>
               </div>
             </div>
-            <div class="openFrom flex items-center gap-2 mr-auto mt-12">
-              <div class="subTitle">Open Hours:</div>
-              <For each={generateOpenHours(restaurantObj().openDays)}>
-                {(day) => <div class="label">{day}</div>}
-              </For>
-            </div>
-            <div class="openFrom flex items-center gap-2 mr-auto mt-2">
-              <div class="subTitle">Delivery Hours:</div>
-              <div>{`${formatDateTime(restaurantObj().deliveryHours.from)} - ${formatDateTime(restaurantObj().deliveryHours.to)}`}</div>
-            </div>
-            <div class="openFrom flex items-center gap-2 mr-auto mt-2">
-              <div class="subTitle">Delivery Fees:</div>
-              <div>
+
+            {/* other details */}
+            <dl class="table-styled mt-12">
+              <dt class="subTitle">Open Hours:</dt>
+              <dd class="text-gray-900 horizontal-list gap-4">
+                <For each={generateOpenHours(restaurantObj().openDays)}>
+                  {(day) => <div class="label">{day}</div>}
+                </For>
+              </dd>
+
+              <dt class="subTitle">Delivery Hours:</dt>
+              <dd class="text-gray-900 horizontal-list gap-4">
+                {`${formatDateTime(restaurantObj().deliveryHours.from)} - ${formatDateTime(restaurantObj().deliveryHours.to)}`}
+              </dd>
+
+              <dt class="subTitle">Delivery Fees:</dt>
+              <dd class="text-gray-900 horizontal-list gap-4">
                 {restaurantObj().deliveryFee.amount}
                 {restaurantObj().deliveryFee.currency}
-              </div>
-            </div>
-            <div class="openFrom flex items-center gap-2 mr-auto mt-2">
-              <div class="subTitle">Cancellation Fees:</div>
-              <div>
+              </dd>
+
+              <dt class="subTitle">Cancellation Fees:</dt>
+              <dd class="text-gray-900 horizontal-list gap-4">
                 {restaurantObj().cancellationFee.amount}
                 {restaurantObj().cancellationFee.currency}
-              </div>
-            </div>
-            <div class="openFrom flex items-center gap-2 mr-auto mt-2">
-              <div class="subTitle">Minimum Order:</div>
-              <div>
+              </dd>
+
+              <dt class="subTitle">Minimum Order:</dt>
+              <dd class="text-gray-900 horizontal-list gap-4">
                 {restaurantObj().minimumDelivery.amount}
                 {restaurantObj().minimumDelivery.currency}
-              </div>
-            </div>
+              </dd>
+            </dl>
+
             {/* dishes */}
-
             <div class="heading-2 mt-12 mb-4">Dishes</div>
-
             <Show
               when={restaurantObj().dishes.length > 0}
               fallback={<div>No dishes found</div>}
