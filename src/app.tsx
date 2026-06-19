@@ -1,11 +1,7 @@
-import {
-  Suspense,
-  type ParentComponent,
-  createSignal,
-  createEffect,
-} from "solid-js";
+import { Suspense, type ParentComponent } from "solid-js";
 import Header from "./components/Header";
 import { useLocation } from "@solidjs/router";
+import { CustomToast } from "./components/custom/CustomToast";
 
 const App: ParentComponent = (props) => {
   const location = useLocation();
@@ -17,6 +13,9 @@ const App: ParentComponent = (props) => {
       <main class="h-full">
         <Suspense>{props.children}</Suspense>
       </main>
+
+      {/* toast */}
+      <CustomToast />
     </div>
   );
 };

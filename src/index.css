@@ -10,6 +10,7 @@
 @import "./styles/Card/card.css";
 @import "./styles/DishCard/dishCard.css";
 @import "./styles/Modal/modal.css";
+@import "./styles/Toast/toast.css";
 
 @layer base {
   *,
@@ -43,6 +44,9 @@
 
   --modal-w: 500px;
   --modal-h: 200px;
+
+  --toast-w: 500px;
+  --toast-h: 70px;
 
   --selection-col: gray-800;
 }

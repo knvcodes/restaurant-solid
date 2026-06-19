@@ -3,8 +3,9 @@ import { Button } from "@kobalte/core/button";
 import { useLocation } from "@solidjs/router";
 import { LoginModal } from "./auth/LoginModal";
 import api from "../utils/axios";
-import { LoginPayload } from "../types";
+import { LoginPayload, RegisterPayload } from "../types";
 import { login, register } from "../service/auth/auth.service";
+import { RegisterModal } from "./auth/RegisterModal";
 
 export default function Header() {
   const [isOpen, setIsOpen] = createSignal(false);
@@ -14,6 +15,7 @@ export default function Header() {
 
   // login modal
   const [isLoginModalOpen, setisLoginModalOpen] = createSignal(false);
+  const [isRegisterModalOpen, setisRegisterModalOpen] = createSignal(false);
 
   // Determine classes based on route
   const textColor = createMemo(() => {
@@ -28,14 +30,16 @@ export default function Header() {
 
   // handle login
   const handleLogin = async (payload: LoginPayload) => {
-    // const response = await login(payload);
+    const response = await login(payload);
+  };
+
+  const handleRegistration = async (payload: RegisterPayload) => {
     const response = await register({
       ...payload,
       name: "john",
       role: "customer",
       isOAuth: false,
     });
-    console.info("response:===>", response);
   };
 
   return (
@@ -118,6 +122,17 @@ export default function Header() {
         <LoginModal
           onClose={() => setisLoginModalOpen(false)}
           onLogin={handleLogin}
+          onRegister={() => {
+            setisLoginModalOpen(false);
+            setisRegisterModalOpen(true);
+          }}
+        />
+      </Show>
+
+      <Show when={isRegisterModalOpen()}>
+        <RegisterModal
+          onClose={() => setisRegisterModalOpen(false)}
+          onRegister={handleRegistration}
         />
       </Show>
     </header>

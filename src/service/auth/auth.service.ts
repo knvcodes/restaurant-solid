@@ -1,3 +1,4 @@
+import { toastActions } from "../../store/toastStore";
 import { LoginPayload, RegisterPayload } from "../../types";
 import api from "../../utils/axios";
 import { getErrorMessage } from "../../utils/helpers";
@@ -14,7 +15,10 @@ export const login = async (payload: LoginPayload) => {
     return response;
   } catch (error) {
     const errorMessage = getErrorMessage(error);
-    console.info("errorMessage:===>", errorMessage);
+
+    if (errorMessage) {
+      toastActions.show(errorMessage, "Failed");
+    }
   }
 };
 
@@ -39,6 +43,9 @@ export const register = async (payload: RegisterPayload) => {
     return response;
   } catch (error) {
     const errorMessage = getErrorMessage(error);
-    console.info("errorMessage:===>", errorMessage);
+
+    if (errorMessage) {
+      toastActions.show(errorMessage, "Failed");
+    }
   }
 };

@@ -1,17 +1,17 @@
 import { createSignal } from "solid-js";
 import CustomInput from "../custom/CustomInput";
 import { CustomModal } from "../custom/CustomModal";
-import { LoginPayload } from "../../types";
+import { RegisterPayload } from "../../types";
 
-interface LoginModalProps {
+interface RegisterModalProps {
   onClose: () => void;
-  onLogin: (payload: LoginPayload) => void;
-  onRegister: () => void;
+  onRegister: (payload: RegisterPayload) => void;
 }
 
-export const LoginModal = (props: LoginModalProps) => {
-  const { onClose, onLogin, onRegister } = props;
+export const RegisterModal = (props: RegisterModalProps) => {
+  const { onClose, onRegister } = props;
 
+  const [name, setname] = createSignal("");
   const [email, setemail] = createSignal("");
   const [password, setpassword] = createSignal("");
   const [isPasswordVisible, setisPasswordVisible] = createSignal(false);
@@ -29,17 +29,20 @@ export const LoginModal = (props: LoginModalProps) => {
   };
 
   const handleSubmit = () => {
-    onLogin({
+    onRegister({
+      name: name(),
       email: email(),
       password: password(),
+      role: "customer",
+      isOAuth: false,
     });
   };
 
   return (
     <CustomModal
-      title="Login"
+      title="Register"
       rightBtnFn={handleSubmit}
-      rightBtnText="Login"
+      rightBtnText="Register"
       onClose={onClose}
     >
       <div class="py-4">
@@ -54,11 +57,6 @@ export const LoginModal = (props: LoginModalProps) => {
           onChange={handlePassword}
           isPasswordVisible={isPasswordVisible()}
         />
-      </div>
-
-      <div class="mb-2 text-sm" onclick={onRegister}>
-        Need Account?{" "}
-        <span class="text-blue-500 label cursor-pointer">Register here</span>
       </div>
     </CustomModal>
   );
