@@ -95,3 +95,10 @@ export interface RegisterPayload extends LoginPayload {
   role: string;
   isOAuth: boolean;
 }
+
+// ADMIN
+
+export type LoginForm = {
+  email: string;
+  password: string;
+};

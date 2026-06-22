@@ -1,18 +1,24 @@
-// images
-import darkPattern from "../../../assets/dark-pattern.jpg";
-
-// components
-import CustomInput from "../../../components/custom/CustomInput";
 import { createSignal } from "solid-js";
 import { Button } from "@kobalte/core/button";
 
 import "../../style.css";
+import { CustomForm } from "../../../components/custom/CustomForm";
+import { createForm } from "@modular-forms/solid";
+import { LoginForm } from "../../../types";
+import { CustomField } from "../../../components/custom/CustomField";
 
 export default function AdminLogin() {
-  const [email, setEmail] = createSignal<string>("");
-  const [password, setPassword] = createSignal<string>("");
+  const [loginForm] = createForm<LoginForm>();
 
-  const handleSubmit = () => {};
+  const [isPasswordVisible, setisPasswordVisible] = createSignal(false);
+
+  const togglePassword = () => {
+    setisPasswordVisible((prev) => !prev);
+  };
+
+  const handleSubmit = (values: LoginForm) => {
+    console.info("values:===>", values);
+  };
 
   return (
     <div class="p-4 w-1/4 flex-center flex-col align-start gap-4">
@@ -20,28 +26,25 @@ export default function AdminLogin() {
         Welcome to Restaurant Management
       </div>
 
-      <div class="title">Login</div>
-      <div class="my-4 w-full">
-        <CustomInput
-          title="Email"
-          type="text"
-          placeholder="Email"
-          value={email()}
-          onChange={(value: string) => setEmail(value)}
-        />
+      <CustomForm of={loginForm} title="Login" onSubmit={handleSubmit}>
+        <div class="my-4">
+          <CustomField name="email" type="email" label="Email" of={loginForm} />
 
-        <CustomInput
-          title="Password"
-          type="password"
-          placeholder="Password"
-          value={password()}
-          onChange={(value: string) => setPassword(value)}
-        />
-      </div>
+          <CustomField
+            name="password"
+            type={isPasswordVisible() ? "text" : "password"}
+            label="Password"
+            of={loginForm}
+            togglePassword={togglePassword}
+            showEye={true}
+            isPasswordVisible={isPasswordVisible()}
+          />
+        </div>
 
-      <Button class="w-full button-y" onclick={handleSubmit}>
-        Log In
-      </Button>
+        <Button class="w-full button-y" type="submit">
+          Log In
+        </Button>
+      </CustomForm>
     </div>
   );
 }

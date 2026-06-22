@@ -30,6 +30,19 @@
       -apple-system,
       BlinkMacSystemFont;
   }
+
+  /* disable autofull styling */
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active,
+  textarea:-webkit-autofill,
+  select:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px theme("colors.gray.800") inset !important;
+    -webkit-text-fill-color: theme("colors.gray.100") !important;
+    caret-color: theme("colors.gray.100") !important;
+  }
 }
 
 /*custom css variables  */

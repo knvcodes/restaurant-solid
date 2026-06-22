@@ -48,10 +48,10 @@ export const LoginModal = (props: LoginModalProps) => {
         <CustomInput
           title="password"
           type={isPasswordVisible() ? "text" : "password"}
-          showEye={true}
           value={password()}
-          togglePassword={togglePassword}
           onChange={handlePassword}
+          togglePassword={togglePassword}
+          showEye={true}
           isPasswordVisible={isPasswordVisible()}
         />
       </div>
