@@ -51,6 +51,10 @@
   --selection-col: gray-800;
 }
 
+.button {
+  background-color: blue;
+}
+
 /* utilities */
 
 .flex-center {

@@ -7,24 +7,15 @@ import RestaurantDetails from "./pages/customers/restaurant/restaurantDetails";
 import AdminLogin from "./pages/admin/auth/adminLogin";
 
 import ProtectedRoute from "./components/ProtectedRoutes";
-
-// Import the guard
-
-// Lazy load your protected pages (just an example, adjust paths to your actual files)
-// const AdminDashboard = lazy(() => import("./pages/admin/Dashboard"));
-// const OwnerDashboard = lazy(() => import("./pages/owner/Dashboard"));
-// const CustomerDashboard = lazy(() => import("./pages/customer/Dashboard"));
+import AdminAuthLayout from "./layouts/AdminLayout";
 
 export const routes: RouteDefinition[] = [
   {
     path: "/",
     component: Home,
   },
-  // {
-  //   path: "/about",
-  //   component: lazy(() => import("./pages/about")),
-  //   load: AboutData,
-  // },
+
+  // customer routes
   {
     path: "/restaurants",
     component: lazy(() => import("./pages/customers/restaurant/restaurants")),
@@ -38,24 +29,24 @@ export const routes: RouteDefinition[] = [
     load: RestaurantDetails,
   },
 
+  // admin auth routes
   {
-    path: "/admin/login",
-    component: lazy(() => import("./pages/admin/auth/adminLogin")),
-    load: AdminLogin,
+    path: "/admin",
+    component: AdminAuthLayout,
+    children: [
+      {
+        path: "/login",
+        component: lazy(() => import("./pages/admin/auth/adminLogin")),
+        load: AdminLogin,
+      },
+      // {
+      //   path: "/dashboard",
+      //   component: lazy(() => import("./pages/admin/dashboard")),
+      // },
+    ],
   },
 
-  // {
-  //   path: "/admin",
-  //   component: () => <ProtectedRoute allowedRoles={['admin']}><AdminDashboard /></ProtectedRoute>,
-  // },
-  // {
-  //   path: "/owner",
-  //   component: () => <ProtectedRoute allowedRoles={['owner']}><OwnerDashboard /></ProtectedRoute>,
-  // },
-  // {
-  //   path: "/customer",
-  //   component: () => <ProtectedRoute allowedRoles={['customer']}><CustomerDashboard /></ProtectedRoute>,
-  // },
+  // Admin layout wrapper
 
   {
     path: "**",
