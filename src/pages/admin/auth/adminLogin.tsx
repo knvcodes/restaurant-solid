@@ -7,6 +7,7 @@ import { LoginForm } from "../../../types";
 import { CustomField } from "../../../components/custom/CustomField";
 import { loginSchema } from "../../../validations/auth/auth";
 import { createForm } from "@formisch/solid";
+import { login } from "../../../service/auth/auth.service";
 
 export default function AdminLogin() {
   const loginForm = createForm({
@@ -18,9 +19,12 @@ export default function AdminLogin() {
     setisPasswordVisible((prev) => !prev);
   };
 
-  const handleSubmit = (values: LoginForm) => {
-    const typedValues = values as unknown as LoginForm;
-    console.info("values:===>", typedValues);
+  const handleSubmit = async (values: LoginForm) => {
+    const response = await login({
+      ...values,
+    });
+
+    console.info("response:===>", response);
   };
 
   return (

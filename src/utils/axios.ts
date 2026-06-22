@@ -9,6 +9,7 @@ import axios, {
 // Create instance
 const api: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL || "https://api.example.com",
+  withCredentials: true,
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",
@@ -31,7 +32,7 @@ api.interceptors.request.use(
 
     return config;
   },
-  (error: AxiosError) => Promise.reject(error)
+  (error: AxiosError) => Promise.reject(error),
 );
 
 // Response interceptor
@@ -42,7 +43,7 @@ api.interceptors.response.use(
       console.warn("Unauthorized! Redirect to login...");
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 export default api;
