@@ -24,7 +24,7 @@ export default function AdminLogin() {
   };
 
   return (
-    <div class="p-4 w-1/4 flex-center flex-col align-start gap-4">
+    <div class="p-4 w-full flex-center flex-col align-start gap-4">
       <div class="absolute top-10 left-10 heading-2">
         Welcome to Restaurant Management
       </div>

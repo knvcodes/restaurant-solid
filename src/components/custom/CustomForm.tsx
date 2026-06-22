@@ -6,14 +6,13 @@ type CustomFormProps = ParentProps<{
   of: any;
   onSubmit: (values: any) => void | Promise<any>;
   title?: string;
-  class?: string;
 }>;
 
 export const CustomForm: Component<CustomFormProps> = (props) => {
-  const [local, formProps] = splitProps(props, ["title", "children", "class"]);
+  const [local, formProps] = splitProps(props, ["title", "children"]);
 
   return (
-    <div class={local.class}>
+    <div class="lg:w-1/3 md:w-1/2 w-full">
       {local.title && <h2 class="heading-2">{local.title}</h2>}
       <Form {...formProps} class="my-4">
         {local.children}
