@@ -11,3 +11,7 @@
   height: 1px;
   width: 100%;
 }
+
+.loading {
+  @apply opacity-20;
+}

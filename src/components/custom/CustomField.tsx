@@ -1,26 +1,16 @@
 // components/CustomField.tsx
-import {
-  Component,
-  createEffect,
-  JSX,
-  mergeProps,
-  Show,
-  splitProps,
-} from "solid-js";
-import { Field, FieldStore } from "@modular-forms/solid";
+import { Component, JSX, mergeProps, Show, splitProps } from "solid-js";
+import { useField, type FormStore, type FormSchema } from "@formisch/solid";
 import { EyeIcon, EyeOffIcon } from "../icons/EyeIcons";
+import type * as v from "valibot";
 
-// The actual field render props type from Modular Forms
-
-type CustomFieldProps = {
-  of: any; // Form store returned by createForm
-  name: string;
+type CustomFieldProps<TSchema extends FormSchema = FormSchema> = {
+  of: FormStore<TSchema>;
+  path: readonly [string]; // or use ValidPath type if available
   type?: string;
   label: string;
   placeholder?: string;
   class?: string;
-  validate?: any;
-  transform?: any;
   togglePassword?: () => void;
   isPasswordVisible?: boolean;
   showEye?: boolean;
@@ -32,54 +22,48 @@ export const CustomField: Component<CustomFieldProps> = (props) => {
     props,
   );
 
-  const [fieldProps, local] = splitProps(merged, [
-    "of",
-    "name",
-    "validate",
-    "transform",
-  ]);
+  const [fieldProps, local] = splitProps(merged, ["of", "path"]);
 
-  createEffect(() => {
-    console.info("local:===>", local);
-  });
+  const field = useField(fieldProps.of, { path: fieldProps.path });
 
   return (
-    <Field {...fieldProps}>
-      {(field: FieldStore<any, any>, fieldProps: any) => (
-        <div class="relative">
-          <label for={props.name}>{props.label}</label>
-          <input
-            {...fieldProps}
-            class="inputField"
-            type={local.type ?? "text"}
-            id={merged.name}
-            placeholder={props.placeholder}
-            value={field.value ?? ""}
-            aria-invalid={!!field.error}
-            aria-describedby={field.error ? `${props.name}-error` : undefined}
+    <div>
+      <label for={merged.path[0]}>{local.label}</label>
+
+      <div class="relative">
+        <input
+          {...field.props}
+          class="inputField"
+          type={local.type}
+          id={merged.path[0]}
+          placeholder={local.placeholder}
+          value={(field.input as string | undefined) ?? ""}
+          aria-invalid={!!field.errors}
+          aria-describedby={
+            field.errors ? `${merged.path[0]}-error` : undefined
+          }
+        />
+
+        <Show when={local.showEye && local.isPasswordVisible}>
+          <EyeIcon
+            class="absolute right-3 top-1/2 -translate-y-1/2"
+            onClick={local.togglePassword}
           />
+        </Show>
 
-          <Show when={local.showEye && local.isPasswordVisible}>
-            <EyeIcon
-              class="absolute right-3 top-1/2"
-              onClick={local.togglePassword}
-            />
-          </Show>
+        <Show when={local.showEye && !local.isPasswordVisible}>
+          <EyeOffIcon
+            class="absolute right-3 top-1/2 -translate-y-1/2"
+            onClick={local.togglePassword}
+          />
+        </Show>
+      </div>
 
-          <Show when={local.showEye && !local.isPasswordVisible}>
-            <EyeOffIcon
-              class="absolute right-3 top-1/2"
-              onClick={local.togglePassword}
-            />
-          </Show>
-
-          {field.error && (
-            <span id={`${props.name}-error`} class="error">
-              {field.error}
-            </span>
-          )}
+      {field.errors && (
+        <div id={`${merged.path[0]}-error`} class="error-text">
+          {field.errors[0]}
         </div>
       )}
-    </Field>
+    </div>
   );
 };

@@ -29,3 +29,7 @@
 .days {
   @apply text-sm bg-black text-white px-2;
 }
+
+.error-text {
+  @apply text-red-500 mb-2;
+}

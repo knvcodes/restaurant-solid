@@ -1,10 +1,10 @@
 // components/CustomForm.tsx
-import { Component, JSX, splitProps, ParentProps } from "solid-js";
-import { Form } from "@modular-forms/solid";
+import { Form } from "@formisch/solid";
+import { Component, splitProps, ParentProps } from "solid-js";
 
 type CustomFormProps = ParentProps<{
   of: any;
-  onSubmit?: (values: any) => void | Promise<any>;
+  onSubmit: (values: any) => void | Promise<any>;
   title?: string;
   class?: string;
 }>;

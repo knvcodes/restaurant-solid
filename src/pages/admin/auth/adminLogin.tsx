@@ -3,13 +3,15 @@ import { Button } from "@kobalte/core/button";
 
 import "../../style.css";
 import { CustomForm } from "../../../components/custom/CustomForm";
-import { createForm } from "@modular-forms/solid";
 import { LoginForm } from "../../../types";
 import { CustomField } from "../../../components/custom/CustomField";
+import { loginSchema } from "../../../validations/auth/auth";
+import { createForm } from "@formisch/solid";
 
 export default function AdminLogin() {
-  const [loginForm] = createForm<LoginForm>();
-
+  const loginForm = createForm({
+    schema: loginSchema,
+  });
   const [isPasswordVisible, setisPasswordVisible] = createSignal(false);
 
   const togglePassword = () => {
@@ -17,7 +19,8 @@ export default function AdminLogin() {
   };
 
   const handleSubmit = (values: LoginForm) => {
-    console.info("values:===>", values);
+    const typedValues = values as unknown as LoginForm;
+    console.info("values:===>", typedValues);
   };
 
   return (
@@ -28,10 +31,15 @@ export default function AdminLogin() {
 
       <CustomForm of={loginForm} title="Login" onSubmit={handleSubmit}>
         <div class="my-4">
-          <CustomField name="email" type="email" label="Email" of={loginForm} />
+          <CustomField
+            path={["email"]}
+            type="email"
+            label="Email"
+            of={loginForm}
+          />
 
           <CustomField
-            name="password"
+            path={["password"]}
             type={isPasswordVisible() ? "text" : "password"}
             label="Password"
             of={loginForm}
