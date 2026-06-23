@@ -8,5 +8,5 @@
 }
 
 .modal-overlay {
-  @apply bg-black/50 backdrop-blur-sm absolute z-50 h-screen w-screen;
+  @apply bg-black/50 backdrop-blur-sm absolute z-50 h-screen w-screen overflow-hidden;
 }

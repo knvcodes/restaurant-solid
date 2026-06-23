@@ -2,20 +2,13 @@ import { createMemo, createSignal, Show } from "solid-js";
 import { Button } from "@kobalte/core/button";
 import { useLocation } from "@solidjs/router";
 import { LoginModal } from "./auth/LoginModal";
-import api from "../utils/axios";
-import { LoginPayload, RegisterPayload } from "../types";
-import { login, register } from "../service/auth/auth.service";
-import { RegisterModal } from "./auth/RegisterModal";
+import { openModal } from "../store/modalStore";
 
 export default function Header() {
   const [isOpen, setIsOpen] = createSignal(false);
 
   // logic to change font of header
   const location = useLocation();
-
-  // login modal
-  const [isLoginModalOpen, setisLoginModalOpen] = createSignal(false);
-  const [isRegisterModalOpen, setisRegisterModalOpen] = createSignal(false);
 
   // Determine classes based on route
   const textColor = createMemo(() => {
@@ -27,20 +20,6 @@ export default function Header() {
         return "text-black border-b-1 w-full bg-white/80";
     }
   });
-
-  // handle login
-  const handleLogin = async (payload: LoginPayload) => {
-    const response = await login(payload);
-  };
-
-  const handleRegistration = async (payload: RegisterPayload) => {
-    const response = await register({
-      ...payload,
-      name: "john",
-      role: "customer",
-      isOAuth: false,
-    });
-  };
 
   return (
     <header
@@ -64,7 +43,7 @@ export default function Header() {
             </a>
           </nav>
 
-          <Button onclick={() => setisLoginModalOpen(true)}>Log In</Button>
+          <Button onclick={() => openModal("login")}>Log In</Button>
 
           {/* Mobile Button on right */}
           <button
@@ -116,25 +95,6 @@ export default function Header() {
           </nav>
         </div>
       )}
-
-      {/* login modal */}
-      <Show when={isLoginModalOpen()}>
-        <LoginModal
-          onClose={() => setisLoginModalOpen(false)}
-          onLogin={handleLogin}
-          onRegister={() => {
-            setisLoginModalOpen(false);
-            setisRegisterModalOpen(true);
-          }}
-        />
-      </Show>
-
-      <Show when={isRegisterModalOpen()}>
-        <RegisterModal
-          onClose={() => setisRegisterModalOpen(false)}
-          onRegister={handleRegistration}
-        />
-      </Show>
     </header>
   );
 }

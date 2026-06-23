@@ -2,6 +2,7 @@ import { Suspense, type ParentComponent } from "solid-js";
 import Header from "./components/Header";
 import { useLocation } from "@solidjs/router";
 import { CustomToast } from "./components/custom/CustomToast";
+import ModalPortal from "./components/ModalPortal";
 
 const App: ParentComponent = (props) => {
   const location = useLocation();
@@ -16,6 +17,7 @@ const App: ParentComponent = (props) => {
 
       {/* toast */}
       <CustomToast />
+      <ModalPortal />
     </div>
   );
 };
