@@ -4,22 +4,25 @@ import Card from "../../../components/Card";
 import api from "../../../utils/axios";
 import { IResponse, IRestaurant } from "../../../types";
 import SearchBar from "../../../components/SearchBar";
-import { generateAddress } from "../../../utils/helpers";
+import { generateAddress, isEmpty } from "../../../utils/helpers";
 import { useNavigate } from "@solidjs/router";
 import { foodbg } from "../../../assets/assets";
 import RestaurantListingSkeleton from "../../../components/restaurants/RestaurantListingSkeleton";
+import { restaurantListing } from "../../../service/restaurants/customer.service";
 
 export default function Restaurants() {
   const [restaurants, setrestaurants] = createSignal<IRestaurant[] | []>([]);
 
   const navigate = useNavigate();
 
+  const fetchRestauraunts = async () => {
+    const restaurantsData = await restaurantListing();
+    setrestaurants(restaurantsData);
+  };
+
   // fetching all restaurants
   onMount(async () => {
-    const response: IResponse<IRestaurant[]> =
-      await api.get("/restaurants/list");
-
-    setrestaurants(response.data.data);
+    fetchRestauraunts();
   });
 
   function gotoDetailsPage(id: string) {
@@ -27,10 +30,10 @@ export default function Restaurants() {
   }
 
   async function onSearchChange(value: string) {
-    const response: IResponse<IRestaurant[]> = await api.get(
-      `/restaurants/list?search=${value}`,
-    );
-    // setrestaurants(response.data.data);
+    if (isEmpty(value)) fetchRestauraunts();
+
+    const restaurantsData = await restaurantListing(value);
+    setrestaurants(restaurantsData);
   }
 
   return (
