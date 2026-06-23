@@ -1,4 +1,6 @@
+import { closeModal } from "../../store/modalStore";
 import { toastActions } from "../../store/toastStore";
+import { setuserStore, userStore } from "../../store/userStore";
 import { LoginPayload, RegisterPayload } from "../../types";
 import api from "../../utils/axios";
 import { getErrorMessage } from "../../utils/helpers";
@@ -13,6 +15,36 @@ export const login = async (payload: LoginPayload) => {
     });
 
     return response;
+  } catch (error) {
+    const errorMessage = getErrorMessage(error);
+
+    if (errorMessage) {
+      toastActions.show(errorMessage, "Failed");
+    }
+  }
+};
+
+export const oauthLogin = async (
+  response: google.accounts.id.CredentialResponse,
+) => {
+  try {
+    const responseData = await api.post(
+      "/auth/oauth",
+      JSON.stringify({ credential: response.credential }),
+      {
+        headers: { "Content-Type": "application/json" },
+      },
+    );
+
+    const { name, avatar } = responseData.data.data;
+
+    setuserStore({
+      name,
+      avatar,
+      role: "customer",
+    });
+
+    closeModal();
   } catch (error) {
     const errorMessage = getErrorMessage(error);
 

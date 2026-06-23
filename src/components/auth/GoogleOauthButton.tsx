@@ -1,6 +1,7 @@
 /// <reference types="google.accounts" />
 import { onMount, createSignal } from "solid-js";
 import api from "../../utils/axios";
+import { oauthLogin } from "../../service/auth/auth.service";
 
 export default function GoogleSignIn() {
   const [buttonRef, setbuttonRef] = createSignal<HTMLDivElement>();
@@ -11,7 +12,7 @@ export default function GoogleSignIn() {
 
     window.google.accounts.id.initialize({
       client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
-      callback: handleCredentialResponse,
+      callback: oauthLogin,
       auto_select: false,
       cancel_on_tap_outside: true,
     });
@@ -22,18 +23,6 @@ export default function GoogleSignIn() {
       size: "large",
     });
   });
-
-  const handleCredentialResponse = (
-    response: google.accounts.id.CredentialResponse,
-  ) => {
-    api.post(
-      "/auth/oauth",
-      JSON.stringify({ credential: response.credential }),
-      {
-        headers: { "Content-Type": "application/json" },
-      },
-    );
-  };
 
   return <div ref={setbuttonRef} class="my-2 w-full" />;
 }

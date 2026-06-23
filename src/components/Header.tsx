@@ -1,11 +1,23 @@
-import { createMemo, createSignal, Show } from "solid-js";
+import { createEffect, createMemo, createSignal, Show } from "solid-js";
 import { Button } from "@kobalte/core/button";
 import { useLocation } from "@solidjs/router";
 import { LoginModal } from "./auth/LoginModal";
 import { openModal } from "../store/modalStore";
+import { handleLogout, userStore } from "../store/userStore";
+import { AccountMenu } from "./Header/AccountMenu";
 
 export default function Header() {
   const [isOpen, setIsOpen] = createSignal(false);
+
+  const [isLoggedIn, setisLoggedIn] = createSignal(false);
+
+  createEffect(() => {
+    if (userStore.name == null) {
+      setisLoggedIn(false);
+    } else {
+      setisLoggedIn(true);
+    }
+  });
 
   // logic to change font of header
   const location = useLocation();
@@ -43,7 +55,13 @@ export default function Header() {
             </a>
           </nav>
 
-          <Button onclick={() => openModal("login")}>Log In</Button>
+          <Show when={!isLoggedIn()}>
+            <Button onclick={() => openModal("login")}>Log In</Button>
+          </Show>
+
+          <Show when={isLoggedIn()}>
+            <AccountMenu />
+          </Show>
 
           {/* Mobile Button on right */}
           <button
