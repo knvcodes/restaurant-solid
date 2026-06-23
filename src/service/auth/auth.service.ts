@@ -9,12 +9,19 @@ export const login = async (payload: LoginPayload) => {
   try {
     const { email, password } = payload;
 
-    const response = await api.post(`/auth/login`, {
+    const responseData = await api.post(`/auth/login`, {
       email,
       password,
     });
 
-    return response;
+    closeModal();
+
+    const { name, role } = responseData.data.data;
+
+    setuserStore({
+      name,
+      role,
+    });
   } catch (error) {
     const errorMessage = getErrorMessage(error);
 
@@ -36,12 +43,12 @@ export const oauthLogin = async (
       },
     );
 
-    const { name, avatar } = responseData.data.data;
+    const { name, avatar, role } = responseData.data.data;
 
     setuserStore({
       name,
       avatar,
-      role: "customer",
+      role,
     });
 
     closeModal();
@@ -64,15 +71,13 @@ export const register = async (payload: RegisterPayload) => {
       isOAuth = false,
     } = payload;
 
-    const response = await api.post(`/auth/register`, {
+    await api.post(`/auth/register`, {
       name,
       email,
       password,
       role,
       isOAuth,
     });
-
-    return response;
   } catch (error) {
     const errorMessage = getErrorMessage(error);
 

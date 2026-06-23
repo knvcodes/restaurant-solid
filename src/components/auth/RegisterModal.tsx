@@ -2,6 +2,7 @@ import { createSignal } from "solid-js";
 import CustomInput from "../custom/CustomInput";
 import { CustomModal } from "../custom/CustomModal";
 import { RegisterPayload } from "../../types";
+import { openModal } from "../../store/modalStore";
 
 interface RegisterModalProps {
   onClose: () => void;
@@ -38,6 +39,10 @@ export const RegisterModal = (props: RegisterModalProps) => {
     });
   };
 
+  const onLogin = () => {
+    openModal("login");
+  };
+
   return (
     <CustomModal
       title="Register"
@@ -57,6 +62,11 @@ export const RegisterModal = (props: RegisterModalProps) => {
           onChange={handlePassword}
           isPasswordVisible={isPasswordVisible()}
         />
+      </div>
+
+      <div class="mb-2 text-sm" onclick={onLogin}>
+        Already have an account?{" "}
+        <span class="text-blue-500 label cursor-pointer">Login</span>
       </div>
     </CustomModal>
   );

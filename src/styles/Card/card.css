@@ -1,6 +1,6 @@
 /* card component */
 .card {
-  @apply flex flex-1 h-[var(--card-h)] bg-transparent overflow-hidden sm:min-w-auto lg:min-w-[var(--card-w)] hover:shadow-xl;
+  @apply flex flex-auto h-[var(--card-h)] bg-transparent overflow-hidden sm:min-w-auto lg:min-w-[var(--card-w)] hover:shadow-xl;
 }
 
 .card-details {

@@ -1,16 +1,18 @@
 import { createEffect, createMemo, createSignal, Show } from "solid-js";
 import { Button } from "@kobalte/core/button";
-import { useLocation } from "@solidjs/router";
-import { LoginModal } from "./auth/LoginModal";
+import { useLocation, useNavigate } from "@solidjs/router";
 import { openModal } from "../store/modalStore";
-import { handleLogout, userStore } from "../store/userStore";
+import { userStore } from "../store/userStore";
 import { AccountMenu } from "./Header/AccountMenu";
 
 export default function Header() {
-  const [isOpen, setIsOpen] = createSignal(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
+  const [isOpen, setIsOpen] = createSignal(false);
   const [isLoggedIn, setisLoggedIn] = createSignal(false);
 
+  // login account ui logic
   createEffect(() => {
     if (userStore.name == null) {
       setisLoggedIn(false);
@@ -20,8 +22,6 @@ export default function Header() {
   });
 
   // logic to change font of header
-  const location = useLocation();
-
   // Determine classes based on route
   const textColor = createMemo(() => {
     switch (location.pathname) {
@@ -40,13 +40,15 @@ export default function Header() {
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16 relative">
           {/* Logo on left */}
-          <div class="flex-shrink-0 text-2xl font-bold ">MyBrand</div>
+          <div
+            class="flex-shrink-0 text-2xl font-bold cursor-pointer"
+            onclick={() => navigate("/")}
+          >
+            MyBrand
+          </div>
 
           {/* Desktop Nav (centered absolutely) */}
           <nav class="hidden md:flex gap-4">
-            <a href="/" class="hover:text-indigo-600 transition">
-              Home
-            </a>
             <a href="/restaurants" class="hover:text-indigo-600 transition">
               My Restaurants
             </a>
