@@ -2,6 +2,7 @@ import { createSignal } from "solid-js";
 import CustomInput from "../custom/CustomInput";
 import { CustomModal } from "../custom/CustomModal";
 import { LoginPayload } from "../../types";
+import GoogleSignIn from "./GoogleOauthButton";
 
 interface LoginModalProps {
   onClose: () => void;
@@ -60,6 +61,10 @@ export const LoginModal = (props: LoginModalProps) => {
         Need Account?{" "}
         <span class="text-blue-500 label cursor-pointer">Register here</span>
       </div>
+
+      <hr />
+      <GoogleSignIn />
+      <hr />
     </CustomModal>
   );
 };
