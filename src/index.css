@@ -11,6 +11,7 @@
 @import "./styles/DishCard/dishCard.css";
 @import "./styles/Modal/modal.css";
 @import "./styles/Toast/toast.css";
+@import "./styles/AccountMenu/accountMenu.css";
 
 @layer base {
   *,
@@ -60,6 +61,8 @@
 
   --toast-w: 500px;
   --toast-h: 70px;
+
+  --account-menu-min-w: 200px;
 
   --selection-col: gray-800;
 }
