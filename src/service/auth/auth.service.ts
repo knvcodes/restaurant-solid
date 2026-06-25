@@ -94,13 +94,15 @@ export const register = async (
       isOAuth = false,
     } = payload;
 
-    await api.post(`/auth/register`, {
+    const response = await api.post(`/auth/register`, {
       name,
       email,
       password,
       role,
       isOAuth,
     });
+
+    toastActions.pushToast(response.data.message, "Success");
 
     openModal("login");
   } catch (error) {
