@@ -24,7 +24,9 @@ export default function Home() {
         <img
           src={reservation}
           alt="Reservation"
-          class="w-[3200px] aspect-[16/9] object-contain"
+          class="max-w-full object-cover"
+          width={1000}
+          height={626}
           loading="lazy"
           decoding="async"
         />

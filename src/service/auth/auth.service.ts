@@ -46,8 +46,11 @@ export const login = async (
 
 export const oauthLogin = async (
   response: google.accounts.id.CredentialResponse,
+  setLoading: Setter<boolean>,
 ) => {
   try {
+    setLoading(true);
+
     const responseData = await api.post(
       "/auth/oauth",
       JSON.stringify({ credential: response.credential }),
@@ -71,11 +74,18 @@ export const oauthLogin = async (
     if (errorMessage) {
       showToastErrors(errorMessage);
     }
+  } finally {
+    setLoading(false);
   }
 };
 
-export const register = async (payload: RegisterPayload) => {
+export const register = async (
+  payload: RegisterPayload,
+  setLoading: Setter<boolean>,
+) => {
   try {
+    setLoading(true);
+
     const {
       email,
       password,
@@ -91,16 +101,25 @@ export const register = async (payload: RegisterPayload) => {
       role,
       isOAuth,
     });
+
+    openModal("login");
   } catch (error) {
     const errorMessage = getErrorMessage(error);
 
     if (errorMessage) {
       showToastErrors(errorMessage);
     }
+  } finally {
+    setLoading(false);
   }
 };
-export const forgotPassword = async (payload: ForgotPasswordPayload) => {
+export const forgotPassword = async (
+  payload: ForgotPasswordPayload,
+  setLoading: Setter<boolean>,
+) => {
   try {
+    setLoading(true);
+
     const { email } = payload;
 
     const response = await api.post(`/auth/forgotPassword`, {
@@ -115,11 +134,18 @@ export const forgotPassword = async (payload: ForgotPasswordPayload) => {
     if (errorMessage) {
       showToastErrors(errorMessage);
     }
+  } finally {
+    setLoading(false);
   }
 };
 
-export const resetPassword = async (payload: ResetPasswordPayload) => {
+export const resetPassword = async (
+  payload: ResetPasswordPayload,
+  setLoading: Setter<boolean>,
+) => {
   try {
+    setLoading(true);
+
     const { newPassword, confirmPassword, token } = payload;
 
     const response = await api.post(`/auth/resetPassword`, {
@@ -136,5 +162,7 @@ export const resetPassword = async (payload: ResetPasswordPayload) => {
     if (errorMessage) {
       showToastErrors(errorMessage);
     }
+  } finally {
+    setLoading(false);
   }
 };

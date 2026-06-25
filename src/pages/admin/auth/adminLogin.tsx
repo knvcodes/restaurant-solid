@@ -13,6 +13,8 @@ export default function AdminLogin() {
   const loginForm = createForm({
     schema: loginSchema,
   });
+
+  const [isLoading, setisLoading] = createSignal(false);
   const [isPasswordVisible, setisPasswordVisible] = createSignal(false);
 
   const togglePassword = () => {
@@ -20,11 +22,12 @@ export default function AdminLogin() {
   };
 
   const handleSubmit = async (values: LoginForm) => {
-    const response = await login({
-      ...values,
-    });
-
-    console.info("response:===>", response);
+    await login(
+      {
+        ...values,
+      },
+      setisLoading,
+    );
   };
 
   return (
@@ -33,30 +36,36 @@ export default function AdminLogin() {
         Welcome to Restaurant Management
       </div>
 
-      <CustomForm of={loginForm} title="Login" onSubmit={handleSubmit}>
-        <div class="my-4">
-          <CustomField
-            path={["email"]}
-            type="email"
-            label="Email"
-            of={loginForm}
-          />
+      <div class="lg:w-1/3 md:w-1/2 ">
+        <h2 class="heading-2">Login</h2>
 
-          <CustomField
-            path={["password"]}
-            type={isPasswordVisible() ? "text" : "password"}
-            label="Password"
-            of={loginForm}
-            togglePassword={togglePassword}
-            showEye={true}
-            isPasswordVisible={isPasswordVisible()}
-          />
-        </div>
+        <CustomForm of={loginForm} onSubmit={handleSubmit}>
+          <div class="my-4">
+            <CustomField
+              disabled={isLoading()}
+              path={["email"]}
+              type="email"
+              label="Email"
+              of={loginForm}
+            />
 
-        <Button class="w-full button-y" type="submit">
-          Log In
-        </Button>
-      </CustomForm>
+            <CustomField
+              disabled={isLoading()}
+              path={["password"]}
+              type={isPasswordVisible() ? "text" : "password"}
+              label="Password"
+              of={loginForm}
+              togglePassword={togglePassword}
+              showEye={true}
+              isPasswordVisible={isPasswordVisible()}
+            />
+          </div>
+
+          <Button class="w-full button-y" type="submit" disabled={isLoading()}>
+            Log In
+          </Button>
+        </CustomForm>
+      </div>
     </div>
   );
 }

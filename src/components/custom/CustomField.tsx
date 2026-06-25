@@ -14,11 +14,17 @@ type CustomFieldProps<TSchema extends FormSchema = FormSchema> = {
   togglePassword?: () => void;
   isPasswordVisible?: boolean;
   showEye?: boolean;
+  disabled?: boolean;
 };
 
 export const CustomField: Component<CustomFieldProps> = (props) => {
   const merged = mergeProps(
-    { type: "text", class: "inputField w-full", togglePassword: () => {} },
+    {
+      type: "text",
+      class: "inputField w-full",
+      togglePassword: () => {},
+      disabled: false,
+    },
     props,
   );
 
@@ -32,6 +38,7 @@ export const CustomField: Component<CustomFieldProps> = (props) => {
 
       <div class="relative">
         <input
+          disabled={merged.disabled}
           {...field.props}
           class="inputField"
           type={local.type}
@@ -59,7 +66,7 @@ export const CustomField: Component<CustomFieldProps> = (props) => {
         </Show>
       </div>
 
-      {field.errors && (
+      {field.errors && field.isTouched && (
         <div id={`${merged.path[0]}-error`} class="error-text">
           {field.errors[0]}
         </div>

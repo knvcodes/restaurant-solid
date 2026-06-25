@@ -15,4 +15,48 @@ export const loginSchema = v.object({
   ),
 });
 
-export type LoginForm = v.InferOutput<typeof loginSchema>;
+export const registerSchema = v.object({
+  email: v.pipe(v.string(), v.email("Invalid email address")),
+  name: v.pipe(
+    v.string(messages.register.error.nameRequired),
+    v.minLength(3, messages.register.error.nameMin),
+  ),
+  password: v.pipe(
+    v.string(messages.login.error.passwordRequired),
+    v.minLength(8, messages.login.error.passwordMin),
+    v.maxLength(128, messages.login.error.passwordMax),
+    v.regex(/[A-Z]/, messages.login.error.passwordUppercase),
+    v.regex(/[a-z]/, messages.login.error.passwordLowercase),
+    v.regex(/[0-9]/, messages.login.error.passwordNumber),
+    v.regex(/[^A-Za-z0-9]/, messages.login.error.passwordSpecial),
+  ),
+});
+
+export const forgotPasswordSchema = v.object({
+  email: v.pipe(v.string(), v.email("Invalid email address")),
+});
+
+export const resetPasswordSchema = v.object({
+  newPassword: v.pipe(
+    v.string(messages.login.error.passwordRequired),
+    v.minLength(8, messages.login.error.passwordMin),
+    v.maxLength(128, messages.login.error.passwordMax),
+    v.regex(/[A-Z]/, messages.login.error.passwordUppercase),
+    v.regex(/[a-z]/, messages.login.error.passwordLowercase),
+    v.regex(/[0-9]/, messages.login.error.passwordNumber),
+    v.regex(/[^A-Za-z0-9]/, messages.login.error.passwordSpecial),
+  ),
+  confirmPassword: v.pipe(
+    v.string(messages.login.error.passwordRequired),
+    v.minLength(8, messages.login.error.passwordMin),
+    v.maxLength(128, messages.login.error.passwordMax),
+    v.regex(/[A-Z]/, messages.login.error.passwordUppercase),
+    v.regex(/[a-z]/, messages.login.error.passwordLowercase),
+    v.regex(/[0-9]/, messages.login.error.passwordNumber),
+    v.regex(/[^A-Za-z0-9]/, messages.login.error.passwordSpecial),
+  ),
+  token: v.pipe(
+    v.string(messages.resetPassword.error.tokenRequired),
+    v.minLength(32, messages.resetPassword.error.tokenMin),
+  ),
+});

@@ -1,17 +1,20 @@
 import { Button } from "@kobalte/core/button";
 import { JSX, Show } from "solid-js";
 import { CloseIcon } from "../icons/Close";
+import { CustomButton } from "./CustomButton";
 
 interface CustomModalProps {
   title: string;
   description?: string;
   leftBtnText?: string;
-  rightBtnText: string;
-  rightBtnFn: () => void;
+  rightBtnText?: string;
+  rightBtnFn?: () => void;
   leftBtnFn?: () => void;
   onClose: () => void;
   children?: JSX.Element;
   customButtons?: JSX.Element;
+  invalid?: boolean;
+  isLoading?: boolean;
 }
 
 export function CustomModal(props: CustomModalProps) {
@@ -25,6 +28,7 @@ export function CustomModal(props: CustomModalProps) {
     onClose = () => {},
     children,
     customButtons,
+    isLoading = false,
   } = props;
   return (
     <div class="modal-overlay flex-center">
@@ -47,9 +51,13 @@ export function CustomModal(props: CustomModalProps) {
               {leftBtnText}
             </Button>
           </Show>
-          <Button class="w-full button-y" onclick={rightBtnFn}>
-            {rightBtnText}
-          </Button>
+
+          <CustomButton
+            label={rightBtnText || ""}
+            onClick={rightBtnFn}
+            disabled={props.invalid}
+            isLoading={props.isLoading}
+          />
         </Show>
         <Show when={customButtons}>{customButtons}</Show>
       </div>

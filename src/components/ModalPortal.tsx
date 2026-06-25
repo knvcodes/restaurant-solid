@@ -53,22 +53,25 @@ export default function ModalPortal() {
   };
 
   const handleRegistration = async (payload: RegisterPayload) => {
-    await register({
-      ...payload,
-      name: "john",
-      role: "customer",
-      isOAuth: false,
-    });
+    await register(
+      {
+        ...payload,
+      },
+      setisLoading,
+    );
   };
 
   const handleForgotPassword = async (payload: ForgotPasswordPayload) => {
-    await forgotPassword({
-      ...payload,
-    });
+    await forgotPassword(
+      {
+        ...payload,
+      },
+      setisLoading,
+    );
   };
 
   const handleResetPassword = async (payload: ResetPasswordPayload) => {
-    await resetPassword({ ...payload });
+    await resetPassword({ ...payload }, setisLoading);
     navigate("/", { replace: true });
   };
 
@@ -88,18 +91,21 @@ export default function ModalPortal() {
             <RegisterModal
               onClose={closeModal}
               onRegister={handleRegistration}
+              isLoading={isLoading()}
             />
           </Show>
           <Show when={modalStore.type === "forgotPassword"}>
             <ForgotPasswordModal
               onClose={closeModal}
               onForgotPassword={handleForgotPassword}
+              isLoading={isLoading()}
             />
           </Show>
           <Show when={modalStore.type === "resetPassword"}>
             <ResetPasswordModal
               onClose={closeModal}
               onResetPassword={handleResetPassword}
+              isLoading={isLoading()}
             />
           </Show>
         </div>

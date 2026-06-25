@@ -1,13 +1,17 @@
 import { createSignal } from "solid-js";
-import CustomInput from "../custom/CustomInput";
 import { CustomModal } from "../custom/CustomModal";
 import { ResetPasswordPayload } from "../../types";
-import { Button } from "@kobalte/core/button";
 import { openModal } from "../../store/modalStore";
 import { useNavigate, useParams } from "@solidjs/router";
+import { CustomButton } from "../custom/CustomButton";
+import { createForm, handleSubmit } from "@formisch/solid";
+import { resetPasswordSchema } from "../../validations/auth/auth";
+import { CustomField } from "../custom/CustomField";
+import { CustomForm } from "../custom/CustomForm";
 
 interface ResetPasswordModalProps {
   onClose: () => void;
+  isLoading: boolean;
   onResetPassword: (payload: ResetPasswordPayload) => void;
 }
 
@@ -16,32 +20,24 @@ export const ResetPasswordModal = (props: ResetPasswordModalProps) => {
   const navigate = useNavigate();
   const params = useParams();
 
-  const [newPassword, setnewPassword] = createSignal("");
-  const [confirmPassword, setconfirmPassword] = createSignal("");
+  const resetForm = createForm({
+    schema: resetPasswordSchema,
+    validate: "input",
+    revalidate: "input",
+    initialInput: {
+      token: params.id,
+    },
+  });
+
   const [isNewPasswordVisible, setisNewPasswordVisible] = createSignal(false);
   const [isConfirmPasswordVisible, setisConfirmPasswordVisible] =
     createSignal(false);
-
-  const handleNewPassword = (value: string) => {
-    setnewPassword(value);
-  };
-  const handleConfirmPassword = (value: string) => {
-    setconfirmPassword(value);
-  };
 
   const toggleNewPassword = () => {
     setisNewPasswordVisible((prev) => !prev);
   };
   const toggleConfirmPassword = () => {
     setisConfirmPasswordVisible((prev) => !prev);
-  };
-
-  const handleSubmit = () => {
-    onResetPassword({
-      token: params.id,
-      newPassword: newPassword(),
-      confirmPassword: confirmPassword(),
-    });
   };
 
   const handleGoBack = () => {
@@ -51,11 +47,15 @@ export const ResetPasswordModal = (props: ResetPasswordModalProps) => {
     });
   };
 
+  const formSubmit = handleSubmit(resetForm, (values) => {
+    onResetPassword({
+      ...values,
+    });
+  });
+
   return (
     <CustomModal
       title="Reset Password"
-      rightBtnFn={handleSubmit}
-      rightBtnText="ResetPassword"
       onClose={() => {
         onClose();
         navigate("/", {
@@ -64,9 +64,12 @@ export const ResetPasswordModal = (props: ResetPasswordModalProps) => {
       }}
       customButtons={
         <div>
-          <Button class="w-full button-y" onclick={handleSubmit}>
-            Reset Password
-          </Button>
+          <CustomButton
+            label="Reset Password"
+            isLoading={props.isLoading}
+            disabled={!resetForm.isValid}
+            onClick={formSubmit}
+          />
 
           <div
             onclick={handleGoBack}
@@ -78,26 +81,28 @@ export const ResetPasswordModal = (props: ResetPasswordModalProps) => {
       }
     >
       <div class="py-4">
-        <CustomInput
-          title="New Password"
-          type={isNewPasswordVisible() ? "text" : "password"}
-          value={newPassword()}
-          onChange={handleNewPassword}
-          placeholder="new password"
-          togglePassword={toggleNewPassword}
-          showEye={true}
-          isPasswordVisible={isNewPasswordVisible()}
-        />
-        <CustomInput
-          title="Confirm Password"
-          type={isConfirmPasswordVisible() ? "text" : "password"}
-          value={confirmPassword()}
-          onChange={handleConfirmPassword}
-          placeholder="confirm password"
-          togglePassword={toggleConfirmPassword}
-          showEye={true}
-          isPasswordVisible={isConfirmPasswordVisible()}
-        />
+        <CustomForm of={resetForm} onSubmit={formSubmit}>
+          <CustomField
+            label="New Password"
+            of={resetForm}
+            path={["newPassword"]}
+            type={isNewPasswordVisible() ? "text" : "password"}
+            placeholder="new password"
+            togglePassword={toggleNewPassword}
+            showEye={true}
+            isPasswordVisible={isNewPasswordVisible()}
+          />
+          <CustomField
+            label="Confirm Password"
+            of={resetForm}
+            path={["confirmPassword"]}
+            type={isConfirmPasswordVisible() ? "text" : "password"}
+            placeholder="confirm password"
+            togglePassword={toggleConfirmPassword}
+            showEye={true}
+            isPasswordVisible={isConfirmPasswordVisible()}
+          />
+        </CustomForm>
       </div>
     </CustomModal>
   );

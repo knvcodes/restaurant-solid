@@ -1,11 +1,15 @@
-import { createEffect, createSignal, Show } from "solid-js";
-import CustomInput from "../custom/CustomInput";
+import { createSignal, Show } from "solid-js";
 import { CustomModal } from "../custom/CustomModal";
 import { LoginPayload } from "../../types";
 import GoogleSignIn from "./GoogleOauthButton";
 import { Button } from "@kobalte/core/button";
 import { openModal } from "../../store/modalStore";
 import Spinner from "../loaders/Spinner";
+import { CustomField } from "../custom/CustomField";
+import { CustomForm } from "../custom/CustomForm";
+import { createForm, handleSubmit as formSubmit } from "@formisch/solid";
+import { loginSchema } from "../../validations/auth/auth";
+import { CustomButton } from "../custom/CustomButton";
 
 interface LoginModalProps {
   onClose: () => void;
@@ -17,29 +21,28 @@ interface LoginModalProps {
 export const LoginModal = (props: LoginModalProps) => {
   const { onClose, onLogin, onRegister } = props;
 
-  const [email, setemail] = createSignal("");
-  const [password, setpassword] = createSignal("");
+  const loginForm = createForm({
+    schema: loginSchema,
+    validate: "input",
+    revalidate: "input",
+  });
+
   const [isPasswordVisible, setisPasswordVisible] = createSignal(false);
-
-  const handleEmail = (value: string) => {
-    if (props.isLoading) return;
-    setemail(value);
-  };
-
-  const handlePassword = (value: string) => {
-    if (props.isLoading) return;
-    setpassword(value);
-  };
 
   const togglePassword = () => {
     if (props.isLoading) return;
     setisPasswordVisible((prev) => !prev);
   };
 
-  const handleSubmit = () => {
+  const loginSubmit = formSubmit(loginForm, (values) => {
     onLogin({
-      email: email(),
-      password: password(),
+      ...values,
+    });
+  });
+
+  const handleSubmit = (values: LoginPayload) => {
+    onLogin({
+      ...values,
     });
   };
 
@@ -51,7 +54,6 @@ export const LoginModal = (props: LoginModalProps) => {
   return (
     <CustomModal
       title="Login"
-      rightBtnFn={handleSubmit}
       rightBtnText="Login"
       onClose={onClose}
       customButtons={
@@ -62,11 +64,14 @@ export const LoginModal = (props: LoginModalProps) => {
           >
             Forgot Password
           </div>
-          <Button class="w-full button-y" onclick={handleSubmit}>
-            <Show when={!props.isLoading} fallback={<Spinner />}>
-              Login
-            </Show>
-          </Button>
+
+          <CustomButton
+            label="Login"
+            isLoading={props.isLoading}
+            disabled={!loginForm.isValid}
+            onClick={loginSubmit}
+          />
+
           <GoogleSignIn />
 
           <div
@@ -79,25 +84,28 @@ export const LoginModal = (props: LoginModalProps) => {
       }
     >
       <div class="py-4">
-        <CustomInput
-          disabled={props.isLoading}
-          title="email"
-          value={email()}
-          onChange={handleEmail}
-          placeholder="john@example.com"
-        />
+        <CustomForm of={loginForm} onSubmit={handleSubmit}>
+          <CustomField
+            path={["email"]}
+            of={loginForm}
+            disabled={props.isLoading}
+            label="email"
+            placeholder="john@example.com"
+          />
 
-        <CustomInput
-          disabled={props.isLoading}
-          title="password"
-          type={isPasswordVisible() ? "text" : "password"}
-          value={password()}
-          onChange={handlePassword}
-          placeholder="password"
-          togglePassword={togglePassword}
-          showEye={true}
-          isPasswordVisible={isPasswordVisible()}
-        />
+          <CustomField
+            path={["password"]}
+            of={loginForm}
+            disabled={props.isLoading}
+            label="password"
+            type={isPasswordVisible() ? "text" : "password"}
+            placeholder="password"
+            togglePassword={togglePassword}
+            showEye={true}
+            isPasswordVisible={isPasswordVisible()}
+          />
+          <button type="submit" style="display: none;" aria-hidden="true" />
+        </CustomForm>
       </div>
     </CustomModal>
   );

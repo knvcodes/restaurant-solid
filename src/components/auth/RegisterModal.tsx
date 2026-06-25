@@ -3,65 +3,79 @@ import CustomInput from "../custom/CustomInput";
 import { CustomModal } from "../custom/CustomModal";
 import { RegisterPayload } from "../../types";
 import { openModal } from "../../store/modalStore";
+import { createForm, handleSubmit } from "@formisch/solid";
+import { registerSchema } from "../../validations/auth/auth";
+import { CustomField } from "../custom/CustomField";
+import { CustomForm } from "../custom/CustomForm";
 
 interface RegisterModalProps {
   onClose: () => void;
   onRegister: (payload: RegisterPayload) => void;
+  isLoading: boolean;
 }
 
 export const RegisterModal = (props: RegisterModalProps) => {
   const { onClose, onRegister } = props;
 
-  const [name, setname] = createSignal("");
-  const [email, setemail] = createSignal("");
-  const [password, setpassword] = createSignal("");
+  const regsiterForm = createForm({
+    schema: registerSchema,
+    validate: "input",
+    revalidate: "input",
+  });
+
   const [isPasswordVisible, setisPasswordVisible] = createSignal(false);
-
-  const handleEmail = (value: string) => {
-    setemail(value);
-  };
-
-  const handlePassword = (value: string) => {
-    setpassword(value);
-  };
 
   const togglePassword = () => {
     setisPasswordVisible((prev) => !prev);
-  };
-
-  const handleSubmit = () => {
-    onRegister({
-      name: name(),
-      email: email(),
-      password: password(),
-      role: "customer",
-      isOAuth: false,
-    });
   };
 
   const onLogin = () => {
     openModal("login");
   };
 
+  const formSubmit = handleSubmit(regsiterForm, (values) => {
+    onRegister({
+      ...values,
+      role: "customer",
+      isOAuth: false,
+    });
+  });
+
   return (
     <CustomModal
       title="Register"
-      rightBtnFn={handleSubmit}
+      rightBtnFn={formSubmit}
       rightBtnText="Register"
+      isLoading={props.isLoading}
       onClose={onClose}
     >
       <div class="py-4">
-        <CustomInput title="email" value={email()} onChange={handleEmail} />
+        <CustomForm of={regsiterForm} onSubmit={formSubmit}>
+          <CustomField
+            label="name"
+            of={regsiterForm}
+            path={["name"]}
+            placeholder="name"
+          />
 
-        <CustomInput
-          title="password"
-          type={isPasswordVisible() ? "text" : "password"}
-          showEye={true}
-          value={password()}
-          togglePassword={togglePassword}
-          onChange={handlePassword}
-          isPasswordVisible={isPasswordVisible()}
-        />
+          <CustomField
+            type="email"
+            label="email"
+            of={regsiterForm}
+            path={["email"]}
+            placeholder="email"
+          />
+
+          <CustomField
+            path={["password"]}
+            of={regsiterForm}
+            label="password"
+            type={isPasswordVisible() ? "text" : "password"}
+            showEye={true}
+            togglePassword={togglePassword}
+            isPasswordVisible={isPasswordVisible()}
+          />
+        </CustomForm>
       </div>
 
       <div class="mb-2 text-sm" onclick={onLogin}>
