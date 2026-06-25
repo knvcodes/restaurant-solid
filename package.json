@@ -7,21 +7,27 @@
     "start": "vite",
     "dev": "vite",
     "build": "vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "check:gitconfig": "git config user.name && git config user.email"
   },
   "license": "MIT",
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.13",
+    "@types/sharp": "^0.31.1",
     "postcss": "^8.4.49",
+    "sharp": "^0.35.2",
     "tailwindcss": "^4.1.13",
     "vite": "^7.1.4",
     "vite-plugin-solid": "^2.11.8"
   },
   "dependencies": {
+    "@formisch/solid": "^0.13.0",
     "@kobalte/core": "^0.13.11",
     "@solidjs/router": "^0.15.3",
+    "@types/google.accounts": "^0.0.18",
     "axios": "^1.12.2",
     "solid-icons": "^1.1.0",
-    "solid-js": "^1.9.5"
+    "solid-js": "^1.9.5",
+    "zod": "^4.4.3"
   }
 }

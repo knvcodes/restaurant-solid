@@ -1,14 +1,18 @@
 @import "tailwindcss";
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
-@import "./styles/components.css";
-/*
-  The default border color has changed to `currentcolor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
 
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
+@import "./styles/utilities.css";
+@import "./styles/fonts.css";
+@import "./styles/fields.css";
+@import "./styles/effects.css";
+
+/* components */
+@import "./styles/Card/card.css";
+@import "./styles/DishCard/dishCard.css";
+@import "./styles/Modal/modal.css";
+@import "./styles/Toast/toast.css";
+@import "./styles/AccountMenu/accountMenu.css";
+
 @layer base {
   *,
   ::after,
@@ -20,14 +24,57 @@
 
   /* Apply Poppins globally */
   html {
-    font-family: "Poppins", ui-sans-serif, system-ui, -apple-system,
+    font-family:
+      "Poppins",
+      ui-sans-serif,
+      system-ui,
+      -apple-system,
       BlinkMacSystemFont;
+  }
+
+  /* disable autofull styling */
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active,
+  textarea:-webkit-autofill,
+  select:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px theme("colors.gray.800") inset !important;
+    -webkit-text-fill-color: theme("colors.gray.100") !important;
+    caret-color: theme("colors.gray.100") !important;
   }
 }
 
 /*custom css variables  */
 
 :root {
-  --card-w: 700px;
+  --card-w: 500px;
   --card-h: 450px;
+  --card-details-max-w: 300px;
+
+  --dish-card-max-w: 1000px;
+  --dish-card-h: 200px;
+
+  --modal-w: 500px;
+  --modal-h: 200px;
+
+  --toast-w: 500px;
+  --toast-h: 70px;
+
+  --account-menu-min-w: 200px;
+
+  --selection-col: gray-800;
+}
+
+.button {
+  background-color: blue;
+}
+
+/* utilities */
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

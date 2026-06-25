@@ -1,39 +1,56 @@
-import { createMemo, createSignal } from "solid-js";
+import { createEffect, createMemo, createSignal, Show } from "solid-js";
 import { Button } from "@kobalte/core/button";
-import { useLocation } from "@solidjs/router";
+import { useLocation, useNavigate } from "@solidjs/router";
+import { openModal } from "../store/modalStore";
+import { userStore } from "../store/userStore";
+import { AccountMenu } from "./Header/AccountMenu";
 
 export default function Header() {
-  const [isOpen, setIsOpen] = createSignal(false);
-
-  // logic to change font of header
+  const navigate = useNavigate();
   const location = useLocation();
 
+  const [isOpen, setIsOpen] = createSignal(false);
+  const [isLoggedIn, setisLoggedIn] = createSignal(false);
+
+  // login account ui logic
+  createEffect(() => {
+    if (userStore.name == null) {
+      setisLoggedIn(false);
+    } else {
+      setisLoggedIn(true);
+    }
+  });
+
+  // logic to change font of header
   // Determine classes based on route
   const textColor = createMemo(() => {
-    switch (location.pathname) {
-      case "/":
-        return "text-white";
-
-      default:
-        return "text-black border-b-1 w-full bg-white/80";
+    if (
+      location.pathname == "/" ||
+      location.pathname.includes("/resetPassword")
+    ) {
+      return "text-white";
+    } else {
+      return "text-black border-b-1 w-full bg-white/80";
     }
   });
 
   return (
     <header
-      class={`fixed left-1/2 -translate-x-1/2 min-w-[1200px] z-50 backdrop-blur-md ${textColor()}`}
+      class={`fixed left-1/2 -translate-x-1/2 min-w-[1200px] z-10 backdrop-blur-md ${textColor()}`}
     >
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16 relative">
           {/* Logo on left */}
-          <div class="flex-shrink-0 text-2xl font-bold ">MyBrand</div>
+          <div
+            class="flex-shrink-0 text-2xl font-bold cursor-pointer"
+            onclick={() => navigate("/")}
+          >
+            MyBrand
+          </div>
 
           {/* Desktop Nav (centered absolutely) */}
-          <nav class="hidden md:flex space-x-6  font-medium absolute left-1/2 -translate-x-1/2">
-            <a href="/" class="hover:text-indigo-600 transition">
-              Home
-            </a>
-            <a href="/myrestaurants" class="hover:text-indigo-600 transition">
+          <nav class="hidden md:flex gap-4">
+            <a href="/restaurants" class="hover:text-indigo-600 transition">
               My Restaurants
             </a>
             <a href="settings" class="hover:text-indigo-600 transition">
@@ -41,7 +58,15 @@ export default function Header() {
             </a>
           </nav>
 
-          <Button>Log In</Button>
+          <Show when={!isLoggedIn()}>
+            <Button onclick={() => openModal("login")} class="button-y">
+              Log In
+            </Button>
+          </Show>
+
+          <Show when={isLoggedIn()}>
+            <AccountMenu />
+          </Show>
 
           {/* Mobile Button on right */}
           <button
@@ -82,7 +107,7 @@ export default function Header() {
               Home
             </a>
             <a
-              href="myrestaurants"
+              href="restaurants"
               class="block hover:text-indigo-600 transition"
             >
               My Restaurants

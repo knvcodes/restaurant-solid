@@ -2,9 +2,12 @@ import { lazy } from "solid-js";
 import type { RouteDefinition } from "@solidjs/router";
 
 import Home from "./pages/home";
-import AboutData from "./pages/about.data";
-import MyRestaurants from "./pages/myRestaurants";
-import RestaurantDetails from "./pages/restaurantDetails";
+import Restaurants from "./pages/customers/restaurant/restaurants";
+import RestaurantDetails from "./pages/customers/restaurant/restaurantDetails";
+import AdminLogin from "./pages/admin/auth/adminLogin";
+
+// import ProtectedRoute from "./components/ProtectedRoutes";
+import AdminAuthLayout from "./layouts/AdminLayout";
 
 export const routes: RouteDefinition[] = [
   {
@@ -12,20 +15,39 @@ export const routes: RouteDefinition[] = [
     component: Home,
   },
   {
-    path: "/about",
-    component: lazy(() => import("./pages/about")),
-    load: AboutData,
+    path: "/resetPassword/:id",
+    component: Home,
+  },
+
+  // customer routes
+  {
+    path: "/restaurants",
+    component: lazy(() => import("./pages/customers/restaurant/restaurants")),
+    load: Restaurants,
   },
   {
-    path: "/myrestaurants",
-    component: lazy(() => import("./pages/myRestaurants")),
-    load: MyRestaurants,
-  },
-  {
-    path: "/myrestaurants/:slug",
-    component: lazy(() => import("./pages/restaurantDetails")),
+    path: "/restaurants/:slug",
+    component: lazy(
+      () => import("./pages/customers/restaurant/restaurantDetails"),
+    ),
     load: RestaurantDetails,
   },
+
+  // admin auth routes
+  {
+    path: "/admin",
+    component: AdminAuthLayout,
+    children: [
+      {
+        path: "/login",
+        component: lazy(() => import("./pages/admin/auth/adminLogin")),
+        load: AdminLogin,
+      },
+    ],
+  },
+
+  // Admin layout wrapper
+
   {
     path: "**",
     component: lazy(() => import("./errors/404")),

@@ -1,26 +1,24 @@
 import { createStore } from "solid-js/store";
 
+export type UserRole = "admin" | "owner" | "customer";
+
+type User = {
+  name: string | null;
+  role: UserRole | null;
+  avatar?: string | null;
+};
+
 // Initialize store
-const [store, setStore] = createStore({
-  userCount: 3,
-  users: [
-    {
-      id: 0,
-      username: "felix909",
-      location: "England",
-      loggedIn: false,
-    },
-    {
-      id: 1,
-      username: "tracy634",
-      location: "Canada",
-      loggedIn: true,
-    },
-    {
-      id: 2,
-      username: "johny123",
-      location: "India",
-      loggedIn: true,
-    },
-  ],
+export const [userStore, setuserStore] = createStore<User>({
+  name: null,
+  role: null,
+  avatar: null,
 });
+
+export const handleLogout = () => {
+  setuserStore({
+    name: null,
+    role: null,
+    avatar: null,
+  });
+};

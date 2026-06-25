@@ -1,0 +1,11 @@
+.verticle-list {
+  @apply flex flex-col;
+}
+
+.horizontal-list {
+  @apply flex;
+}
+
+.table-styled {
+  @apply grid grid-cols-[minmax(120px,auto)_1fr] gap-x-8 gap-y-2;
+}

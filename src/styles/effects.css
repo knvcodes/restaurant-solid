@@ -1,0 +1,17 @@
+/* effects */
+.gradient-glass {
+  @apply bg-gradient-to-b from-white/80 via-white/60 backdrop-blur-xs to-transparent;
+}
+
+.separator {
+  border: none;
+  background-color: hsl(240 5% 84%);
+}
+.separator[data-orientation="horizontal"] {
+  height: 1px;
+  width: 100%;
+}
+
+.loading {
+  @apply opacity-20;
+}

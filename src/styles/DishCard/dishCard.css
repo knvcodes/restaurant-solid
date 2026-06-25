@@ -1,0 +1,10 @@
+/* dish */
+
+.dish-card {
+  @apply py-4 mr-auto w-full max-w-[var(--dish-card-max-w)] h-[var(--dish-card-h)] flex gap-4;
+  @apply hover:translate-x-2 hover:bg-gray-200 px-4 hover:scale-105 hover:cursor-pointer;
+
+  .title {
+    @apply font-semibold text-2xl text-black mb-2;
+  }
+}
