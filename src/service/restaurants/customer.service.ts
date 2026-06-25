@@ -1,7 +1,7 @@
 import { toastActions } from "../../store/toastStore";
 import { IResponse, IRestaurant } from "../../types";
 import api from "../../utils/axios";
-import { getErrorMessage, isEmpty } from "../../utils/helpers";
+import { getErrorMessage, isEmpty, showToastErrors } from "../../utils/helpers";
 
 export const restaurantListing = async (search?: string) => {
   try {
@@ -18,7 +18,7 @@ export const restaurantListing = async (search?: string) => {
     const errorMessage = getErrorMessage(error);
 
     if (errorMessage) {
-      toastActions.show(errorMessage, "Failed");
+      showToastErrors(errorMessage);
     }
 
     return [];

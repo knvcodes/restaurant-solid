@@ -1,5 +1,3 @@
-import { FieldValues } from "@modular-forms/solid";
-
 export interface IResponse<T = unknown> {
   data: {
     message: string;
@@ -100,7 +98,17 @@ export interface RegisterPayload extends LoginPayload {
 
 // ADMIN
 
-export type LoginForm = FieldValues & {
+export type LoginForm = {
   email: string;
   password: string;
 };
+
+export interface ForgotPasswordPayload {
+  email: string;
+}
+
+export interface ResetPasswordPayload {
+  token: string;
+  newPassword: string;
+  confirmPassword: string;
+}

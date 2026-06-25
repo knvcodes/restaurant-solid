@@ -6,12 +6,16 @@ import Restaurants from "./pages/customers/restaurant/restaurants";
 import RestaurantDetails from "./pages/customers/restaurant/restaurantDetails";
 import AdminLogin from "./pages/admin/auth/adminLogin";
 
-import ProtectedRoute from "./components/ProtectedRoutes";
+// import ProtectedRoute from "./components/ProtectedRoutes";
 import AdminAuthLayout from "./layouts/AdminLayout";
 
 export const routes: RouteDefinition[] = [
   {
     path: "/",
+    component: Home,
+  },
+  {
+    path: "/resetPassword/:id",
     component: Home,
   },
 
@@ -39,10 +43,6 @@ export const routes: RouteDefinition[] = [
         component: lazy(() => import("./pages/admin/auth/adminLogin")),
         load: AdminLogin,
       },
-      // {
-      //   path: "/dashboard",
-      //   component: lazy(() => import("./pages/admin/dashboard")),
-      // },
     ],
   },
 

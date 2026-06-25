@@ -11,6 +11,7 @@ interface CustomModalProps {
   leftBtnFn?: () => void;
   onClose: () => void;
   children?: JSX.Element;
+  customButtons?: JSX.Element;
 }
 
 export function CustomModal(props: CustomModalProps) {
@@ -23,6 +24,7 @@ export function CustomModal(props: CustomModalProps) {
     leftBtnFn = () => {},
     onClose = () => {},
     children,
+    customButtons,
   } = props;
   return (
     <div class="modal-overlay flex-center">
@@ -39,14 +41,17 @@ export function CustomModal(props: CustomModalProps) {
         <Show when={children} fallback={<div>{description}</div>}>
           {children}
         </Show>
-        <Show when={leftBtnText}>
-          <Button class="w-full button-y" onclick={leftBtnFn}>
-            {leftBtnText}
+        <Show when={!customButtons}>
+          <Show when={leftBtnText}>
+            <Button class="w-full button-y" onclick={leftBtnFn}>
+              {leftBtnText}
+            </Button>
+          </Show>
+          <Button class="w-full button-y" onclick={rightBtnFn}>
+            {rightBtnText}
           </Button>
         </Show>
-        <Button class="w-full button-y" onclick={rightBtnFn}>
-          {rightBtnText}
-        </Button>
+        <Show when={customButtons}>{customButtons}</Show>
       </div>
     </div>
   );

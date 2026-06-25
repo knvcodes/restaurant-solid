@@ -3,6 +3,8 @@ import CustomInput from "../custom/CustomInput";
 import { CustomModal } from "../custom/CustomModal";
 import { LoginPayload } from "../../types";
 import GoogleSignIn from "./GoogleOauthButton";
+import { Button } from "@kobalte/core/button";
+import { openModal } from "../../store/modalStore";
 
 interface LoginModalProps {
   onClose: () => void;
@@ -36,35 +38,57 @@ export const LoginModal = (props: LoginModalProps) => {
     });
   };
 
+  const handleForgotPassword = () => {
+    openModal("forgotPassword");
+  };
+
   return (
     <CustomModal
       title="Login"
       rightBtnFn={handleSubmit}
       rightBtnText="Login"
       onClose={onClose}
+      customButtons={
+        <div>
+          <div
+            onclick={handleForgotPassword}
+            class="mb-2 text-sm text-blue-500 label cursor-pointer"
+          >
+            Forgot Password
+          </div>
+          <Button class="w-full button-y" onclick={handleSubmit}>
+            Login
+          </Button>
+          <GoogleSignIn />
+
+          <div
+            onclick={onRegister}
+            class="mt-4 text-sm text-center text-blue-500 label cursor-pointer"
+          >
+            Register
+          </div>
+        </div>
+      }
     >
       <div class="py-4">
-        <CustomInput title="email" value={email()} onChange={handleEmail} />
+        <CustomInput
+          title="email"
+          value={email()}
+          onChange={handleEmail}
+          placeholder="john@example.com"
+        />
 
         <CustomInput
           title="password"
           type={isPasswordVisible() ? "text" : "password"}
           value={password()}
           onChange={handlePassword}
+          placeholder="password"
           togglePassword={togglePassword}
           showEye={true}
           isPasswordVisible={isPasswordVisible()}
         />
       </div>
-
-      <div class="mb-2 text-sm" onclick={onRegister}>
-        Need Account?{" "}
-        <span class="text-blue-500 label cursor-pointer">Register here</span>
-      </div>
-
-      <hr />
-      <GoogleSignIn />
-      <hr />
     </CustomModal>
   );
 };

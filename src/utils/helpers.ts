@@ -1,3 +1,4 @@
+import { toastActions } from "../store/toastStore";
 import { DeliveryHours, IRestaurant } from "../types";
 
 export const generateRandomImageUrl = (length: number) => {
@@ -55,10 +56,21 @@ export function formatDateTime(timeString: string) {
   });
 }
 
-export const getErrorMessage = (error: unknown): string => {
+export const getErrorMessage = (error: unknown): string | string[] => {
   // Axios error
   if (typeof error === "object" && error !== null) {
     const err = error as any;
+
+    console.info("err.response:===>", err.response);
+
+    if (
+      Array.isArray(err.response?.data?.details) &&
+      err.response?.data?.details?.length > 0
+    ) {
+      return err.response?.data?.details.map(
+        (errorItem: { message: string }) => errorItem.message,
+      );
+    }
 
     // Server returned error response
     if (err.response?.data?.message || err.response?.data?.error) {
@@ -97,4 +109,16 @@ export const isEmpty = (value: unknown): boolean => {
   } catch {
     return true;
   }
+};
+
+export const showToastErrors = (errors: string | string[]) => {
+  if (Array.isArray(errors)) {
+    errors.forEach((error) => toastActions.show(error, "Validation failed"));
+  } else {
+    toastActions.show(errors, "Error");
+  }
+};
+
+export const generateRandomId = () => {
+  return crypto.randomUUID();
 };

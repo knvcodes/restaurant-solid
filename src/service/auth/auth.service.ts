@@ -1,9 +1,14 @@
-import { closeModal } from "../../store/modalStore";
+import { closeModal, openModal } from "../../store/modalStore";
 import { toastActions } from "../../store/toastStore";
-import { setuserStore, userStore } from "../../store/userStore";
-import { LoginPayload, RegisterPayload } from "../../types";
+import { setuserStore } from "../../store/userStore";
+import {
+  ForgotPasswordPayload,
+  LoginPayload,
+  RegisterPayload,
+  ResetPasswordPayload,
+} from "../../types";
 import api from "../../utils/axios";
-import { getErrorMessage } from "../../utils/helpers";
+import { getErrorMessage, showToastErrors } from "../../utils/helpers";
 
 export const login = async (payload: LoginPayload) => {
   try {
@@ -26,7 +31,7 @@ export const login = async (payload: LoginPayload) => {
     const errorMessage = getErrorMessage(error);
 
     if (errorMessage) {
-      toastActions.show(errorMessage, "Failed");
+      showToastErrors(errorMessage);
     }
   }
 };
@@ -56,7 +61,7 @@ export const oauthLogin = async (
     const errorMessage = getErrorMessage(error);
 
     if (errorMessage) {
-      toastActions.show(errorMessage, "Failed");
+      showToastErrors(errorMessage);
     }
   }
 };
@@ -82,7 +87,46 @@ export const register = async (payload: RegisterPayload) => {
     const errorMessage = getErrorMessage(error);
 
     if (errorMessage) {
-      toastActions.show(errorMessage, "Failed");
+      showToastErrors(errorMessage);
+    }
+  }
+};
+export const forgotPassword = async (payload: ForgotPasswordPayload) => {
+  try {
+    const { email } = payload;
+
+    const response = await api.post(`/auth/forgotPassword`, {
+      email,
+    });
+
+    toastActions.show(response.data.message, "Success");
+    closeModal();
+  } catch (error) {
+    const errorMessage = getErrorMessage(error);
+
+    if (errorMessage) {
+      showToastErrors(errorMessage);
+    }
+  }
+};
+
+export const resetPassword = async (payload: ResetPasswordPayload) => {
+  try {
+    const { newPassword, confirmPassword, token } = payload;
+
+    const response = await api.post(`/auth/resetPassword`, {
+      newPassword,
+      token,
+      confirmPassword,
+    });
+
+    toastActions.show(response.data.message, "Success");
+    openModal("login");
+  } catch (error) {
+    const errorMessage = getErrorMessage(error);
+
+    if (errorMessage) {
+      showToastErrors(errorMessage);
     }
   }
 };

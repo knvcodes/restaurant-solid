@@ -3,10 +3,36 @@ import { createEffect, Show } from "solid-js";
 import { closeModal, modalStore, openModal } from "../store/modalStore";
 import { LoginModal } from "./auth/LoginModal";
 import { RegisterModal } from "./auth/RegisterModal";
-import { LoginPayload, RegisterPayload } from "../types";
-import { login, register } from "../service/auth/auth.service";
+import {
+  ForgotPasswordPayload,
+  LoginPayload,
+  RegisterPayload,
+  ResetPasswordPayload,
+} from "../types";
+import {
+  forgotPassword,
+  login,
+  register,
+  resetPassword,
+} from "../service/auth/auth.service";
+import { useLocation, useNavigate, useParams } from "@solidjs/router";
+import { ForgotPasswordModal } from "./auth/ForgotPasswordModal";
+import { ResetPasswordModal } from "./auth/ResetPasswordModal";
 
 export default function ModalPortal() {
+  const location = useLocation();
+  const params = useParams();
+  const id = params.id;
+  const navigate = useNavigate();
+
+  // auto open resetpassword modal on path
+  createEffect(() => {
+    if (location.pathname.includes("resetPassword")) {
+      openModal("resetPassword");
+    }
+  });
+
+  // remove overflow
   createEffect(() => {
     if (modalStore.type) {
       document.body.style.overflow = "hidden";
@@ -33,6 +59,17 @@ export default function ModalPortal() {
     });
   };
 
+  const handleForgotPassword = async (payload: ForgotPasswordPayload) => {
+    await forgotPassword({
+      ...payload,
+    });
+  };
+
+  const handleResetPassword = async (payload: ResetPasswordPayload) => {
+    await resetPassword({ ...payload });
+    navigate("/", { replace: true });
+  };
+
   return (
     <Show when={modalStore.type}>
       <div class="modal-overlay" onClick={closeModal}>
@@ -48,6 +85,18 @@ export default function ModalPortal() {
             <RegisterModal
               onClose={closeModal}
               onRegister={handleRegistration}
+            />
+          </Show>
+          <Show when={modalStore.type === "forgotPassword"}>
+            <ForgotPasswordModal
+              onClose={closeModal}
+              onForgotPassword={handleForgotPassword}
+            />
+          </Show>
+          <Show when={modalStore.type === "resetPassword"}>
+            <ResetPasswordModal
+              onClose={closeModal}
+              onResetPassword={handleResetPassword}
             />
           </Show>
         </div>

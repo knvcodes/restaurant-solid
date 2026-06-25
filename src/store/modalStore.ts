@@ -1,6 +1,11 @@
 import { createStore } from "solid-js/store";
 
-export type ModalType = "login" | "register" | "forgotPassword" | null;
+export type ModalType =
+  | "login"
+  | "register"
+  | "forgotPassword"
+  | "resetPassword"
+  | null;
 
 interface ModalState {
   type: ModalType;

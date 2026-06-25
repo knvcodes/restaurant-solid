@@ -24,12 +24,13 @@ export default function Header() {
   // logic to change font of header
   // Determine classes based on route
   const textColor = createMemo(() => {
-    switch (location.pathname) {
-      case "/":
-        return "text-white";
-
-      default:
-        return "text-black border-b-1 w-full bg-white/80";
+    if (
+      location.pathname == "/" ||
+      location.pathname.includes("/resetPassword")
+    ) {
+      return "text-white";
+    } else {
+      return "text-black border-b-1 w-full bg-white/80";
     }
   });
 
