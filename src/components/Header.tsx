@@ -59,7 +59,9 @@ export default function Header() {
           </nav>
 
           <Show when={!isLoggedIn()}>
-            <Button onclick={() => openModal("login")}>Log In</Button>
+            <Button onclick={() => openModal("login")} class="button-y">
+              Log In
+            </Button>
           </Show>
 
           <Show when={isLoggedIn()}>

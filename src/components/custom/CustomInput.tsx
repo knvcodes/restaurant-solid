@@ -13,6 +13,7 @@ export default function CustomInput(props: {
   togglePassword?: () => void;
   isPasswordVisible?: boolean;
   showEye?: boolean;
+  disabled?: boolean;
 }) {
   const {
     placeholder = "",
@@ -21,6 +22,7 @@ export default function CustomInput(props: {
     value = "",
     showEye = false,
     title,
+    disabled = false,
   } = props;
 
   return (
@@ -28,6 +30,7 @@ export default function CustomInput(props: {
       {title && <div>{title}</div>}
       <div class="relative">
         <input
+          disabled={disabled}
           type={props.type || "text"}
           value={value}
           placeholder={placeholder || ""}

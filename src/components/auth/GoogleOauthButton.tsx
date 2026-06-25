@@ -1,6 +1,5 @@
 /// <reference types="google.accounts" />
 import { onMount, createSignal } from "solid-js";
-import api from "../../utils/axios";
 import { oauthLogin } from "../../service/auth/auth.service";
 
 export default function GoogleSignIn() {
@@ -15,6 +14,7 @@ export default function GoogleSignIn() {
       callback: oauthLogin,
       auto_select: false,
       cancel_on_tap_outside: true,
+      itp_support: true,
     });
 
     window.google.accounts.id.renderButton(el, {

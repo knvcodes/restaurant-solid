@@ -1,15 +1,17 @@
-import { createSignal } from "solid-js";
+import { createEffect, createSignal, Show } from "solid-js";
 import CustomInput from "../custom/CustomInput";
 import { CustomModal } from "../custom/CustomModal";
 import { LoginPayload } from "../../types";
 import GoogleSignIn from "./GoogleOauthButton";
 import { Button } from "@kobalte/core/button";
 import { openModal } from "../../store/modalStore";
+import Spinner from "../loaders/Spinner";
 
 interface LoginModalProps {
   onClose: () => void;
   onLogin: (payload: LoginPayload) => void;
   onRegister: () => void;
+  isLoading: boolean;
 }
 
 export const LoginModal = (props: LoginModalProps) => {
@@ -20,14 +22,17 @@ export const LoginModal = (props: LoginModalProps) => {
   const [isPasswordVisible, setisPasswordVisible] = createSignal(false);
 
   const handleEmail = (value: string) => {
+    if (props.isLoading) return;
     setemail(value);
   };
 
   const handlePassword = (value: string) => {
+    if (props.isLoading) return;
     setpassword(value);
   };
 
   const togglePassword = () => {
+    if (props.isLoading) return;
     setisPasswordVisible((prev) => !prev);
   };
 
@@ -39,6 +44,7 @@ export const LoginModal = (props: LoginModalProps) => {
   };
 
   const handleForgotPassword = () => {
+    if (props.isLoading) return;
     openModal("forgotPassword");
   };
 
@@ -57,7 +63,9 @@ export const LoginModal = (props: LoginModalProps) => {
             Forgot Password
           </div>
           <Button class="w-full button-y" onclick={handleSubmit}>
-            Login
+            <Show when={!props.isLoading} fallback={<Spinner />}>
+              Login
+            </Show>
           </Button>
           <GoogleSignIn />
 
@@ -72,6 +80,7 @@ export const LoginModal = (props: LoginModalProps) => {
     >
       <div class="py-4">
         <CustomInput
+          disabled={props.isLoading}
           title="email"
           value={email()}
           onChange={handleEmail}
@@ -79,6 +88,7 @@ export const LoginModal = (props: LoginModalProps) => {
         />
 
         <CustomInput
+          disabled={props.isLoading}
           title="password"
           type={isPasswordVisible() ? "text" : "password"}
           value={password()}

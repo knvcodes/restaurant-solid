@@ -1,5 +1,5 @@
 // components/ModalPortal.tsx
-import { createEffect, Show } from "solid-js";
+import { createEffect, createSignal, Show } from "solid-js";
 import { closeModal, modalStore, openModal } from "../store/modalStore";
 import { LoginModal } from "./auth/LoginModal";
 import { RegisterModal } from "./auth/RegisterModal";
@@ -25,6 +25,8 @@ export default function ModalPortal() {
   const id = params.id;
   const navigate = useNavigate();
 
+  const [isLoading, setisLoading] = createSignal(false);
+
   // auto open resetpassword modal on path
   createEffect(() => {
     if (location.pathname.includes("resetPassword")) {
@@ -47,7 +49,7 @@ export default function ModalPortal() {
   };
 
   const handleLogin = async (payload: LoginPayload) => {
-    await login(payload);
+    await login(payload, setisLoading);
   };
 
   const handleRegistration = async (payload: RegisterPayload) => {
@@ -79,6 +81,7 @@ export default function ModalPortal() {
               onClose={closeModal}
               onLogin={handleLogin}
               onRegister={onRegister}
+              isLoading={isLoading()}
             />
           </Show>
           <Show when={modalStore.type === "register"}>

@@ -1,3 +1,4 @@
+import { Setter } from "solid-js";
 import { closeModal, openModal } from "../../store/modalStore";
 import { toastActions } from "../../store/toastStore";
 import { setuserStore } from "../../store/userStore";
@@ -10,9 +11,14 @@ import {
 import api from "../../utils/axios";
 import { getErrorMessage, showToastErrors } from "../../utils/helpers";
 
-export const login = async (payload: LoginPayload) => {
+export const login = async (
+  payload: LoginPayload,
+  setLoading: Setter<boolean>,
+) => {
   try {
     const { email, password } = payload;
+
+    setLoading(true);
 
     const responseData = await api.post(`/auth/login`, {
       email,
@@ -33,6 +39,8 @@ export const login = async (payload: LoginPayload) => {
     if (errorMessage) {
       showToastErrors(errorMessage);
     }
+  } finally {
+    setLoading(false);
   }
 };
 
