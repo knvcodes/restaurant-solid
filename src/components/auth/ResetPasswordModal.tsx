@@ -53,7 +53,7 @@ export const ResetPasswordModal = (props: ResetPasswordModalProps) => {
 
   return (
     <CustomModal
-      title="ResetPassword"
+      title="Reset Password"
       rightBtnFn={handleSubmit}
       rightBtnText="ResetPassword"
       onClose={() => {
