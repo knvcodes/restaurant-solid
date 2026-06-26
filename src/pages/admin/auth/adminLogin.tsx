@@ -1,13 +1,12 @@
 import { createSignal } from "solid-js";
-import { Button } from "@kobalte/core/button";
 
 import "../../style.css";
 import { CustomForm } from "../../../components/custom/CustomForm";
-import { LoginForm } from "../../../types";
 import { CustomField } from "../../../components/custom/CustomField";
 import { loginSchema } from "../../../validations/auth/auth";
-import { createForm } from "@formisch/solid";
+import { createForm, handleSubmit } from "@formisch/solid";
 import { login } from "../../../service/auth/auth.service";
+import { CustomButton } from "../../../components/custom/CustomButton";
 
 export default function AdminLogin() {
   const loginForm = createForm({
@@ -21,14 +20,14 @@ export default function AdminLogin() {
     setisPasswordVisible((prev) => !prev);
   };
 
-  const handleSubmit = async (values: LoginForm) => {
+  const formSubmit = handleSubmit(loginForm, async (values) => {
     await login(
       {
         ...values,
       },
       setisLoading,
     );
-  };
+  });
 
   return (
     <div class="p-4 w-full flex-center flex-col align-start gap-4">
@@ -39,7 +38,7 @@ export default function AdminLogin() {
       <div class="lg:w-1/3 md:w-1/2 ">
         <h2 class="heading-2">Login</h2>
 
-        <CustomForm of={loginForm} onSubmit={handleSubmit}>
+        <CustomForm of={loginForm} onSubmit={formSubmit}>
           <div class="my-4">
             <CustomField
               disabled={isLoading()}
@@ -61,9 +60,12 @@ export default function AdminLogin() {
             />
           </div>
 
-          <Button class="w-full button-y" type="submit" disabled={isLoading()}>
-            Log In
-          </Button>
+          <CustomButton
+            label="Log In"
+            disabled={!loginForm.isValid}
+            isLoading={isLoading()}
+            onClick={formSubmit}
+          />
         </CustomForm>
       </div>
     </div>

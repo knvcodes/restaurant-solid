@@ -122,3 +122,19 @@ export const showToastErrors = (errors: string | string[]) => {
 export const generateRandomId = () => {
   return crypto.randomUUID();
 };
+
+// js data helpers
+
+export const addObjToArray = <T>(arr: T[], obj: T, prop: keyof T): T[] => {
+  const exists = arr.find((item) => item[prop] === obj[prop]);
+
+  return exists ? arr : [...arr, obj];
+};
+
+export const removeObjFromArray = <T>(
+  arr: T[],
+  value: string | number,
+  prop: keyof T,
+): T[] => {
+  return arr.filter((item) => item[prop] !== value);
+};
