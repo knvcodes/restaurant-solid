@@ -1,0 +1,9 @@
+/* dish */
+
+.dish-modal {
+  @apply max-w-3xl bg-white;
+
+  .label {
+    @apply bg-amber-500 rounded-md px-2;
+  }
+}

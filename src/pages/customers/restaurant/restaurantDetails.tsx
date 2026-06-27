@@ -14,7 +14,6 @@ import { FaSolidStar } from "solid-icons/fa";
 import { FiStar } from "solid-icons/fi";
 import { foodbg } from "../../../assets/assets";
 import DishCard from "../../../components/restaurants/DishCard";
-import { openModal } from "../../../store/modalStore";
 
 export default function RestaurantDetails() {
   const params = useParams();

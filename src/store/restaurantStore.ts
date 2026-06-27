@@ -1,9 +1,15 @@
 import { createStore } from "solid-js/store";
-import { IDish } from "../types";
+import { IDish, IServing } from "../types";
 import { addObjToArray, removeObjFromArray } from "../utils/helpers";
 
+interface OrderDish extends Omit<IDish, "serving"> {
+  serving_id: string;
+  serving_quantity: number;
+  serving: IServing;
+}
+
 interface RestaurantState {
-  dishes: IDish[];
+  dishes: OrderDish[];
   selectedDish: IDish | null;
 }
 
@@ -14,9 +20,27 @@ export const [restaurantStore, setrestaurantStore] =
     selectedDish: null,
   });
 
-export const addDish = (dish: IDish) =>
+const handleAddingDish = (dish: OrderDish, arr: OrderDish[]) => {
+  const findDish = arr.find(
+    (dishItem) => dishItem.serving_id == dish.serving_id,
+  );
+
+  if (findDish) {
+    return arr.map((dishItem) => {
+      if (dishItem.id == findDish.id) {
+        return { ...dishItem, serving_quantity: dishItem.serving_quantity + 1 };
+      } else {
+        return dishItem;
+      }
+    });
+  } else {
+    return [...arr, dish];
+  }
+};
+
+export const addDish = (dish: OrderDish) =>
   setrestaurantStore({
-    dishes: addObjToArray(restaurantStore.dishes, dish, "id"),
+    dishes: handleAddingDish(dish, restaurantStore.dishes),
   });
 
 export const selectDish = (dish: IDish) =>
