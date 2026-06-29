@@ -4,6 +4,8 @@ import { useLocation, useNavigate } from "@solidjs/router";
 import { openModal } from "../store/modalStore";
 import { userStore } from "../store/userStore";
 import { AccountMenu } from "./Header/AccountMenu";
+import { FaSolidCartShopping } from "solid-icons/fa";
+import { VsCircleFilled, VsCircleSmallFilled } from "solid-icons/vs";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -65,59 +67,16 @@ export default function Header() {
           </Show>
 
           <Show when={isLoggedIn()}>
-            <AccountMenu />
+            <div class="horizontal-list items-center gap-12">
+              <div class="relative">
+                <VsCircleFilled class="absolute -right-4 -top-2" color="red" />
+                <FaSolidCartShopping font-size="20" />
+              </div>
+              <AccountMenu />
+            </div>
           </Show>
-
-          {/* Mobile Button on right */}
-          <button
-            class="md:hidden inline-flex items-center justify-center p-2 rounded-md  hover:text-indigo-600 focus:outline-none"
-            onClick={() => setIsOpen(!isOpen())}
-          >
-            <svg
-              class="h-6 w-6"
-              stroke="currentColor"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              {isOpen() ? (
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              ) : (
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              )}
-            </svg>
-          </button>
         </div>
       </div>
-
-      {/* Mobile Menu */}
-      {isOpen() && (
-        <div class="md:hidden bg-white border-t border-gray-200">
-          <nav class="px-4 py-3 space-y-2 text-gray-700 font-medium">
-            <a href="/" class="block hover:text-indigo-600 transition">
-              Home
-            </a>
-            <a
-              href="restaurants"
-              class="block hover:text-indigo-600 transition"
-            >
-              My Restaurants
-            </a>
-            <a href="settings" class="block hover:text-indigo-600 transition">
-              Settings
-            </a>
-          </nav>
-        </div>
-      )}
     </header>
   );
 }

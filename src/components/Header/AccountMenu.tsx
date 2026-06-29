@@ -31,7 +31,7 @@ export function AccountMenu(props: AccountMenuProps) {
       >
         <Show
           when={userStore.avatar}
-          fallback={<FaSolidCircleUser font-size="30" />}
+          fallback={<FaSolidCircleUser font-size="20" />}
         >
           <img
             src={userStore.avatar ?? restaurant_placeholder}

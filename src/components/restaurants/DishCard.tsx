@@ -2,17 +2,23 @@ import { For } from "solid-js";
 import { IDish } from "../../types";
 import { generateRandomImageUrl } from "../../utils/helpers";
 import { randomDishUrls } from "../../utils/staticData";
+import { openModal } from "../../store/modalStore";
+import { selectDish } from "../../store/restaurantStore";
 
 interface DishCardProps {
   dish: IDish;
-  onClick?: () => void;
 }
 
 export default function DishCard(props: DishCardProps) {
-  const { dish, onClick = () => {} } = props;
+  const { dish } = props;
+
+  const handleDishClick = () => {
+    openModal("dish");
+    selectDish(dish);
+  };
 
   return (
-    <div class="dish-card" onclick={onClick}>
+    <div class="dish-card" onclick={handleDishClick}>
       <div>
         <img
           src={randomDishUrls[generateRandomImageUrl(randomDishUrls.length)]}
@@ -28,7 +34,7 @@ export default function DishCard(props: DishCardProps) {
           <For each={dish.serving}>
             {(serving) => (
               <div class="verticle-list">
-                <div>{serving.title}</div>
+                <div>{serving.type}</div>
               </div>
             )}
           </For>

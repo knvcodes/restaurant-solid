@@ -8,13 +8,19 @@ interface ButtonProps {
   classes?: string;
   onClick?: () => void;
   isLoading?: boolean;
+  extraClasses?: string;
 }
 
 export function CustomButton(props: ButtonProps) {
-  const { label = "Default", onClick, classes = "w-full button-y" } = props;
+  const {
+    label = "Default",
+    onClick,
+    classes = "w-full button-y",
+    extraClasses,
+  } = props;
   return (
     <Button
-      class={`${classes} ${props.disabled && "opacity-50"}`}
+      class={`${classes} ${props.disabled && "opacity-50"} ${extraClasses}`}
       onclick={onClick}
       disabled={props.disabled || props.isLoading}
     >

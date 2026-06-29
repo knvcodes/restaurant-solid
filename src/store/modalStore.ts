@@ -5,11 +5,11 @@ export type ModalType =
   | "register"
   | "forgotPassword"
   | "resetPassword"
+  | "dish"
   | null;
 
 interface ModalState {
   type: ModalType;
-  props?: Record<string, any>;
 }
 
 // Initialize store
@@ -17,7 +17,6 @@ export const [modalStore, setmodalStore] = createStore<ModalState>({
   type: null,
 });
 
-export const openModal = (type: ModalType, props?: Record<string, any>) =>
-  setmodalStore({ type, props });
+export const openModal = (type: ModalType) => setmodalStore({ type });
 
-export const closeModal = () => setmodalStore({ type: null, props: undefined });
+export const closeModal = () => setmodalStore({ type: null });

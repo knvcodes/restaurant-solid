@@ -9,6 +9,8 @@
 /* components */
 @import "./styles/Card/card.css";
 @import "./styles/DishCard/dishCard.css";
+@import "./styles/DishModal/dishModal.css";
+@import "./styles/CustomTooltip/customTooltip.css";
 @import "./styles/Modal/modal.css";
 @import "./styles/Toast/toast.css";
 @import "./styles/AccountMenu/accountMenu.css";

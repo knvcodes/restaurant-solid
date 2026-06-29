@@ -9,7 +9,7 @@ const App: ParentComponent = (props) => {
   const isAdminRoute = location.pathname.startsWith("/admin");
 
   return (
-    <div class="flex flex-col relative min-h-screen bg-white">
+    <div class="flex flex-col relative min-h-screen bg-white app-class">
       {!isAdminRoute && <Header />}
       <main class="h-full">
         <Suspense>{props.children}</Suspense>

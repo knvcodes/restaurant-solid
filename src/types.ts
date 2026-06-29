@@ -29,8 +29,8 @@ export interface IRestaurant {
   dishes: IDish[];
 }
 
-interface IServing {
-  title: string;
+export interface IServing {
+  type: string;
   value: number;
   price: number;
   currency: string;

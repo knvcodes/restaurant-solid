@@ -53,11 +53,11 @@ export default function Restaurants() {
           <SearchBar onChange={onSearchChange} />
 
           {/* listing */}
-          <div class="grid xl:grid-cols-2 lg:grid-cols-1 gap-4">
-            <Show
-              when={restaurants().length > 0}
-              fallback={<RestaurantListingSkeleton />}
-            >
+          <Show
+            when={restaurants().length > 0}
+            fallback={<RestaurantListingSkeleton />}
+          >
+            <div class="grid xl:grid-cols-2 lg:grid-cols-1 gap-4">
               <For each={restaurants()}>
                 {(restaurantItem) => (
                   <Card
@@ -70,8 +70,8 @@ export default function Restaurants() {
                   />
                 )}
               </For>
-            </Show>
-          </div>
+            </div>
+          </Show>
         </div>
       </div>
     </div>
