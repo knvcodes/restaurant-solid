@@ -1,23 +1,47 @@
-import { createEffect, createMemo, For, Show } from "solid-js";
+import { createEffect, createMemo, createSignal, For, Show } from "solid-js";
 import { closeModal, modalStore } from "../../store/modalStore";
-import { addDish, restaurantStore } from "../../store/restaurantStore";
+import {
+  addDish,
+  deleteDish,
+  removeRestaurantDishes,
+  restaurantStore,
+} from "../../store/restaurantStore";
 import { CustomButton } from "../custom/CustomButton";
 import { generateRandomImageUrl } from "../../utils/helpers";
 import { randomDishUrls } from "../../utils/staticData";
 import CustomTooltip from "../custom/CustomTooltip";
 import { IServing } from "../../types";
+import { FaSolidMinus, FaSolidPlus } from "solid-icons/fa";
 
 export default function DishModal() {
-  createEffect(() => {
-    console.info(
-      "restaurantStore.selectedDish:===>",
-      restaurantStore.selectedDish,
-      restaurantStore.dishes,
-    );
-  });
-
   const dishItem = createMemo(() => restaurantStore.selectedDish);
 
+  // mapping to show serving selection
+  const selectedDishIds = createMemo(() =>
+    restaurantStore.dishes.length > 0
+      ? restaurantStore.dishes.map((dishItem) => dishItem.serving_id)
+      : [],
+  );
+
+  // obj for selection mapping
+  const [selectedDishes, setselectedDishes] = createSignal<
+    Record<string, number>
+  >({});
+
+  createEffect(() => {
+    if (restaurantStore.dishes.length > 0) {
+      let newDishObj: Record<string, number> = {};
+      restaurantStore.dishes.forEach((dishItem) => {
+        newDishObj[dishItem.serving_id] = dishItem.serving_quantity;
+      });
+
+      setselectedDishes(newDishObj);
+    } else {
+      setselectedDishes({});
+    }
+  });
+
+  // add/remove dish functions
   const handleDish = (serveItem: IServing) => {
     const dish = dishItem();
 
@@ -31,10 +55,14 @@ export default function DishModal() {
     }
   };
 
+  const handleRemoveDish = (serving_id: string) => {
+    deleteDish(serving_id);
+  };
+
   return (
     <Show when={modalStore.type == "dish"}>
       <Show when={dishItem()} keyed>
-        {({ name, description, serving, metadata }) => (
+        {({ name, description, serving, metadata, restaurantId }) => (
           <div
             class="modal-overlay flex-center"
             onclick={(e) => e.stopPropagation()}
@@ -56,26 +84,55 @@ export default function DishModal() {
                     <div> Prep Time: {metadata.prepTimeMinutes} mins</div>
                   </CustomTooltip>
                 </div>
-                <div class="description">{description}</div>
+                <div class="description mb-4">{description}</div>
                 <div class="horizontal-list gap-2 my-4">
                   <For each={serving}>
                     {(serveItem) => (
                       <div
-                        class="border-1 pt-4 rounded-md cursor-pointer hover:bg-amber-100"
+                        class={`serve-item`}
                         onclick={() => handleDish(serveItem)}
                       >
-                        <div class="px-4 font-semibold">{serveItem.type}</div>
-                        <div class="px-4 italic mb-4 opacity-70">
-                          Serves: {serveItem.value}
-                        </div>
-                        <div class="ml-auto px-2 py-2 text-center font-bold text-white bg-amber-400">
+                        <div class="type">{serveItem.type}</div>
+                        <div class="serving">Serves: {serveItem.value}</div>
+
+                        <div class="serving-price">
                           {serveItem.price} {serveItem.currency}
                         </div>
+                        <Show when={selectedDishIds().includes(serveItem._id)}>
+                          <div class="serve-buttons">
+                            <FaSolidMinus
+                              onclick={(e) => {
+                                handleRemoveDish(serveItem._id);
+                                e.stopPropagation();
+                              }}
+                            />
+                            <div>{selectedDishes()[serveItem._id]}</div>
+                            <FaSolidPlus
+                              onclick={(e) => {
+                                handleDish(serveItem);
+                                e.stopPropagation();
+                              }}
+                            />
+                          </div>
+                        </Show>
                       </div>
                     )}
                   </For>
                 </div>
-                <CustomButton label={"Cancel"} onClick={() => closeModal()} />
+
+                <div class="horizontal-list gap-2">
+                  <CustomButton
+                    label={"Cancel"}
+                    extraClasses="!bg-transparent button-border"
+                    onClick={() => {
+                      closeModal();
+                      removeRestaurantDishes(restaurantId);
+                    }}
+                  />
+                  <Show when={Object.keys(selectedDishes()).length > 0}>
+                    <CustomButton label={"Add"} onClick={() => closeModal()} />
+                  </Show>
+                </div>
               </div>
             </div>
           </div>

@@ -34,7 +34,7 @@ export default function DishCard(props: DishCardProps) {
           <For each={dish.serving}>
             {(serving) => (
               <div class="verticle-list">
-                <div>{serving.title}</div>
+                <div>{serving.type}</div>
               </div>
             )}
           </For>

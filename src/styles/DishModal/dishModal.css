@@ -6,4 +6,24 @@
   .label {
     @apply bg-amber-500 rounded-md px-2;
   }
+
+  .serve-item {
+    @apply border-1 pt-4 rounded-md cursor-pointer hover:bg-amber-100;
+
+    .type {
+      @apply px-4 font-semibold;
+    }
+
+    .serving {
+      @apply px-4 italic mb-4 opacity-70;
+    }
+
+    .serving-price {
+      @apply ml-auto px-2 py-2 text-center font-bold text-white bg-amber-400;
+    }
+
+    .serve-buttons {
+      @apply flex gap-2 justify-between items-center p-2;
+    }
+  }
 }

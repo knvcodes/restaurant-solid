@@ -9,3 +9,7 @@
 .table-styled {
   @apply grid grid-cols-[minmax(120px,auto)_1fr] gap-x-8 gap-y-2;
 }
+
+.button-border {
+  @apply border-2 border-amber-100;
+}
