@@ -9,9 +9,19 @@ export default function GoogleSignIn() {
     const el = buttonRef();
     if (!el) return; // guard against undefined
 
+    // Wrap in a non-async callback that calls your async function
+    const handleCredentialResponse = (
+      response: google.accounts.id.CredentialResponse,
+    ) => {
+      // Google doesn't await this, so we handle errors internally
+      oauthLogin(response).catch((err) => {
+        console.error("OAuth login failed:", err);
+      });
+    };
+
     window.google.accounts.id.initialize({
       client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
-      callback: oauthLogin,
+      callback: handleCredentialResponse,
       auto_select: false,
       cancel_on_tap_outside: true,
       itp_support: true,
