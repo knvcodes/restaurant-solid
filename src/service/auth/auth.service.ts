@@ -46,11 +46,8 @@ export const login = async (
 
 export const oauthLogin = async (
   response: google.accounts.id.CredentialResponse,
-  setLoading: Setter<boolean>,
 ) => {
   try {
-    setLoading(true);
-
     const responseData = await api.post(
       "/auth/oauth",
       JSON.stringify({ credential: response.credential }),
@@ -74,8 +71,6 @@ export const oauthLogin = async (
     if (errorMessage) {
       showToastErrors(errorMessage);
     }
-  } finally {
-    setLoading(false);
   }
 };
 
