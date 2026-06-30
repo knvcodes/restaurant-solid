@@ -23,14 +23,14 @@ export default function DishCard(props: DishCardProps) {
         <img
           src={randomDishUrls[generateRandomImageUrl(randomDishUrls.length)]}
           alt="Avatar"
-          class="h-full min-w-[300px] mx-auto object-cover pointer-events-none"
+          class="h-full md:min-w-[300px] max-w-[300px] mx-auto object-cover pointer-events-none"
         />
       </div>
       <div class="flex flex-col">
         <div class="title">{dish.name}</div>
         <div class="description">{dish.description}</div>
 
-        <div class="label horizontal-list gap-4 mt-auto ">
+        <div class="label horizontal-list gap-4 md:mt-auto mt-4">
           <For each={dish.serving}>
             {(serving) => (
               <div class="verticle-list">

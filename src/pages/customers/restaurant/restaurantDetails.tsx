@@ -42,8 +42,10 @@ export default function RestaurantDetails() {
               opacity: 0.1,
             }}
           ></div>
-          <div class="flex flex-col px-12 w-[1200px] flex-1 relative mt-16 h-full mx-auto bg-white">
-            <div class="h-[500px] aspect-[16/9] w-full">
+
+          {/* main page */}
+          <div class="flex flex-col lg:px-12 px-0 xl:w-[1200px] w-full flex-1 relative mt-16 h-full mx-auto bg-white">
+            <div class="h-[500px] aspect-[16/9] lg:w-full w-auto">
               <img
                 src={
                   randomImageUrls[
@@ -55,7 +57,7 @@ export default function RestaurantDetails() {
               />
             </div>
             {/* header */}
-            <div class="w-full mt-12 flex justify-between">
+            <div class="w-full mt-12 md:w-auto xl:px-0 px-6 lg:!flex-row flex flex-col justify-between">
               <div>
                 <div class="font-semibold text-3xl text-start">
                   {restaurantObj().name}
@@ -83,7 +85,7 @@ export default function RestaurantDetails() {
             </div>
 
             {/* other details */}
-            <dl class="table-styled mt-12">
+            <dl class="table-styled mt-12 xl:px-0 px-6">
               <dt class="subTitle">Open Hours:</dt>
               <dd class="text-gray-900 horizontal-list gap-4">
                 <For each={generateOpenHours(restaurantObj().openDays)}>
@@ -116,12 +118,12 @@ export default function RestaurantDetails() {
             </dl>
 
             {/* dishes */}
-            <div class="heading-2 mt-12 mb-4">Dishes</div>
+            <div class="heading-2 mt-12 mb-4 xl:px-0 px-6">Dishes</div>
             <Show
               when={restaurantObj().dishes.length > 0}
-              fallback={<div>No dishes found</div>}
+              fallback={<div class="xl:px-0 px-6">No dishes found</div>}
             >
-              <div class="verticle-list">
+              <div class="verticle-list md:px-0 px-4">
                 <For each={restaurantObj().dishes ?? []}>
                   {(dish) => <DishCard dish={dish} />}
                 </For>

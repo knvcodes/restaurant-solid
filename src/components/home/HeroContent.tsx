@@ -5,7 +5,7 @@ export default function HeroContent(props: {
   const { headline, subtext } = props;
   return (
     <>
-      <div class="ml-auto text-white flex items-center h-full p-6 rounded-lg bg-gradient-to-r from-transparent to-black w-full">
+      <div class="text-white flex items-center h-full p-6 bg-gradient-to-r from-transparent to-black w-full">
         <div class="bg-yellow w-[500px] ml-auto">
           <div class="text-6xl">{headline}</div>
           <div class="text-xl mt-4 text-white/50">{subtext}</div>

@@ -6,6 +6,8 @@ import { userStore } from "../store/userStore";
 import { AccountMenu } from "./Header/AccountMenu";
 import { FaSolidCartShopping } from "solid-icons/fa";
 import { VsCircleFilled, VsCircleSmallFilled } from "solid-icons/vs";
+import { FiMenu } from "solid-icons/fi";
+import { AiOutlineClose } from "solid-icons/ai";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -13,6 +15,8 @@ export default function Header() {
 
   const [isOpen, setIsOpen] = createSignal(false);
   const [isLoggedIn, setisLoggedIn] = createSignal(false);
+
+  const [burgerMenuOpen, setburgerMenuOpen] = createSignal(false);
 
   // login account ui logic
   createEffect(() => {
@@ -37,10 +41,8 @@ export default function Header() {
   });
 
   return (
-    <header
-      class={`fixed left-1/2 -translate-x-1/2 min-w-[1200px] z-10 backdrop-blur-md ${textColor()}`}
-    >
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <header class={`fixed w-full z-10 ${textColor()}`}>
+      <div class="lg:max-w-7xl mx-auto px-4 backdrop-blur-md sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16 relative">
           {/* Logo on left */}
           <div
@@ -60,12 +62,28 @@ export default function Header() {
             </a>
           </nav>
 
-          <Show when={!isLoggedIn()}>
-            <Button onclick={() => openModal("login")} class="button-y">
-              Log In
-            </Button>
-          </Show>
+          <div class="md:block hidden">
+            <Show when={!isLoggedIn()}>
+              <Button onclick={() => openModal("login")} class="button-y">
+                Log In
+              </Button>
+            </Show>
+          </div>
+          <div class="block md:hidden">
+            <Show
+              when={!burgerMenuOpen()}
+              fallback={
+                <AiOutlineClose
+                  font-size="20"
+                  onclick={() => setburgerMenuOpen(false)}
+                />
+              }
+            >
+              <FiMenu font-size="20" onclick={() => setburgerMenuOpen(true)} />
+            </Show>
+          </div>
 
+          {/* logged in menu */}
           <Show when={isLoggedIn()}>
             <div class="horizontal-list items-center gap-12">
               <div class="relative">

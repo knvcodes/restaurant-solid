@@ -17,7 +17,7 @@ export default function ImageWithText(props: {
         <img
           src={imageUrl}
           alt={headline}
-          class="absolute inset-0 h-full w-full object-cover"
+          class="absolute inset-0 h-full w-full object-cover md:blur-none blur-md z-0"
           loading={priority ? "eager" : "lazy"}
           decoding="async"
           fetchpriority={priority ? "high" : "auto"}
