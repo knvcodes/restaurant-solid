@@ -23,7 +23,7 @@ export default function DishCard(props: DishCardProps) {
         <img
           src={randomDishUrls[generateRandomImageUrl(randomDishUrls.length)]}
           alt="Avatar"
-          class="h-full md:min-w-[300px] max-w-[300px] mx-auto object-cover pointer-events-none"
+          class="max-h-[200px] md:min-w-[300px] max-w-[300px] mx-auto object-cover pointer-events-none"
         />
       </div>
       <div class="flex flex-col">

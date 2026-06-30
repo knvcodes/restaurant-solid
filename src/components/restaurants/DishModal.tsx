@@ -85,7 +85,7 @@ export default function DishModal() {
                   </CustomTooltip>
                 </div>
                 <div class="description mb-4">{description}</div>
-                <div class="horizontal-list gap-2 my-4">
+                <div class="flex md:flex-row flex-col md:gap-2 gap-1 my-4">
                   <For each={serving}>
                     {(serveItem) => (
                       <div

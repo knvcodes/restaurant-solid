@@ -1,4 +1,5 @@
 @import "tailwindcss";
+
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
 
 @import "./styles/utilities.css";
@@ -14,6 +15,7 @@
 @import "./styles/Modal/modal.css";
 @import "./styles/Toast/toast.css";
 @import "./styles/AccountMenu/accountMenu.css";
+@import "./styles/SideMenu/sideMenu.css";
 
 @layer base {
   *,

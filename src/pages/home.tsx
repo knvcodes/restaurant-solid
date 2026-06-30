@@ -17,7 +17,7 @@ export default function Home() {
             reserve a table in seconds."
       />
       <div class="md:bg-black h-screen max-w-screen relative flex items-center text-white">
-        <div class="flex-1 z-20 h-full">
+        <div class="z-20 h-full flex-1">
           <HeroContent
             headline="Elevate Your Dining Experience"
             subtext="From street food to fine dining — discover and reserve with confidence."
@@ -26,7 +26,7 @@ export default function Home() {
         <img
           src={reservation}
           alt="Reservation"
-          class="md:blur-none blur-md object-cover md:w-1/2 md:h-auto md:relative absolute inset-0 z-10 w-full h-full"
+          class="object-cover w-1/2 md:block hidden"
           height={626}
           loading="lazy"
           decoding="async"

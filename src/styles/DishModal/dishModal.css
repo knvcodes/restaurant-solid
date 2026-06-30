@@ -1,21 +1,21 @@
 /* dish */
 
 .dish-modal {
-  @apply max-w-3xl bg-white;
+  @apply max-w-3xl md:w-auto w-full  bg-white;
 
   .label {
     @apply bg-amber-500 rounded-md px-2;
   }
 
   .serve-item {
-    @apply border-1 pt-4 rounded-md cursor-pointer hover:bg-amber-100;
+    @apply border-1 md:pt-4 rounded-md cursor-pointer hover:bg-amber-100 md:block flex items-center;
 
     .type {
       @apply px-4 font-semibold;
     }
 
     .serving {
-      @apply px-4 italic mb-4 opacity-70;
+      @apply px-4 italic md:mb-4 mb-0 opacity-70;
     }
 
     .serving-price {

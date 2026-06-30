@@ -1,4 +1,4 @@
-import { createEffect, createMemo, createSignal, Show } from "solid-js";
+import { createEffect, createMemo, createSignal, Setter, Show } from "solid-js";
 import { Button } from "@kobalte/core/button";
 import { useLocation, useNavigate } from "@solidjs/router";
 import { openModal } from "../store/modalStore";
@@ -9,14 +9,19 @@ import { VsCircleFilled, VsCircleSmallFilled } from "solid-icons/vs";
 import { FiMenu } from "solid-icons/fi";
 import { AiOutlineClose } from "solid-icons/ai";
 
-export default function Header() {
+interface HeaderProps {
+  burgerMenuOpen: boolean;
+  setburgerMenuOpen: Setter<boolean>;
+}
+
+export default function Header(props: HeaderProps) {
+  const { burgerMenuOpen, setburgerMenuOpen } = props;
+
   const navigate = useNavigate();
   const location = useLocation();
 
   const [isOpen, setIsOpen] = createSignal(false);
   const [isLoggedIn, setisLoggedIn] = createSignal(false);
-
-  const [burgerMenuOpen, setburgerMenuOpen] = createSignal(false);
 
   // login account ui logic
   createEffect(() => {
@@ -55,7 +60,7 @@ export default function Header() {
           {/* Desktop Nav (centered absolutely) */}
           <nav class="hidden md:flex gap-4">
             <a href="/restaurants" class="hover:text-indigo-600 transition">
-              My Restaurants
+              Restaurants
             </a>
             <a href="settings" class="hover:text-indigo-600 transition">
               Settings
@@ -71,7 +76,7 @@ export default function Header() {
           </div>
           <div class="block md:hidden">
             <Show
-              when={!burgerMenuOpen()}
+              when={!burgerMenuOpen}
               fallback={
                 <AiOutlineClose
                   font-size="20"

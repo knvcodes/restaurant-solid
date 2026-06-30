@@ -1,0 +1,9 @@
+.side-menu {
+  @apply fixed right-0 w-1/2 h-screen z-30 px-4;
+
+  .side-item {
+    @apply text-xl;
+    @apply hover:text-amber-400;
+    @apply cursor-pointer;
+  }
+}
