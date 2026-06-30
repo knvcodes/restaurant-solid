@@ -20,17 +20,15 @@ export default function Restaurants() {
     setrestaurants(restaurantsData);
   };
 
-  // fetching all restaurants
-  onMount(async () => {
-    fetchRestauraunts();
-  });
-
   function gotoDetailsPage(id: string) {
     navigate(`/restaurants/${id}`);
   }
 
   async function onSearchChange(value: string) {
-    if (isEmpty(value)) fetchRestauraunts();
+    if (isEmpty(value)) {
+      fetchRestauraunts();
+      return;
+    }
 
     const restaurantsData = await restaurantListing(value);
     setrestaurants(restaurantsData);
