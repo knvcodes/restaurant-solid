@@ -50,7 +50,7 @@ export default function Restaurants() {
       ></div>
       <div class="relative mt-20 lg:px-12 md:px-0 lg:w-5/6 sm:w-full mx-auto bg-white">
         {/* trending */}
-        <h1 class="text-2xl my-2 mt-27 font-bold">Trending</h1>
+        <h1 class="text-2xl my-4 mt-27 font-bold lg:px-0 px-6">Trending</h1>
         <div class="mb-4 overflow-scroll">
           <Show
             when={trendingRestaurants().length > 0}
@@ -74,7 +74,7 @@ export default function Restaurants() {
         </div>
 
         {/* <Filters /> */}
-        <div class="horizontal-list justify-between pt-12 mb-4">
+        <div class="flex md:flex-row flex-col justify-between pt-12 mb-4 gap-4 lg:px-0 px-6">
           <div class="font-bold text-2xl">All Restaurants</div>
           <SearchBar onChange={onSearchChange} />
         </div>

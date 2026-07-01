@@ -73,6 +73,17 @@ interface Address {
   zipcode: string;
 }
 
+// BREADCRUMBS
+
+export interface Path {
+  pathName: string;
+  path: string;
+}
+
+export interface CustomBreadCrumbsProps {
+  paths: Path[];
+}
+
 // USER
 
 export type UserRole = "admin" | "owner" | "customer";

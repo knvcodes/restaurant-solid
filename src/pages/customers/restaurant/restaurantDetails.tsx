@@ -1,7 +1,7 @@
 import { createSignal, For, onMount, Show } from "solid-js";
 import "../../style.css";
 import api from "../../../utils/axios";
-import { IResponse, IRestaurant } from "../../../types";
+import { IResponse, IRestaurant, Path } from "../../../types";
 import {
   formatDateTime,
   generateAddress,
@@ -14,6 +14,7 @@ import { FaSolidStar } from "solid-icons/fa";
 import { FiStar } from "solid-icons/fi";
 import { foodbg } from "../../../assets/assets";
 import DishCard from "../../../components/restaurants/DishCard";
+import CustomBreadCrumbs from "../../../components/BreadCrumbs";
 
 export default function RestaurantDetails() {
   const params = useParams();
@@ -28,6 +29,8 @@ export default function RestaurantDetails() {
 
     setrestaurant(response.data.data);
   });
+
+  const paths: Path[] = [];
 
   return (
     <Show when={restaurant()} fallback={<>loading....</>}>
@@ -45,6 +48,8 @@ export default function RestaurantDetails() {
 
           {/* main page */}
           <div class="flex flex-col lg:px-12 px-0 xl:w-[1200px] w-full flex-1 relative mt-16 h-full mx-auto bg-white">
+            <CustomBreadCrumbs paths={paths} />
+
             <div class="h-[500px] aspect-[16/9] lg:w-full w-auto">
               <img
                 src={
@@ -123,7 +128,7 @@ export default function RestaurantDetails() {
               when={restaurantObj().dishes.length > 0}
               fallback={<div class="xl:px-0 px-6">No dishes found</div>}
             >
-              <div class="verticle-list md:px-0 px-4">
+              <div class="verticle-list md:px-0 px-4 gap-4">
                 <For each={restaurantObj().dishes ?? []}>
                   {(dish) => <DishCard dish={dish} />}
                 </For>

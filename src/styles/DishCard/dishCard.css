@@ -1,9 +1,9 @@
 /* dish */
 
 .dish-card {
-  @apply py-4 mr-auto w-full max-w-[var(--dish-card-max-w)] h-[var(--dish-card-h)] flex gap-4;
-  @apply hover:translate-x-2 hover:bg-gray-200 px-4 hover:scale-105 hover:cursor-pointer;
-  @apply md:flex-row flex-col;
+  @apply py-4 mr-auto w-full max-w-[var(--dish-card-max-w)] md:h-[var(--dish-card-h)] flex gap-4;
+  @apply hover:translate-x-2 hover:bg-gray-200 px-4 md:hover:scale-105 hover:cursor-pointer;
+  @apply md:flex-row flex-col h-full md:bg-none bg-gray-200;
 
   .title {
     @apply font-semibold text-2xl text-black mb-2;
