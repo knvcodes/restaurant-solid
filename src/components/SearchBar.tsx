@@ -31,7 +31,7 @@ export default function SearchBar(props: {
         value={search()}
         onInput={(e) => setSearch(e.currentTarget.value)}
         placeholder="Search your restaurants..."
-        class="mb-12 search__input p-2 px-4 bg-white border-b border-gray-200/60 w-full"
+        class="search__input p-2 px-4 bg-white border-b border-gray-200/60 w-full"
       />
       <ImCancelCircle
         font-size="20"

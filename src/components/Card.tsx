@@ -3,16 +3,15 @@ import { FiStar } from "solid-icons/fi";
 import { generateRandomImageUrl } from "../utils/helpers";
 import { randomImageUrls } from "../utils/staticData";
 import { ICardProps } from "../types";
-import { CustomBadge } from "./custom/CustomBadge";
-import { createMemo, createSignal, onCleanup, onMount } from "solid-js";
+import { createMemo, createSignal, onCleanup, onMount, Show } from "solid-js";
 import { restaurant_placeholder } from "../assets/assets";
 
 export default function Card(props: ICardProps) {
   const {
     name = "Brooklynn Stake House",
-    address,
-    city,
+    cuisine,
     onClick = () => {},
+    trending = false,
   } = props;
 
   // Only render img when card enters viewport
@@ -40,7 +39,11 @@ export default function Card(props: ICardProps) {
   );
 
   return (
-    <div ref={cardRef} class="card relative" onclick={onClick}>
+    <div
+      ref={cardRef}
+      class={`${trending ? "trending-card" : "card"} relative`}
+      onclick={onClick}
+    >
       <div class="absolute inset-0">
         <img
           src={imageUrl()}
@@ -48,23 +51,22 @@ export default function Card(props: ICardProps) {
           decoding="async"
           alt="restaurantImage"
           onError={() => setimageBroken(true)}
-          class="h-full w-full object-cover pointer-events-none"
+          class="h-full w-full object-cover aspect-[16/9] pointer-events-none"
         />
       </div>
 
-      <div class="card-details gradient-glass">
+      <div class="card-details gradient-glass-dark text-white">
         <h2 class="text-3xl font-semibold">{name}</h2>
-        <p class="text-sm mt-2 text-black/80">{address}</p>
-        <p class="mt-4">
-          <CustomBadge label={city} />
-        </p>
-        <div class="flex gap-2 my-4">
-          <FaSolidStar />
-          <FaSolidStar />
-          <FaSolidStar />
-          <FaSolidStar />
-          <FiStar />
-        </div>
+        <p class="mt-4 border-b-2">{cuisine}</p>
+        <Show when={!trending}>
+          <div class="flex gap-2 my-4">
+            <FaSolidStar />
+            <FaSolidStar />
+            <FaSolidStar />
+            <FaSolidStar />
+            <FiStar />
+          </div>
+        </Show>
       </div>
     </div>
   );

@@ -1,8 +1,16 @@
 /* card component */
 .card {
-  @apply flex flex-auto h-[var(--card-h)] bg-transparent overflow-hidden sm:min-w-auto lg:min-w-[var(--card-w)] hover:shadow-xl;
+  @apply flex flex-auto h-[var(--card-h)] bg-transparent overflow-hidden sm:min-w-auto lg:min-w-[var(--card-w)] shadow-md;
+
+  .card-details {
+    @apply relative flex flex-col p-4 ml-0 sm:ml-auto w-full sm:w-auto max-w-full md:max-w-[var(--card-details-max-w)] justify-end sm:justify-center h-min sm:h-auto mt-auto sm:mt-0;
+  }
 }
 
-.card-details {
-  @apply relative flex flex-col p-4 ml-0 sm:ml-auto w-full sm:w-auto max-w-full md:max-w-[var(--card-details-max-w)] justify-end sm:justify-center h-min sm:h-auto mt-auto sm:mt-0;
+.trending-card {
+  @apply flex flex-auto  min-w-[400px] min-h-[300px] shadow-md;
+
+  .card-details {
+    @apply relative w-full h-[100px] mt-auto p-4;
+  }
 }

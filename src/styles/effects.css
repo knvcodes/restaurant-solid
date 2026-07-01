@@ -4,7 +4,7 @@
 }
 
 .gradient-glass-dark {
-  @apply bg-gradient-to-b from-black/80 via-black/60 backdrop-blur-xs to-transparent;
+  @apply bg-gradient-to-b from-black/80 via-black/60 backdrop-blur-xs to-black/40;
 }
 
 .separator {

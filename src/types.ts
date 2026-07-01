@@ -7,9 +7,9 @@ export interface IResponse<T = unknown> {
 
 export interface ICardProps {
   name: string;
-  address: string;
-  city: string;
   onClick: () => void;
+  cuisine: string;
+  trending?: boolean;
 }
 
 export interface IRestaurant {
