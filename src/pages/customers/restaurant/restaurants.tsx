@@ -1,16 +1,12 @@
-import { createEffect, createSignal, For, Show } from "solid-js";
+import { createSignal, For, Show } from "solid-js";
 import "../../style.css";
 import Card from "../../../components/Card";
-import { IRestaurant } from "../../../types";
 import SearchBar from "../../../components/SearchBar";
-import { isEmpty } from "../../../utils/helpers";
 import { useNavigate } from "@solidjs/router";
 import { foodbg } from "../../../assets/assets";
 import RestaurantListingSkeleton from "../../../components/restaurants/RestaurantListingSkeleton";
-import {
-  restaurantListing,
-  useRestaurants,
-} from "../../../service/restaurants/customer.service";
+import {} from "../../../service/restaurants/customer.service";
+import { useRestaurants } from "../../../service/restaurants/customer.provider";
 
 export default function Restaurants() {
   const navigate = useNavigate();

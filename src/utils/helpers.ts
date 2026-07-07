@@ -138,3 +138,7 @@ export const removeObjFromArray = <T>(
 ): T[] => {
   return arr.filter((item) => item[prop] !== value);
 };
+
+export const extractBreadCrumbs = (str: string) => {
+  return str.split("/");
+};

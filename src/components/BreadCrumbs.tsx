@@ -3,13 +3,13 @@ import { For, Show } from "solid-js";
 import { CustomBreadCrumbsProps, Path } from "../types";
 
 const CustomBreadCrumbs = (props: CustomBreadCrumbsProps) => {
-  const { paths } = props;
+  console.info("props.paths:===>", props.paths);
 
   return (
-    <Show when={paths.length > 0}>
+    <Show when={props.paths.length > 0}>
       <Breadcrumbs>
         <ol class="breadcrumbs__list">
-          <For each={paths}>
+          <For each={props.paths}>
             {(pathItem: Path) => (
               <li class="breadcrumbs__item">
                 <Breadcrumbs.Link
