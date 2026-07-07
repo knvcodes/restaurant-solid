@@ -1,40 +1,31 @@
 import { createSignal, For, Show } from "solid-js";
 import "../../style.css";
 import Card from "../../../components/Card";
-import { IRestaurant } from "../../../types";
 import SearchBar from "../../../components/SearchBar";
-import { isEmpty } from "../../../utils/helpers";
 import { useNavigate } from "@solidjs/router";
 import { foodbg } from "../../../assets/assets";
 import RestaurantListingSkeleton from "../../../components/restaurants/RestaurantListingSkeleton";
-import { restaurantListing } from "../../../service/restaurants/customer.service";
+import {} from "../../../service/restaurants/customer.service";
+import { useRestaurants } from "../../../service/restaurants/customer.provider";
 
 export default function Restaurants() {
-  const [restaurants, setrestaurants] = createSignal<IRestaurant[] | []>([]);
-  const [trendingRestaurants, settrendingRestaurants] = createSignal<
-    IRestaurant[] | []
-  >([]);
-
   const navigate = useNavigate();
 
-  const fetchRestauraunts = async () => {
-    const restaurantsData = await restaurantListing();
-    setrestaurants(restaurantsData);
-    settrendingRestaurants(restaurantsData.slice(0, 5));
-  };
+  const [search, setsearch] = createSignal("&limit=50");
+
+  // listing api
+  const restaurantsData = useRestaurants(search);
+
+  // restaurant states
+  const trendingRestaurants = () => restaurantsData.data?.slice(0, 5) ?? [];
 
   function gotoDetailsPage(id: string) {
     navigate(`/restaurants/${id}`);
   }
 
+  // search on change handler
   async function onSearchChange(value: string) {
-    if (isEmpty(value)) {
-      fetchRestauraunts();
-      return;
-    }
-
-    const restaurantsData = await restaurantListing(value);
-    setrestaurants(restaurantsData);
+    setsearch(value + "&limit=50");
   }
 
   return (
@@ -52,9 +43,14 @@ export default function Restaurants() {
         {/* trending */}
         <h1 class="text-2xl my-4 mt-27 font-bold lg:px-0 px-6">Trending</h1>
         <div class="mb-4 overflow-scroll">
+          <Show when={restaurantsData.isPending}>
+            <RestaurantListingSkeleton />
+          </Show>
           <Show
-            when={trendingRestaurants().length > 0}
-            fallback={<RestaurantListingSkeleton />}
+            when={
+              !restaurantsData.isPending && trendingRestaurants().length > 0
+            }
+            fallback={<>No Restaurants found</>}
           >
             <div class="flex gap-2">
               <For each={trendingRestaurants()}>
@@ -80,12 +76,14 @@ export default function Restaurants() {
         </div>
         <div class="flex flex-col mt-2">
           {/* listing */}
-          <Show
-            when={restaurants().length > 0}
-            fallback={<RestaurantListingSkeleton />}
-          >
+
+          <Show when={restaurantsData.isPending}>
+            <RestaurantListingSkeleton />
+          </Show>
+
+          <Show when={restaurantsData.data && restaurantsData.data.length > 0}>
             <div class="grid xl:grid-cols-2 lg:grid-cols-1 gap-4">
-              <For each={restaurants()}>
+              <For each={restaurantsData.data}>
                 {(restaurantItem) => (
                   <Card
                     onClick={() => {
@@ -97,6 +95,10 @@ export default function Restaurants() {
                 )}
               </For>
             </div>
+          </Show>
+
+          <Show when={restaurantsData.data && restaurantsData.data.length == 0}>
+            <div>No restaurants found</div>
           </Show>
         </div>
       </div>

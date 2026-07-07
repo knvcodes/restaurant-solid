@@ -1,39 +1,54 @@
-import { createSignal, For, onMount, Show } from "solid-js";
+import { createEffect, createSignal, For, onMount, Show } from "solid-js";
 import "../../style.css";
-import api from "../../../utils/axios";
 import { IResponse, IRestaurant, Path } from "../../../types";
 import {
+  extractBreadCrumbs,
   formatDateTime,
   generateAddress,
   generateOpenHours,
   generateRandomImageUrl,
 } from "../../../utils/helpers";
 import { randomImageUrls } from "../../../utils/staticData";
-import { useParams } from "@solidjs/router";
+import { useLocation, useParams } from "@solidjs/router";
 import { FaSolidStar } from "solid-icons/fa";
 import { FiStar } from "solid-icons/fi";
 import { foodbg } from "../../../assets/assets";
 import DishCard from "../../../components/restaurants/DishCard";
 import CustomBreadCrumbs from "../../../components/BreadCrumbs";
+import { useRestaurantsDetails } from "../../../service/restaurants/customer.provider";
 
 export default function RestaurantDetails() {
   const params = useParams();
+  const location = useLocation();
 
-  const [restaurant, setrestaurant] = createSignal<IRestaurant | null>(null);
+  const [restaurantId, setrestaurantId] = createSignal(params.slug);
 
-  // fetching all restaurants
+  // api provider
+  const restaurantDetailData = useRestaurantsDetails(restaurantId);
+
+  // set params id to signal
   onMount(async () => {
-    const response: IResponse<IRestaurant> = await api.get(
-      `/restaurants/${params.slug}`,
-    );
-
-    setrestaurant(response.data.data);
+    setrestaurantId(params.slug);
   });
 
-  const paths: Path[] = [];
+  // breadcrumbs
+  const [pathArr, setpathArr] = createSignal<Path[]>([]);
+
+  createEffect(() => {
+    const paths = extractBreadCrumbs(location.pathname);
+    console.info("paths:===>", paths);
+    setpathArr(
+      paths
+        .filter((item) => item !== "")
+        .map((pathItem) => ({
+          pathName: pathItem,
+          path: "/" + pathItem,
+        })),
+    );
+  });
 
   return (
-    <Show when={restaurant()} fallback={<>loading....</>}>
+    <Show when={restaurantDetailData.data} fallback={<>loading....</>}>
       {(restaurantObj) => (
         <div class="min-h-screen relative">
           <div
@@ -48,7 +63,7 @@ export default function RestaurantDetails() {
 
           {/* main page */}
           <div class="flex flex-col lg:px-12 px-0 xl:w-[1200px] w-full flex-1 relative mt-16 h-full mx-auto bg-white">
-            <CustomBreadCrumbs paths={paths} />
+            <CustomBreadCrumbs paths={pathArr()} />
 
             <div class="h-[500px] aspect-[16/9] lg:w-full w-auto">
               <img
