@@ -1,4 +1,3 @@
-import { createQuery } from "@tanstack/solid-query";
 import { IResponse, IRestaurant } from "../../types";
 import api from "../../utils/axios";
 import { getErrorMessage, isEmpty, showToastErrors } from "../../utils/helpers";

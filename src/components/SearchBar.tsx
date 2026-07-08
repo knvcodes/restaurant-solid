@@ -25,7 +25,7 @@ export default function SearchBar(props: {
   onCleanup(() => clearTimeout(timer));
 
   return (
-    <div class="relative">
+    <div class="relative md:w-1/2">
       <input
         type="text"
         value={search()}

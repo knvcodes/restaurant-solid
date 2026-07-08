@@ -19,5 +19,4 @@ export const useRestaurantsDetails = (id: Accessor<string>) =>
   createQuery(() => ({
     queryKey: ["restaurants", "details", id()],
     queryFn: () => restaurantDetails(id()),
-    ...default_timer,
   }));

@@ -18,6 +18,7 @@
 @import "./styles/Toast/toast.css";
 @import "./styles/AccountMenu/accountMenu.css";
 @import "./styles/SideMenu/sideMenu.css";
+@import "./styles/CustomBreadCrumbs/customBreadCrumbs.css";
 
 @layer base {
   *,

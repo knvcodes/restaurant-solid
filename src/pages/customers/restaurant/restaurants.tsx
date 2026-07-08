@@ -1,4 +1,4 @@
-import { createSignal, For, Show } from "solid-js";
+import { createEffect, createSignal, For, Show } from "solid-js";
 import "../../style.css";
 import Card from "../../../components/Card";
 import SearchBar from "../../../components/SearchBar";
@@ -7,6 +7,7 @@ import { foodbg } from "../../../assets/assets";
 import RestaurantListingSkeleton from "../../../components/restaurants/RestaurantListingSkeleton";
 import {} from "../../../service/restaurants/customer.service";
 import { useRestaurants } from "../../../service/restaurants/customer.provider";
+import { IRestaurant } from "../../../types";
 
 export default function Restaurants() {
   const navigate = useNavigate();
@@ -15,9 +16,19 @@ export default function Restaurants() {
 
   // listing api
   const restaurantsData = useRestaurants(search);
+  const [mostVisitedRestaurants, setmostVisitedRestaurants] = createSignal<
+    IRestaurant[] | []
+  >([]);
 
   // restaurant states
-  const trendingRestaurants = () => restaurantsData.data?.slice(0, 5) ?? [];
+
+  createEffect(() => {
+    const sorted = [...(restaurantsData.data ?? [])].sort(
+      (a, b) => b.views - a.views,
+    );
+
+    setmostVisitedRestaurants(sorted.slice(0, 5));
+  });
 
   function gotoDetailsPage(id: string) {
     navigate(`/restaurants/${id}`);
@@ -40,20 +51,20 @@ export default function Restaurants() {
         }}
       ></div>
       <div class="relative mt-20 lg:px-12 md:px-0 lg:w-5/6 sm:w-full mx-auto bg-white">
-        {/* trending */}
-        <h1 class="text-2xl my-4 mt-27 font-bold lg:px-0 px-6">Trending</h1>
+        {/* mostVisited */}
+        <h1 class="text-2xl my-4 mt-27 font-bold lg:px-0 px-6">Most visited</h1>
         <div class="mb-4 overflow-scroll">
           <Show when={restaurantsData.isPending}>
             <RestaurantListingSkeleton />
           </Show>
           <Show
             when={
-              !restaurantsData.isPending && trendingRestaurants().length > 0
+              !restaurantsData.isPending && mostVisitedRestaurants().length > 0
             }
             fallback={<>No Restaurants found</>}
           >
             <div class="flex gap-2">
-              <For each={trendingRestaurants()}>
+              <For each={mostVisitedRestaurants()}>
                 {(restaurantItem) => (
                   <Card
                     trending={true}

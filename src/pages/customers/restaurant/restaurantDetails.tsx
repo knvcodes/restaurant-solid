@@ -14,7 +14,7 @@ import { FaSolidStar } from "solid-icons/fa";
 import { FiStar } from "solid-icons/fi";
 import { foodbg } from "../../../assets/assets";
 import DishCard from "../../../components/restaurants/DishCard";
-import CustomBreadCrumbs from "../../../components/BreadCrumbs";
+import CustomBreadCrumbs from "../../../components/custom/CustomBreadCrumbs";
 import { useRestaurantsDetails } from "../../../service/restaurants/customer.provider";
 
 export default function RestaurantDetails() {
@@ -36,13 +36,15 @@ export default function RestaurantDetails() {
 
   createEffect(() => {
     const paths = extractBreadCrumbs(location.pathname);
-    console.info("paths:===>", paths);
     setpathArr(
       paths
         .filter((item) => item !== "")
-        .map((pathItem) => ({
-          pathName: pathItem,
-          path: "/" + pathItem,
+        .map((pathItem, index) => ({
+          pathName:
+            index == paths.length - 2
+              ? restaurantDetailData.data?.name.toLowerCase() || ""
+              : pathItem,
+          path: index == paths.length - 2 ? location.pathname : "/" + pathItem,
         })),
     );
   });

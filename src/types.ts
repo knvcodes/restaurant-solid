@@ -27,6 +27,7 @@ export interface IRestaurant {
   minimumDelivery: CancellationFee;
   openDays: DeliveryHours;
   dishes: IDish[];
+  views: number;
 }
 
 export interface IServing {
