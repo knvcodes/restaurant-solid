@@ -16,6 +16,7 @@ import { foodbg } from "../../../assets/assets";
 import DishCard from "../../../components/restaurants/DishCard";
 import CustomBreadCrumbs from "../../../components/custom/CustomBreadCrumbs";
 import { useRestaurantsDetails } from "../../../service/restaurants/customer.provider";
+import CustomImage from "../../../components/custom/CustomImage";
 
 export default function RestaurantDetails() {
   const params = useParams();
@@ -68,14 +69,24 @@ export default function RestaurantDetails() {
             <CustomBreadCrumbs paths={pathArr()} />
 
             <div class="h-[500px] aspect-[16/9] lg:w-full w-auto">
-              <img
-                src={
+              <CustomImage
+                alt="restaurantImage"
+                desktopSrc={
                   randomImageUrls[
                     generateRandomImageUrl(randomImageUrls.length)
                   ]
                 }
-                alt="Avatar"
-                class="h-full w-full mx-auto object-cover pointer-events-none"
+                fallbackSrc={
+                  randomImageUrls[
+                    generateRandomImageUrl(randomImageUrls.length)
+                  ]
+                }
+                classes="h-full w-full mx-auto object-cover pointer-events-none"
+                mobileSrc={
+                  randomImageUrls[
+                    generateRandomImageUrl(randomImageUrls.length)
+                  ]
+                }
               />
             </div>
             {/* header */}
