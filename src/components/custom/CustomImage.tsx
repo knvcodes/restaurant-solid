@@ -4,10 +4,20 @@ interface CustomImageProps {
   fallbackSrc: string;
   alt: string;
   classes: string;
+  fetchpriority?: "low" | "high";
+  loading?: "lazy" | "eager";
 }
 
 const CustomImage = (props: CustomImageProps) => {
-  const { mobileSrc, desktopSrc, fallbackSrc, alt, classes } = props;
+  const {
+    mobileSrc,
+    desktopSrc,
+    fallbackSrc,
+    alt,
+    classes,
+    fetchpriority = "low",
+    loading = "lazy",
+  } = props;
 
   return (
     <picture>
@@ -15,7 +25,13 @@ const CustomImage = (props: CustomImageProps) => {
 
       <source media="(min-width: 769px)" srcset={desktopSrc} />
 
-      <img src={fallbackSrc} alt={alt} class={classes} />
+      <img
+        src={fallbackSrc}
+        alt={alt}
+        class={classes}
+        fetchpriority={fetchpriority}
+        loading={loading}
+      />
     </picture>
   );
 };

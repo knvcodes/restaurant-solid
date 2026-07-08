@@ -7,6 +7,7 @@ type ImageConfig = {
   width: number;
   height?: number;
   fit?: "cover" | "contain" | "fill" | "inside" | "outside";
+  mobile?: boolean;
 };
 
 export default function optimizeImagesPlugin(): Plugin {
@@ -62,29 +63,57 @@ export default function optimizeImagesPlugin(): Plugin {
           /\.(jpg|jpeg|png)$/i,
           ".webp",
         );
+        const outputRelPathMobile = relativePath.replace(
+          /\.(jpg|jpeg|png)$/i,
+          "-mobile.webp",
+        );
+
         const outputPath = path.join(outputDir, outputRelPath);
+        const outputPathMobile = path.join(outputDir, outputRelPathMobile);
         const jpegOutputPath = outputPath.replace(".webp", ".jpg");
 
         fs.mkdirSync(path.dirname(outputPath), { recursive: true });
 
-        // Generate WebP
-        await sharp(filePath)
-          .resize(config.width, config.height, { fit: config.fit })
-          .webp({ quality: 80 })
-          .toFile(outputPath);
+        // if imageconfig is object
+        if (!Array.isArray(config)) {
+          // Generate WebP
+          await sharp(filePath)
+            .resize(config.width, config.height, { fit: config.fit })
+            .webp({ quality: 80 })
+            .toFile(outputPath);
 
-        // Generate JPEG fallback
-        await sharp(filePath)
-          .resize(config.width, config.height, { fit: config.fit })
-          .jpeg({ quality: 80, mozjpeg: true })
-          .toFile(jpegOutputPath);
+          // Generate JPEG fallback
+          await sharp(filePath)
+            .resize(config.width, config.height, { fit: config.fit })
+            .jpeg({ quality: 80, mozjpeg: true })
+            .toFile(jpegOutputPath);
+        } else {
+          config.forEach(async (configItem) => {
+            if (Object.keys(configItem).includes("mobile")) {
+              await sharp(filePath)
+                .resize(configItem.width, configItem.height, {
+                  fit: configItem.fit,
+                })
+                .webp({ quality: 80 })
+                .toFile(outputPathMobile);
+            } else {
+              await sharp(filePath)
+                .resize(configItem.width, configItem.height, {
+                  fit: configItem.fit,
+                })
+                .webp({ quality: 80 })
+                .toFile(outputPath);
+            }
 
-        const inSize = (fs.statSync(filePath).size / 1024).toFixed(1);
-        const outSize = (fs.statSync(outputPath).size / 1024).toFixed(1);
-
-        console.log(
-          `  ✓ ${relativePath}: ${inSize} KB → ${outSize} KB (${config.width}w)`,
-        );
+            // Generate JPEG fallback
+            await sharp(filePath)
+              .resize(configItem.width, configItem.height, {
+                fit: configItem.fit,
+              })
+              .jpeg({ quality: 80, mozjpeg: true })
+              .toFile(jpegOutputPath);
+          });
+        }
       });
 
       return Promise.all(promises) as unknown as void;
@@ -92,7 +121,10 @@ export default function optimizeImagesPlugin(): Plugin {
   };
 }
 
-function getImageConfig(relativePath: string, fileName: string): ImageConfig {
+function getImageConfig(
+  relativePath: string,
+  fileName: string,
+): ImageConfig | ImageConfig[] {
   // Hero images — full width, keep aspect ratio
   if (relativePath.includes("hero") || fileName.startsWith("welcome")) {
     return { width: 1920, fit: "inside" }; // max 1920px wide, keep ratio
@@ -104,7 +136,10 @@ function getImageConfig(relativePath: string, fileName: string): ImageConfig {
 
   // Restaurant cards — fixed size
   if (relativePath.includes("restaurant")) {
-    return { width: 737, height: 450, fit: "cover" };
+    return [
+      { width: 737, height: 450, fit: "cover" },
+      { width: 430, height: 450, fit: "cover", mobile: true },
+    ];
   }
 
   // Dishes — adjust as needed

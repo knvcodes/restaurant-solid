@@ -1,12 +1,20 @@
 import {
   place_1,
+  place_1_mobile,
   place_2,
+  place_2_mobile,
   place_3,
+  place_3_mobile,
   place_4,
+  place_4_mobile,
   place_5,
+  place_5_mobile,
   place_6,
+  place_6_mobile,
   place_7,
+  place_7_mobile,
   place_8,
+  place_8_mobile,
 } from "../assets/assets";
 
 export const randomImageUrls = [
@@ -18,6 +26,17 @@ export const randomImageUrls = [
   place_6,
   place_7,
   place_8,
+];
+
+export const randomImageUrlsMobile = [
+  place_1_mobile,
+  place_2_mobile,
+  place_3_mobile,
+  place_4_mobile,
+  place_5_mobile,
+  place_6_mobile,
+  place_7_mobile,
+  place_8_mobile,
 ];
 
 export const randomDishUrls = [

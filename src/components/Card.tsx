@@ -56,8 +56,8 @@ export default function Card(props: ICardProps) {
       </div>
 
       <div class="card-details gradient-glass-dark text-white">
-        <h2 class="text-3xl font-semibold">{name}</h2>
-        <p class="mt-4 border-b-2">{cuisine}</p>
+        <h2 class="text-3xl font-semibold name">{name}</h2>
+        <p class="mt-4 border-b-2 cuisine">{cuisine}</p>
         <Show when={!trending}>
           <div class="flex gap-2 my-4">
             <FaSolidStar />

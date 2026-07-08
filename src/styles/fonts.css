@@ -22,7 +22,7 @@
   @apply text-gray-400;
 }
 
-.cuisine {
+.cuisine-label {
   @apply bg-amber-200 text-xl px-2;
 }
 
@@ -32,4 +32,13 @@
 
 .error-text {
   @apply text-red-500 mb-2;
+}
+
+@font-face {
+  font-family: "Merienda";
+  src: url("/fonts/merienda-v22-latin_latin-ext_vietnamese-regular.woff2")
+    format("woff2");
+  font-weight: 400 700; /* variable font range */
+  font-style: normal;
+  font-display: swap;
 }

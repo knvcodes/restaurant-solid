@@ -8,7 +8,10 @@ import {
   generateOpenHours,
   generateRandomImageUrl,
 } from "../../../utils/helpers";
-import { randomImageUrls } from "../../../utils/staticData";
+import {
+  randomImageUrls,
+  randomImageUrlsMobile,
+} from "../../../utils/staticData";
 import { useLocation, useParams } from "@solidjs/router";
 import { FaSolidStar } from "solid-icons/fa";
 import { FiStar } from "solid-icons/fi";
@@ -70,6 +73,8 @@ export default function RestaurantDetails() {
 
             <div class="h-[500px] aspect-[16/9] lg:w-full w-auto">
               <CustomImage
+                loading="eager"
+                fetchpriority="high"
                 alt="restaurantImage"
                 desktopSrc={
                   randomImageUrls[
@@ -83,7 +88,7 @@ export default function RestaurantDetails() {
                 }
                 classes="h-full w-full mx-auto object-cover pointer-events-none"
                 mobileSrc={
-                  randomImageUrls[
+                  randomImageUrlsMobile[
                     generateRandomImageUrl(randomImageUrls.length)
                   ]
                 }
@@ -95,7 +100,7 @@ export default function RestaurantDetails() {
                 <div class="font-semibold text-3xl text-start">
                   {restaurantObj().name}
                 </div>
-                <div class="cuisine">{restaurantObj().cuisine}</div>
+                <div class="cuisine-label">{restaurantObj().cuisine}</div>
                 <div class="description mt-4">
                   <div>{restaurantObj().description}</div>
                 </div>

@@ -8,7 +8,7 @@ const CustomBreadCrumbs = (props: CustomBreadCrumbsProps) => {
   return (
     <Show when={props.paths.length > 0}>
       <Breadcrumbs>
-        <ol class="breadcrumbs__list my-4">
+        <ol class="breadcrumbs__list m-4">
           <For each={props.paths}>
             {(pathItem: Path, index) => (
               <li class="breadcrumbs__item">

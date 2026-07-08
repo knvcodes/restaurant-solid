@@ -1,9 +1,5 @@
 @import "tailwindcss";
 
-/* @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap"); */
-
-@import url("https://fonts.googleapis.com/css2?family=Merienda:wght@300..900&family=Playwrite+NZ:wght@100..400&display=swap");
-
 @import "./styles/utilities.css";
 @import "./styles/fonts.css";
 @import "./styles/fields.css";
@@ -29,18 +25,13 @@
     border-color: var(--color-gray-200, currentcolor);
   }
 
-  /* Apply Poppins globally */
-  html {
-    font-family:
-      "Merienda",
-      ui-sans-serif,
-      system-ui,
-      -apple-system,
-      BlinkMacSystemFont;
+  /* Apply Merienda globally — use body, not just html */
+  html,
+  body {
+    font-family: "Merienda", ui-sans-serif, system-ui, sans-serif;
   }
 
-  /* disable autofull styling */
-
+  /* disable autofill styling */
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
   input:-webkit-autofill:focus,
@@ -51,26 +42,41 @@
     -webkit-text-fill-color: theme("colors.gray.100") !important;
     caret-color: theme("colors.gray.100") !important;
   }
+
+  /* Hide scrollbars globally */
+  /* html,
+  body {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar {
+    display: none;
+  }
+
+  * {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  *::-webkit-scrollbar {
+    display: none;
+  } */
 }
 
-/*custom css variables  */
-
+/*custom css variables */
 :root {
   --card-w: 500px;
   --card-h: 450px;
   --card-details-max-w: 300px;
-
   --dish-card-max-w: 1000px;
   --dish-card-h: 200px;
-
   --modal-w: 500px;
   --modal-h: 200px;
-
   --toast-w: 500px;
   --toast-h: 70px;
-
   --account-menu-min-w: 200px;
-
   --selection-col: gray-800;
 }
 
@@ -79,39 +85,13 @@
 }
 
 /* utilities */
-
 .flex-center {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* hiding all scrollbars */
-
-/* Hide scrollbars globally */
-html,
-body {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE 10+ */
-}
-
-html::-webkit-scrollbar,
-body::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Edge */
-}
-
-/* Hide scrollbars on any scrollable element */
-* {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-*::-webkit-scrollbar {
-  display: none;
-}
-
-/* Or target specific elements */
-.scroll-container {
+/* .scroll-container {
   overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -119,4 +99,4 @@ body::-webkit-scrollbar {
 
 .scroll-container::-webkit-scrollbar {
   display: none;
-}
+} */

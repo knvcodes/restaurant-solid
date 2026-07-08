@@ -22,6 +22,23 @@ const place_6 = "/images/resized/restaurant/restaurant/place_6.webp";
 const place_7 = "/images/resized/restaurant/restaurant/place_7.webp";
 const place_8 = "/images/resized/restaurant/restaurant/place_8.webp";
 
+const place_1_mobile =
+  "/images/resized/restaurant/restaurant/place_1-mobile.webp";
+const place_2_mobile =
+  "/images/resized/restaurant/restaurant/place_2-mobile.webp";
+const place_3_mobile =
+  "/images/resized/restaurant/restaurant/place_3-mobile.webp";
+const place_4_mobile =
+  "/images/resized/restaurant/restaurant/place_4-mobile.webp";
+const place_5_mobile =
+  "/images/resized/restaurant/restaurant/place_5-mobile.webp";
+const place_6_mobile =
+  "/images/resized/restaurant/restaurant/place_6-mobile.webp";
+const place_7_mobile =
+  "/images/resized/restaurant/restaurant/place_7-mobile.webp";
+const place_8_mobile =
+  "/images/resized/restaurant/restaurant/place_8-mobile.webp";
+
 export {
   hero,
   reservation,
@@ -36,4 +53,12 @@ export {
   place_6,
   place_7,
   place_8,
+  place_1_mobile,
+  place_2_mobile,
+  place_3_mobile,
+  place_4_mobile,
+  place_5_mobile,
+  place_6_mobile,
+  place_7_mobile,
+  place_8_mobile,
 };
