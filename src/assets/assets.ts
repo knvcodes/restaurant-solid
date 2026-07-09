@@ -1,5 +1,6 @@
 // SVG stays as import (it's already small, not optimized)
 import foodbg from "./foodbg.svg";
+import avatar from "./avatar.png";
 
 // Optimized images from public/images/resized (served as static URLs)
 
@@ -61,4 +62,5 @@ export {
   place_6_mobile,
   place_7_mobile,
   place_8_mobile,
+  avatar,
 };

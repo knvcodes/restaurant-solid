@@ -2,12 +2,13 @@ import { createEffect, createSignal, Show } from "solid-js";
 import { handleLogout, userStore } from "../../store/userStore";
 import { restaurant_placeholder } from "../../assets/assets";
 import { FaSolidCircleUser } from "solid-icons/fa";
-import { useLocation } from "@solidjs/router";
+import { useLocation, useNavigate } from "@solidjs/router";
 
 interface AccountMenuProps {}
 
 export function AccountMenu(props: AccountMenuProps) {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const [isMenuOpen, setisMenuOpen] = createSignal(false);
   const [bgClass, setbgClass] = createSignal("bg-gray-800/80");
@@ -22,6 +23,10 @@ export function AccountMenu(props: AccountMenuProps) {
       setbgClass("bg-white/80 hover:bg-gray-100/80");
     }
   });
+
+  const handleProfile = () => {
+    navigate("/settings");
+  };
 
   return (
     <div class="min-w-[var(--account-menu-min-w)]">
@@ -46,6 +51,7 @@ export function AccountMenu(props: AccountMenuProps) {
       </div>
       <Show when={isMenuOpen()}>
         <div class={`account-menu ${bgClass()}`}>
+          <div onclick={handleProfile}>Profile</div>
           <div onclick={handleLogout}>Logout</div>
         </div>
       </Show>

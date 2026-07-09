@@ -8,6 +8,7 @@ import AdminLogin from "./pages/admin/auth/adminLogin";
 
 // import ProtectedRoute from "./components/ProtectedRoutes";
 import AdminAuthLayout from "./layouts/AdminLayout";
+import Settings from "./pages/settings";
 
 export const routes: RouteDefinition[] = [
   {
@@ -17,6 +18,13 @@ export const routes: RouteDefinition[] = [
   {
     path: "/resetPassword/:id",
     component: Home,
+  },
+
+  // profile
+  {
+    path: "/settings",
+    component: lazy(() => import("./pages/settings")),
+    load: Settings,
   },
 
   // customer routes

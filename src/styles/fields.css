@@ -1,7 +1,7 @@
 /* input fields */
 
 .inputField {
-  @apply border-2 px-4 py-2 my-2 rounded-md w-full;
+  @apply border-b-2 px-4 py-2 my-2 w-full outline-none;
 }
 
 button {

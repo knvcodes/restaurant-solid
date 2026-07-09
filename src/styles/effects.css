@@ -21,5 +21,5 @@
 }
 
 .check {
-  @apply border-8 border-amber-50;
+  @apply border-8 border-amber-500;
 }

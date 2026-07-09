@@ -1,3 +1,7 @@
 .account-menu {
   @apply absolute right-0 p-4 top-16 backdrop-blur-3xl min-w-[var(--account-menu-min-w)] shadow-md;
+
+  div {
+    @apply cursor-pointer;
+  }
 }
