@@ -4,9 +4,12 @@ import { createSignal, JSX } from "solid-js";
 import { CustomButton } from "../custom/CustomButton";
 import { processImage } from "../../utils/imageProcessor";
 import { fetchUserData, uploadAvatar } from "../../service/user/user.service";
+import { userStore } from "../../store/userStore";
 
 const Profile = () => {
-  const [preview, setpreview] = createSignal<string | null>(null);
+  const [preview, setpreview] = createSignal<string | null>(
+    userStore.avatar ?? null,
+  );
   const [processedImage, setprocessedImage] = createSignal<File | null>(null);
 
   const handlePhotoUpload: JSX.EventHandler<HTMLInputElement, Event> = async (
@@ -42,7 +45,23 @@ const Profile = () => {
   };
 
   return (
-    <div class="profile verticle-list gap-4">
+    <div class="horizontal-list justify-between w-full">
+      <div class="profile verticle-list gap-4">
+        <div>
+          <div class="description">Name</div>
+          <div>{userStore.name}</div>
+        </div>
+        <div>
+          <div class="description">Type</div>
+          <div>{userStore.role}</div>
+        </div>
+
+        <CustomButton
+          label="Save changes"
+          onClick={handleSubmit}
+          disabled={preview() == null}
+        />
+      </div>
       <div class="relative flex-center mb-4">
         <img
           src={preview() || avatar}
@@ -61,20 +80,6 @@ const Profile = () => {
           class="check w-full h-full absolute right-0 left-0 top-0 bottom-0 rounded-full opacity-0"
         />
       </div>
-      <div>
-        <div class="description">Email</div>
-        <div>James@gmail.com</div>
-      </div>
-      <div>
-        <div class="description">Name</div>
-        <div>James buo</div>
-      </div>
-
-      <CustomButton
-        label="Save changes"
-        onClick={handleSubmit}
-        disabled={preview() == null}
-      />
     </div>
   );
 };

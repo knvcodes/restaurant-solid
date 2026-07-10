@@ -42,7 +42,7 @@ export default function Settings() {
       ></div>
       <div class="relative pt-28 lg:px-12 md:px-0 lg:w-5/6 sm:w-full mx-auto bg-white flex-1 flex">
         {/* sidebar */}
-        <div class="profile-menu verticle-list gap-4 border-r-2 max-w-60 cursor-pointer flex-1 h-min">
+        <div class="profile-menu verticle-list gap-4 border-r-2 max-w-60 min-w-60 cursor-pointer flex-1 h-min">
           <div
             onclick={() => handleCategoryChange("profile")}
             class={`${category() == "profile" ? "opacity-100" : "opacity-50"} w-min`}
@@ -57,7 +57,7 @@ export default function Settings() {
           </div>
         </div>
         {/* main section */}
-        <div class="mx-28">
+        <div class="mx-28 w-full">
           <Show when={category() == "profile"}>
             <Profile />
           </Show>

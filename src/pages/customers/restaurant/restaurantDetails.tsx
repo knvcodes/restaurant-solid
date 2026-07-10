@@ -115,6 +115,10 @@ export default function RestaurantDetails() {
                   <FiStar />
                 </div>
 
+                <div class="text-blue-500 label font-semibold mb-4 cursor-pointer">
+                  View all reviews
+                </div>
+
                 <div class="description">
                   <div>{generateAddress(restaurantObj()!)}</div>
                 </div>
@@ -157,6 +161,7 @@ export default function RestaurantDetails() {
 
             {/* dishes */}
             <div class="heading-2 mt-12 mb-4 xl:px-0 px-6">Dishes</div>
+            <hr class="mb-6" />
             <Show
               when={restaurantObj().dishes.length > 0}
               fallback={<div class="xl:px-0 px-6">No dishes found</div>}
