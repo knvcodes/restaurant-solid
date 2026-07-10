@@ -26,6 +26,7 @@ export function AccountMenu(props: AccountMenuProps) {
 
   const handleProfile = () => {
     navigate("/settings");
+    setisMenuOpen(false);
   };
 
   // Close menu when clicking

@@ -23,6 +23,7 @@
   "dependencies": {
     "@formisch/solid": "^0.13.0",
     "@kobalte/core": "^0.13.11",
+    "@solid-primitives/storage": "^4.3.5",
     "@solidjs/router": "^0.15.3",
     "@tanstack/solid-query": "^5.101.2",
     "@types/google.accounts": "^0.0.18",

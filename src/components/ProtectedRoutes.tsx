@@ -1,25 +1,25 @@
+// components/ProtectedRoute.tsx
 import { JSX, Show } from "solid-js";
 import { Navigate } from "@solidjs/router";
-import { store, UserRole } from "../store/userStore";
+import { UserRole, userStore } from "../store/userStore";
 
 interface ProtectedRouteProps {
   children: JSX.Element;
   allowedRoles: UserRole[];
 }
 
-export default function ProtectedRoute(props: ProtectedRouteProps) {
-  // Find the currently logged-in user reactively
-  const currentUser = () => store.users.find((u) => u.loggedIn);
+export function ProtectedRoute(props: ProtectedRouteProps) {
+  console.info("userStore.role:===>", userStore.role);
 
   return (
     <Show
-      // Check if user exists AND their role is allowed
-      when={currentUser() && props.allowedRoles.includes(currentUser()!.role)}
+      when={
+        userStore.role !== null &&
+        props.allowedRoles.includes(userStore.role as UserRole)
+      }
       fallback={
-        // If not allowed, check if they are logged in at all
-        <Show when={currentUser()} fallback={<Navigate href="/login" />}>
-          {/* Logged in but wrong role -> Unauthorized */}
-          <Navigate href="/unauthorized" />
+        <Show when={userStore.role} fallback={<Navigate href="/" />}>
+          <Navigate href="/" />
         </Show>
       }
     >

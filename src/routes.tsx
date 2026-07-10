@@ -6,9 +6,10 @@ import Restaurants from "./pages/customers/restaurant/restaurants";
 import RestaurantDetails from "./pages/customers/restaurant/restaurantDetails";
 import AdminLogin from "./pages/admin/auth/adminLogin";
 
-// import ProtectedRoute from "./components/ProtectedRoutes";
 import AdminAuthLayout from "./layouts/AdminLayout";
 import Settings from "./pages/settings";
+
+import { ProtectedRoute } from "./components/ProtectedRoutes";
 
 export const routes: RouteDefinition[] = [
   {
@@ -23,8 +24,14 @@ export const routes: RouteDefinition[] = [
   // profile
   {
     path: "/settings",
-    component: lazy(() => import("./pages/settings")),
-    load: Settings,
+    component: () => {
+      const Settings = lazy(() => import("./pages/settings"));
+      return (
+        <ProtectedRoute allowedRoles={["customer", "owner"]}>
+          <Settings />
+        </ProtectedRoute>
+      );
+    },
   },
 
   // customer routes
