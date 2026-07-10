@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from "@solidjs/router";
 import { AiOutlineClose } from "solid-icons/ai";
 import { createMemo, Setter, Show } from "solid-js";
+import { openModal } from "../../store/modalStore";
 
 interface SideMenuProps {
   open: boolean;
@@ -33,18 +34,26 @@ export function SideMenu(props: SideMenuProps) {
 
   return (
     <Show when={props.open}>
-      <div class={`side-menu ${textColor()}`}>
+      <div class={`side-menu ${textColor()} flex flex-col`}>
         <AiOutlineClose
           font-size="20"
           class="ml-auto h-16"
           onclick={() => setburgerMenuOpen(false)}
         />
-        <div class="verticle-list gap-4">
+        <div class="verticle-list gap-4 h-full">
           <div class="side-item" onclick={() => goto("/restaurants")}>
             Restaurants
           </div>
           <div class="side-item" onclick={() => goto("/settings")}>
             Settings
+          </div>
+
+          <hr />
+          <div
+            class="side-item text-yellow-500 mb-12"
+            onclick={() => openModal("login")}
+          >
+            Login
           </div>
         </div>
       </div>

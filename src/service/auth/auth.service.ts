@@ -10,10 +10,13 @@ import {
 } from "../../types";
 import api from "../../utils/axios";
 import { getErrorMessage, showToastErrors } from "../../utils/helpers";
+import { NavigateOptions } from "@solidjs/router";
 
 export const login = async (
   payload: LoginPayload,
   setLoading: Setter<boolean>,
+  navigate: (arg1: string, arg2: { replace: boolean }) => void,
+  callback?: () => void,
 ) => {
   try {
     const { email, password } = payload;
@@ -27,12 +30,16 @@ export const login = async (
 
     closeModal();
 
-    const { name, role } = responseData.data.data;
+    const { name, role, avatar } = responseData.data.data;
 
     setuserStore({
       name,
       role,
+      avatar,
     });
+
+    navigate("/restaurants", { replace: true });
+    callback?.();
   } catch (error) {
     const errorMessage = getErrorMessage(error);
 
@@ -139,6 +146,7 @@ export const forgotPassword = async (
 export const resetPassword = async (
   payload: ResetPasswordPayload,
   setLoading: Setter<boolean>,
+  navigate: (arg0: string, arg1: { replace: boolean }) => void,
 ) => {
   try {
     setLoading(true);
@@ -153,6 +161,7 @@ export const resetPassword = async (
 
     toastActions.show(response.data.message, "Success");
     openModal("login");
+    navigate("/", { replace: true });
   } catch (error) {
     const errorMessage = getErrorMessage(error);
 

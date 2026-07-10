@@ -3,7 +3,7 @@ import { avatar } from "../../assets/assets";
 import { createSignal, JSX } from "solid-js";
 import { CustomButton } from "../custom/CustomButton";
 import { processImage } from "../../utils/imageProcessor";
-import { uploadAvatar } from "../../service/user/user.service";
+import { fetchUserData, uploadAvatar } from "../../service/user/user.service";
 
 const Profile = () => {
   const [preview, setpreview] = createSignal<string | null>(null);
@@ -39,6 +39,7 @@ const Profile = () => {
 
     if (uploadFile) {
       await uploadAvatar(uploadFile);
+      const user = await fetchUserData();
     }
   };
 

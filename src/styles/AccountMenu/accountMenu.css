@@ -1,7 +1,7 @@
 .account-menu {
-  @apply absolute right-0 p-4 top-16 backdrop-blur-3xl min-w-[var(--account-menu-min-w)] shadow-md;
+  @apply absolute right-0 p-4 top-16 backdrop-blur-3xl min-w-[var(--account-menu-min-w)] shadow-md flex flex-col gap-2;
 
   div {
-    @apply cursor-pointer;
+    @apply cursor-pointer opacity-50 hover:opacity-100;
   }
 }

@@ -34,7 +34,7 @@ const App: ParentComponent = (props) => {
 
         {/* toast */}
         <CustomToast />
-        <ModalPortal />
+        <ModalPortal setburgerMenuOpen={setburgerMenuOpen} />
       </div>
     </QueryClientProvider>
   );

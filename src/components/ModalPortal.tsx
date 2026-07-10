@@ -1,9 +1,16 @@
-import { createEffect, Show } from "solid-js";
+import { createEffect, Setter, Show } from "solid-js";
 import AuthModals from "./auth/AuthModals";
 import { closeModal, modalStore, openModal } from "../store/modalStore";
 import DishModal from "./restaurants/DishModal";
+import { int } from "zod";
 
-export default function ModalPortal() {
+interface ModalPortalProps {
+  setburgerMenuOpen: Setter<boolean>;
+}
+
+export default function ModalPortal(props: ModalPortalProps) {
+  const { setburgerMenuOpen } = props;
+
   // auto open resetpassword modal on path
   createEffect(() => {
     if (location.pathname.includes("resetPassword")) {
@@ -23,7 +30,7 @@ export default function ModalPortal() {
   return (
     <Show when={modalStore.type}>
       <div class="modal-overlay" onClick={closeModal}>
-        <AuthModals />
+        <AuthModals setburgerMenuOpen={setburgerMenuOpen} />
         <DishModal />
       </div>
     </Show>

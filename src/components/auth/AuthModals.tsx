@@ -1,5 +1,5 @@
 // components/ModalPortal.tsx
-import { createSignal, Show } from "solid-js";
+import { createSignal, Setter, Show } from "solid-js";
 import { useNavigate } from "@solidjs/router";
 import { closeModal, modalStore, openModal } from "../../store/modalStore";
 import {
@@ -19,7 +19,12 @@ import { RegisterModal } from "./RegisterModal";
 import { ForgotPasswordModal } from "./ForgotPasswordModal";
 import { ResetPasswordModal } from "./ResetPasswordModal";
 
-export default function AuthModals() {
+interface AuthModalsProps {
+  setburgerMenuOpen: Setter<boolean>;
+}
+
+export default function AuthModals(props: AuthModalsProps) {
+  const { setburgerMenuOpen } = props;
   const navigate = useNavigate();
 
   const [isLoading, setisLoading] = createSignal(false);
@@ -30,7 +35,13 @@ export default function AuthModals() {
 
   //   service calls
   const handleLogin = async (payload: LoginPayload) => {
-    await login(payload, setisLoading);
+    try {
+      await login(payload, setisLoading, navigate, () => {
+        setburgerMenuOpen(false);
+      });
+    } catch (error) {
+      console.info("error:===>", error);
+    }
   };
 
   const handleRegistration = async (payload: RegisterPayload) => {
@@ -42,8 +53,7 @@ export default function AuthModals() {
   };
 
   const handleResetPassword = async (payload: ResetPasswordPayload) => {
-    await resetPassword({ ...payload }, setisLoading);
-    navigate("/", { replace: true });
+    await resetPassword({ ...payload }, setisLoading, navigate);
   };
 
   return (

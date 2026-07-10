@@ -62,9 +62,6 @@ export default function Header(props: HeaderProps) {
             <a href="/restaurants" class="hover:text-indigo-600 transition">
               Restaurants
             </a>
-            <a href="settings" class="hover:text-indigo-600 transition">
-              Settings
-            </a>
           </nav>
 
           <div class="md:block hidden">
