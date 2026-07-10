@@ -3,8 +3,6 @@ import { For, Show } from "solid-js";
 import { CustomBreadCrumbsProps, Path } from "../../types";
 
 const CustomBreadCrumbs = (props: CustomBreadCrumbsProps) => {
-  console.info("props.paths:===>", props.paths);
-
   return (
     <Show when={props.paths.length > 0}>
       <Breadcrumbs>

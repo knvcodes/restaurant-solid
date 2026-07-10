@@ -41,8 +41,6 @@ const handleAddingDish = (dish: OrderDish, arr: OrderDish[]) => {
 const handleRemoveDish = (serving_id: string, arr: OrderDish[]) => {
   const findDish = arr.find((dishItem) => dishItem.serving_id == serving_id);
 
-  console.info("findDish:===>", findDish, serving_id);
-
   // if serving quantity 1. remove the dish, else reduce quantity
   if (findDish && findDish.serving_quantity == 1) {
     return arr.filter((dishItem) => dishItem.serving_id !== serving_id);

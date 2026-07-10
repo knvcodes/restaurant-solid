@@ -35,8 +35,6 @@ const Profile = () => {
   const handleSubmit = async () => {
     const uploadFile = processedImage();
 
-    console.info("processImage():===>", processedImage());
-
     if (uploadFile) {
       await uploadAvatar(uploadFile);
       const user = await fetchUserData();

@@ -35,8 +35,6 @@ const fetchUserData = async () => {
   try {
     const response = await api.get("/user/profile");
 
-    console.info("response.data:===>", response.data);
-
     const { name, avatar, role } = response.data.data;
 
     setuserStore({
