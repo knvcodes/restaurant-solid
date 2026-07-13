@@ -58,7 +58,7 @@ export default function Header(props: HeaderProps) {
           </div>
 
           {/* Desktop Nav (centered absolutely) */}
-          <nav class="hidden md:flex gap-4">
+          <nav class="hidden md:flex gap-4 mx-auto">
             <a href="/restaurants" class="hover:text-indigo-600 transition">
               Restaurants
             </a>

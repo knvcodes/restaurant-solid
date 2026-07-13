@@ -13,6 +13,7 @@ interface DishCardProps {
   serveType?: string;
   onMinus?: () => void;
   onPlus?: () => void;
+  restaurantName: string;
 }
 
 export default function DishCard(props: DishCardProps) {
@@ -23,11 +24,12 @@ export default function DishCard(props: DishCardProps) {
     serveType,
     onMinus = () => {},
     onPlus = () => {},
+    restaurantName,
   } = props;
 
   const handleDishClick = () => {
     openModal("dish");
-    selectDish(dish);
+    selectDish(dish, restaurantName);
   };
 
   const handleRemoveDishItem = (serving_id: string) => {

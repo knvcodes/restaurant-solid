@@ -22,7 +22,7 @@ export default function DishModal() {
   const selectedDishIds = createMemo(() => {
     if (restaurantStore.dishes.length > 0) {
       const selectedDishObj = restaurantStore.dishes.find(
-        (dishItem) => dishItem.id == restaurantStore.selectedDish?.id,
+        (dishItem) => dishItem._id == restaurantStore.selectedDish?._id,
       );
       const ids = selectedDishObj?.serving
         .filter((servingItem) => servingItem.total > 0)
@@ -56,7 +56,12 @@ export default function DishModal() {
     const dish = dishItem();
 
     if (dish) {
-      handleAddingDish(dish.restaurantId, serveItem._id, dish);
+      handleAddingDish(
+        dish.restaurantName,
+        dish.restaurantId,
+        serveItem._id,
+        dish,
+      );
     }
   };
 

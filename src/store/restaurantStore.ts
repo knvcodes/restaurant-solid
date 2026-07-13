@@ -27,13 +27,16 @@ export {
 };
 
 export const handleAddingDish = (
+  restaurantName: string,
   restaurant_id: string,
   serving_id: string,
   dish: IDish,
 ) => {
   const dishExist = restaurantStore.dishes.find(
-    (dishItem) => dishItem.id == dish.id,
+    (dishItem) => dishItem._id == dish._id,
   );
+
+  console.info("restaurantName:===>", restaurantName);
 
   if (dishExist) {
     const newList = restaurantStore.dishes.map((dishItem) => {
@@ -65,6 +68,7 @@ export const handleAddingDish = (
         ...restaurantStore.dishes,
         {
           ...dish,
+          restaurantName,
           serving: dish.serving.map((servingItem) => {
             if (servingItem._id == serving_id) {
               return {
@@ -121,9 +125,16 @@ export const removeRestaurantDishes = (restaurant_id: string) => {
   });
 };
 
-export const selectDish = (dish: IDish) => {
+export const selectDish = (dish: IDish, restaurantName: string) => {
   persistedSetRestaurantStore({
     ...restaurantStore,
-    selectedDish: dish,
+    selectedDish: { ...dish, restaurantName },
+  });
+};
+
+export const clearAllDishes = () => {
+  persistedSetRestaurantStore({
+    dishes: [],
+    selectedDish: persistedRestaurantStore.selectedDish,
   });
 };

@@ -40,7 +40,8 @@ export interface IServing {
 }
 
 export interface IDish {
-  id: string;
+  restaurantName: string;
+  _id: string;
   name: string;
   description: string;
   tags: string[];

@@ -1,6 +1,7 @@
 import { createEffect, createMemo, createSignal, For, Show } from "solid-js";
 import { foodbg } from "../assets/assets";
 import {
+  clearAllDishes,
   handleAddingDish,
   handleRemoveDish,
   restaurantStore,
@@ -11,12 +12,14 @@ import { IDish, IServing } from "../types";
 export default function Cart() {
   const cartItems = createMemo(() => restaurantStore.dishes);
 
-  console.info("cartItems:===>", cartItems());
-
   // add/remove dish functions
-  const handleDish = (dish: IDish, serveItem: IServing) => {
+  const handleDish = (
+    restaurantName: string,
+    dish: IDish,
+    serveItem: IServing,
+  ) => {
     if (dish) {
-      handleAddingDish(dish.restaurantId, serveItem._id, dish);
+      handleAddingDish(restaurantName, dish.restaurantId, serveItem._id, dish);
     }
   };
 
@@ -38,26 +41,44 @@ export default function Cart() {
         }}
       ></div>
       <div class="relative pt-28 lg:px-12 md:px-0 lg:w-5/6 sm:w-full mx-auto h-full flex-1 bg-white">
-        <div class="heading-3 mb-2">Orders</div>
-        <hr class="mb-8" />
+        <div class="horizontal-list justify-between">
+          <div class="heading-3 mb-2">Orders</div>
+          <div onclick={() => clearAllDishes()} class="cursor-pointer">
+            Clear All Orders
+          </div>
+        </div>
+        <hr class="mb-12" />
 
-        <div class="verticle-list gap-4">
+        <div class="verticle-list gap-20">
           <For each={cartItems()}>
             {(dish) => (
-              <For each={dish.serving}>
-                {(serveItem) => (
-                  <DishCard
-                    onMinus={() => handleRemoveDishItem(dish, serveItem._id)}
-                    onPlus={() =>
-                      handleAddingDish(dish.restaurantId, serveItem._id, dish)
-                    }
-                    serveType={serveItem.type}
-                    dish={dish}
-                    showServeButtons={true}
-                    serveCount={serveItem.total}
-                  />
-                )}
-              </For>
+              <div>
+                <div class="heading-3">{dish.restaurantName}</div>
+                <For
+                  each={dish.serving.filter(
+                    (servingItem) => servingItem.total > 0,
+                  )}
+                >
+                  {(serveItem) => (
+                    <DishCard
+                      restaurantName={dish.restaurantName}
+                      onMinus={() => handleRemoveDishItem(dish, serveItem._id)}
+                      onPlus={() =>
+                        handleAddingDish(
+                          dish.restaurantName,
+                          dish.restaurantId,
+                          serveItem._id,
+                          dish,
+                        )
+                      }
+                      serveType={serveItem.type}
+                      dish={dish}
+                      showServeButtons={true}
+                      serveCount={serveItem.total}
+                    />
+                  )}
+                </For>
+              </div>
             )}
           </For>
         </div>

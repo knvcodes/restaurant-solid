@@ -168,7 +168,12 @@ export default function RestaurantDetails() {
             >
               <div class="verticle-list md:px-0 px-4 gap-4">
                 <For each={restaurantObj().dishes ?? []}>
-                  {(dish) => <DishCard dish={dish} />}
+                  {(dish) => (
+                    <DishCard
+                      dish={dish}
+                      restaurantName={restaurantObj().name}
+                    />
+                  )}
                 </For>
               </div>
             </Show>
