@@ -1,6 +1,6 @@
 import { createEffect, createSignal, onCleanup, Show } from "solid-js";
 import { handleLogout, userStore } from "../../store/userStore";
-import { restaurant_placeholder } from "../../assets/assets";
+import { avatar } from "../../assets/assets";
 import { FaSolidCircleUser } from "solid-icons/fa";
 import { useLocation, useNavigate } from "@solidjs/router";
 
@@ -12,6 +12,7 @@ export function AccountMenu(props: AccountMenuProps) {
 
   const [isMenuOpen, setisMenuOpen] = createSignal(false);
   const [bgClass, setbgClass] = createSignal("bg-gray-800/80");
+  const [showPlaceholder, setshowPlaceholder] = createSignal(false);
 
   // dynamic styling
   createEffect(() => {
@@ -60,10 +61,13 @@ export function AccountMenu(props: AccountMenuProps) {
           fallback={<FaSolidCircleUser font-size="20" />}
         >
           <img
-            src={userStore.avatar ?? restaurant_placeholder}
+            src={
+              userStore.avatar && !showPlaceholder() ? userStore.avatar : avatar
+            }
             alt="userProfilePhoto"
             referrerpolicy="no-referrer"
             class="rounded-full w-10 h-10"
+            onerror={() => setshowPlaceholder(true)}
           />
         </Show>
         <div>{userStore.name}</div>

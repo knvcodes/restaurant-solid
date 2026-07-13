@@ -1,8 +1,8 @@
 import { createEffect, createMemo, createSignal, For, Show } from "solid-js";
 import { closeModal, modalStore } from "../../store/modalStore";
 import {
-  addDish,
-  deleteDish,
+  handleAddingDish,
+  handleRemoveDish,
   removeRestaurantDishes,
   restaurantStore,
 } from "../../store/restaurantStore";
@@ -16,28 +16,38 @@ import { FaSolidMinus, FaSolidPlus } from "solid-icons/fa";
 export default function DishModal() {
   const dishItem = createMemo(() => restaurantStore.selectedDish);
 
+  const [dishCount, setdishCount] = createSignal<Record<string, number>>({});
+
   // mapping to show serving selection
-  const selectedDishIds = createMemo(() =>
-    restaurantStore.dishes.length > 0
-      ? restaurantStore.dishes.map((dishItem) => dishItem.serving_id)
-      : [],
-  );
-
-  // obj for selection mapping
-  const [selectedDishes, setselectedDishes] = createSignal<
-    Record<string, number>
-  >({});
-
-  createEffect(() => {
+  const selectedDishIds = createMemo(() => {
     if (restaurantStore.dishes.length > 0) {
-      let newDishObj: Record<string, number> = {};
-      restaurantStore.dishes.forEach((dishItem) => {
-        newDishObj[dishItem.serving_id] = dishItem.serving_quantity;
-      });
+      const selectedDishObj = restaurantStore.dishes.find(
+        (dishItem) => dishItem.id == restaurantStore.selectedDish?.id,
+      );
+      const ids = selectedDishObj?.serving
+        .filter((servingItem) => servingItem.total > 0)
+        .map((serveItem) => {
+          return {
+            _id: serveItem._id,
+            total: serveItem.total,
+          };
+        });
 
-      setselectedDishes(newDishObj);
+      if (ids && ids.length > 0) {
+        let newObj: Record<string, number> = {};
+        ids.forEach((idItem) => {
+          newObj[idItem._id] = idItem.total;
+        });
+        setdishCount(newObj);
+      }
+
+      if (ids) {
+        return ids.map((serveItem) => serveItem._id);
+      } else {
+        return [];
+      }
     } else {
-      setselectedDishes({});
+      return [];
     }
   });
 
@@ -46,17 +56,16 @@ export default function DishModal() {
     const dish = dishItem();
 
     if (dish) {
-      addDish({
-        ...dish,
-        serving_id: serveItem._id,
-        serving_quantity: 1,
-        serving: serveItem,
-      });
+      handleAddingDish(dish.restaurantId, serveItem._id, dish);
     }
   };
 
-  const handleRemoveDish = (serving_id: string) => {
-    deleteDish(serving_id);
+  const handleRemoveDishItem = (serving_id: string) => {
+    const dish = dishItem();
+
+    if (dish) {
+      handleRemoveDish(dish?.restaurantId, serving_id);
+    }
   };
 
   return (
@@ -102,11 +111,11 @@ export default function DishModal() {
                           <div class="serve-buttons">
                             <FaSolidMinus
                               onclick={(e) => {
-                                handleRemoveDish(serveItem._id);
+                                handleRemoveDishItem(serveItem._id);
                                 e.stopPropagation();
                               }}
                             />
-                            <div>{selectedDishes()[serveItem._id]}</div>
+                            <div>{dishCount()[serveItem._id]}</div>
                             <FaSolidPlus
                               onclick={(e) => {
                                 handleDish(serveItem);
@@ -129,7 +138,7 @@ export default function DishModal() {
                       removeRestaurantDishes(restaurantId);
                     }}
                   />
-                  <Show when={Object.keys(selectedDishes()).length > 0}>
+                  <Show when={Object.keys(selectedDishIds()).length > 0}>
                     <CustomButton label={"Add"} onClick={() => closeModal()} />
                   </Show>
                 </div>

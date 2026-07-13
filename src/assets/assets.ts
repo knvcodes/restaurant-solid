@@ -1,6 +1,6 @@
 // SVG stays as import (it's already small, not optimized)
 import foodbg from "./foodbg.svg";
-import avatar from "./avatar.png";
+import avatar from "/images/resized/avatar.webp";
 
 // Optimized images from public/images/resized (served as static URLs)
 
@@ -12,7 +12,7 @@ const cuisines = "/images/resized/cuisines.webp";
 
 // RESTAURANTS
 const restaurant_placeholder =
-  "/images/resized/restaurant/restaurant_placeholder.jpg";
+  "/images/resized/restaurant/restaurant/restaurant_placeholder.jpg";
 
 const place_1 = "/images/resized/restaurant/restaurant/place_1.webp";
 const place_2 = "/images/resized/restaurant/restaurant/place_2.webp";

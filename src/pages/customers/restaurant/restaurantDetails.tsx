@@ -1,6 +1,6 @@
 import { createEffect, createSignal, For, onMount, Show } from "solid-js";
 import "../../style.css";
-import { IResponse, IRestaurant, Path } from "../../../types";
+import { Path } from "../../../types";
 import {
   extractBreadCrumbs,
   formatDateTime,

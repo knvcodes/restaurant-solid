@@ -11,6 +11,7 @@ const Profile = () => {
     userStore.avatar ?? null,
   );
   const [processedImage, setprocessedImage] = createSignal<File | null>(null);
+  const [showPlaceholder, setshowPlaceholder] = createSignal(false);
 
   const handlePhotoUpload: JSX.EventHandler<HTMLInputElement, Event> = async (
     e,
@@ -29,6 +30,7 @@ const Profile = () => {
         // Create preview
         setpreview(URL.createObjectURL(processed));
         setprocessedImage(processed);
+        setshowPlaceholder(false);
       } catch (err) {
         console.error("Processing failed:", err);
       }
@@ -64,11 +66,12 @@ const Profile = () => {
       </div>
       <div class="relative flex-center mb-4">
         <img
-          src={preview() || avatar}
+          src={preview() && !showPlaceholder() ? (preview() ?? avatar) : avatar}
           alt="uploadedAvatar"
           width={200}
           height={200}
           class="rounded-full aspect-[4/4]"
+          onerror={() => setshowPlaceholder(true)}
         />
         <FiEdit class="absolute right-0 bottom-0" font-size="20" />
         <input

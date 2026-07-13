@@ -36,6 +36,7 @@ export interface IServing {
   price: number;
   currency: string;
   _id: string;
+  total: number;
 }
 
 export interface IDish {
