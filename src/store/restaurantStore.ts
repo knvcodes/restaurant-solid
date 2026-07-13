@@ -1,5 +1,6 @@
 import { createStore } from "solid-js/store";
 import { IDish, IServing } from "../types";
+import { makePersisted } from "@solid-primitives/storage";
 
 interface RestaurantState {
   dishes: IDish[];
@@ -7,11 +8,23 @@ interface RestaurantState {
 }
 
 // Initialize store
-export const [restaurantStore, setrestaurantStore] =
-  createStore<RestaurantState>({
-    dishes: [],
-    selectedDish: null,
-  });
+const [restaurantStore, setrestaurantStore] = createStore<RestaurantState>({
+  dishes: [],
+  selectedDish: null,
+});
+
+const [persistedRestaurantStore, persistedSetRestaurantStore] = makePersisted(
+  [restaurantStore, setrestaurantStore],
+  {
+    name: "restaurantStore",
+    storage: sessionStorage,
+  },
+);
+
+export {
+  persistedRestaurantStore as restaurantStore,
+  persistedSetRestaurantStore as setrestaurantStore,
+};
 
 export const handleAddingDish = (
   restaurant_id: string,
@@ -43,11 +56,11 @@ export const handleAddingDish = (
       }
     });
 
-    setrestaurantStore({
+    persistedSetRestaurantStore({
       dishes: newList,
     });
   } else {
-    setrestaurantStore({
+    persistedSetRestaurantStore({
       dishes: [
         ...restaurantStore.dishes,
         {
@@ -89,7 +102,7 @@ export const handleRemoveDish = (restaurant_id: string, serving_id: string) => {
     }
   });
 
-  setrestaurantStore({
+  persistedSetRestaurantStore({
     dishes: newList,
   });
 };
@@ -103,13 +116,13 @@ export const removeRestaurantDishes = (restaurant_id: string) => {
     }
   });
 
-  setrestaurantStore({
+  persistedSetRestaurantStore({
     dishes: newList,
   });
 };
 
 export const selectDish = (dish: IDish) => {
-  setrestaurantStore({
+  persistedSetRestaurantStore({
     ...restaurantStore,
     selectedDish: dish,
   });

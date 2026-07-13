@@ -90,7 +90,10 @@ export default function Header(props: HeaderProps) {
             <div class="horizontal-list items-center gap-12">
               <div class="relative">
                 <VsCircleFilled class="absolute -right-4 -top-2" color="red" />
-                <FaSolidCartShopping font-size="20" />
+                <FaSolidCartShopping
+                  font-size="20"
+                  onclick={() => navigate("/cart")}
+                />
               </div>
               <AccountMenu />
             </div>

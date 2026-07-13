@@ -1,20 +1,39 @@
-import { For } from "solid-js";
+import { For, Show } from "solid-js";
 import { IDish } from "../../types";
 import { generateRandomImageUrl } from "../../utils/helpers";
 import { randomDishUrls } from "../../utils/staticData";
 import { openModal } from "../../store/modalStore";
-import { selectDish } from "../../store/restaurantStore";
+import { handleRemoveDish, selectDish } from "../../store/restaurantStore";
+import { FaSolidMinus, FaSolidPlus } from "solid-icons/fa";
 
 interface DishCardProps {
   dish: IDish;
+  showServeButtons?: boolean;
+  serveCount?: number;
+  serveType?: string;
+  onMinus?: () => void;
+  onPlus?: () => void;
 }
 
 export default function DishCard(props: DishCardProps) {
-  const { dish } = props;
+  const {
+    dish,
+    showServeButtons,
+    serveCount,
+    serveType,
+    onMinus = () => {},
+    onPlus = () => {},
+  } = props;
 
   const handleDishClick = () => {
     openModal("dish");
     selectDish(dish);
+  };
+
+  const handleRemoveDishItem = (serving_id: string) => {
+    if (dish) {
+      handleRemoveDish(dish?.restaurantId, serving_id);
+    }
   };
 
   return (
@@ -26,18 +45,42 @@ export default function DishCard(props: DishCardProps) {
           class="md:min-w-[300px] max-h-[225px] h-full max-w-[300px] mx-auto object-cover pointer-events-none"
         />
       </div>
-      <div class="flex flex-col">
-        <div class="title">{dish.name}</div>
+      <div class="flex flex-col w-full">
+        <div class="flex justify-between w-full">
+          <div class="title">{dish.name}</div>
+          <Show when={showServeButtons}>
+            <div class="serve-buttons flex items-center gap-2 bg-white px-2 w-28 justify-between">
+              <FaSolidMinus
+                onclick={(e) => {
+                  onMinus();
+                  e.stopPropagation();
+                }}
+              />
+              <div>{serveCount}</div>
+              <FaSolidPlus
+                onclick={(e) => {
+                  onPlus();
+                  e.stopPropagation();
+                }}
+              />
+            </div>
+          </Show>
+        </div>
         <div class="description">{dish.description}</div>
 
         <div class="label horizontal-list gap-4 md:mt-auto mt-4">
-          <For each={dish.serving}>
-            {(serving) => (
-              <div class="verticle-list">
-                <div>{serving.type}</div>
-              </div>
-            )}
-          </For>
+          <Show
+            when={!showServeButtons}
+            fallback={<div class="">{serveType}</div>}
+          >
+            <For each={dish.serving}>
+              {(serving) => (
+                <div class="verticle-list">
+                  <div>{serving.type}</div>
+                </div>
+              )}
+            </For>
+          </Show>
         </div>
       </div>
     </div>

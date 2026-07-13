@@ -10,6 +10,7 @@ import AdminAuthLayout from "./layouts/AdminLayout";
 import Settings from "./pages/settings";
 
 import { ProtectedRoute } from "./components/ProtectedRoutes";
+import Cart from "./pages/cart";
 
 export const routes: RouteDefinition[] = [
   {
@@ -29,6 +30,18 @@ export const routes: RouteDefinition[] = [
       return (
         <ProtectedRoute allowedRoles={["customer", "owner"]}>
           <Settings />
+        </ProtectedRoute>
+      );
+    },
+  },
+
+  {
+    path: "/cart",
+    component: () => {
+      const Settings = lazy(() => import("./pages/cart"));
+      return (
+        <ProtectedRoute allowedRoles={["customer", "owner"]}>
+          <Cart />
         </ProtectedRoute>
       );
     },
