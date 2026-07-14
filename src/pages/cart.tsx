@@ -40,7 +40,7 @@ export default function Cart() {
           opacity: 0.1,
         }}
       ></div>
-      <div class="relative pt-28 lg:px-12 md:px-0 lg:w-5/6 sm:w-full mx-auto h-full flex-1 bg-white">
+      <div class="relative pt-28 lg:px-12 md:px-0 lg:w-5/6  px-4 w-full mx-auto h-full flex-1 bg-white">
         <div class="horizontal-list justify-between">
           <div class="heading-3 mb-2">Orders</div>
           <div onclick={() => clearAllDishes()} class="cursor-pointer">

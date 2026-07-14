@@ -44,6 +44,9 @@ export function SideMenu(props: SideMenuProps) {
           <div class="side-item" onclick={() => goto("/restaurants")}>
             Restaurants
           </div>
+          <div class="side-item" onclick={() => goto("/cart")}>
+            Cart
+          </div>
           <div class="side-item" onclick={() => goto("/settings")}>
             Settings
           </div>

@@ -40,9 +40,9 @@ export default function Settings() {
           opacity: 0.1,
         }}
       ></div>
-      <div class="relative pt-28 lg:px-12 md:px-0 lg:w-5/6 sm:w-full mx-auto bg-white flex-1 flex">
+      <div class="relative pt-28 lg:px-12 md:px-0 lg:w-5/6 px-4 w-full mx-auto bg-white md:flex-1 gap-12 flex md:flex-row flex-col">
         {/* sidebar */}
-        <div class="profile-menu verticle-list gap-4 border-r-2 max-w-60 min-w-60 cursor-pointer flex-1 h-min">
+        <div class="profile-menu verticle-list gap-4 md:border-r-2 md:max-w-60 md:min-w-60 w-full cursor-pointer flex-1 h-min">
           <div
             onclick={() => handleCategoryChange("profile")}
             class={`${category() == "profile" ? "opacity-100" : "opacity-50"} w-min`}
@@ -56,8 +56,10 @@ export default function Settings() {
             Orders
           </div>
         </div>
+
+        <hr />
         {/* main section */}
-        <div class="mx-28 w-full">
+        <div class="md:mx-28 md:w-full">
           <Show when={category() == "profile"}>
             <Profile />
           </Show>

@@ -71,7 +71,8 @@ export default function Header(props: HeaderProps) {
               </Button>
             </Show>
           </div>
-          <div class="block md:hidden">
+
+          <div class="flex items-center gap-4">
             <Show
               when={!burgerMenuOpen}
               fallback={
@@ -81,23 +82,31 @@ export default function Header(props: HeaderProps) {
                 />
               }
             >
-              <FiMenu font-size="20" onclick={() => setburgerMenuOpen(true)} />
+              <Show when={isLoggedIn()}>
+                <div class="horizontal-list items-center gap-12">
+                  <div class="relative md:block hidden">
+                    <VsCircleFilled
+                      class="absolute -right-4 -top-2"
+                      color="red"
+                    />
+                    <FaSolidCartShopping
+                      font-size="20"
+                      onclick={() => navigate("/cart")}
+                    />
+                  </div>
+                  <AccountMenu />
+                </div>
+              </Show>
+
+              <FiMenu
+                font-size="20"
+                class="md:hidden block"
+                onclick={() => setburgerMenuOpen(true)}
+              />
             </Show>
           </div>
 
           {/* logged in menu */}
-          <Show when={isLoggedIn()}>
-            <div class="horizontal-list items-center gap-12">
-              <div class="relative">
-                <VsCircleFilled class="absolute -right-4 -top-2" color="red" />
-                <FaSolidCartShopping
-                  font-size="20"
-                  onclick={() => navigate("/cart")}
-                />
-              </div>
-              <AccountMenu />
-            </div>
-          </Show>
         </div>
       </div>
     </header>

@@ -51,7 +51,7 @@ export function AccountMenu(props: AccountMenuProps) {
   });
 
   return (
-    <div class="min-w-[var(--account-menu-min-w)]" ref={menuRef}>
+    <div class="md:min-w-[var(--account-menu-min-w)]" ref={menuRef}>
       <div
         class="horizontal-list gap-4 items-center cursor-pointer relative"
         onclick={() => setisMenuOpen((p) => !p)}
