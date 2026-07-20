@@ -6,11 +6,12 @@ import Restaurants from "./pages/customers/restaurant/restaurants";
 import RestaurantDetails from "./pages/customers/restaurant/restaurantDetails";
 import AdminLogin from "./pages/admin/auth/adminLogin";
 
-import AdminAuthLayout from "./layouts/AdminLayout";
 import Settings from "./pages/settings";
 
 import { ProtectedRoute } from "./components/ProtectedRoutes";
 import Cart from "./pages/cart";
+import AdminAuthLayout from "./layouts/AdminAuthLayout";
+import AdminLayout from "./layouts/AdminLayout";
 
 export const routes: RouteDefinition[] = [
   {
@@ -69,6 +70,18 @@ export const routes: RouteDefinition[] = [
       {
         path: "/login",
         component: lazy(() => import("./pages/admin/auth/adminLogin")),
+        load: AdminLogin,
+      },
+    ],
+  },
+
+  {
+    path: "/admin",
+    component: AdminLayout,
+    children: [
+      {
+        path: "/dashboard",
+        component: lazy(() => import("./pages/admin/dashboard/dashboard")),
         load: AdminLogin,
       },
     ],

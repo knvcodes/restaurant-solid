@@ -18,6 +18,12 @@
   @apply text-gray-600 font-semibold;
 }
 
+.label-container-dark {
+  div {
+    @apply text-gray-500 font-semibold hover:text-white cursor-pointer;
+  }
+}
+
 .description {
   @apply text-gray-400;
 }

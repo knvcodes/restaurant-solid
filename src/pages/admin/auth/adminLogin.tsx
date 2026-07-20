@@ -7,8 +7,11 @@ import { loginSchema } from "../../../validations/auth/auth";
 import { createForm, handleSubmit } from "@formisch/solid";
 import { login } from "../../../service/auth/auth.service";
 import { CustomButton } from "../../../components/custom/CustomButton";
+import { useNavigate } from "@solidjs/router";
 
 export default function AdminLogin() {
+  const navigate = useNavigate();
+
   const loginForm = createForm({
     schema: loginSchema,
   });
@@ -26,6 +29,7 @@ export default function AdminLogin() {
         ...values,
       },
       setisLoading,
+      navigate,
     );
   });
 

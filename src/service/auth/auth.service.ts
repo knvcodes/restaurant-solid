@@ -32,13 +32,20 @@ export const login = async (
 
     const { name, role, avatar } = responseData.data.data;
 
+    console.info("role:===>", role);
+
     setuserStore({
       name,
       role,
       avatar,
     });
 
-    navigate("/restaurants", { replace: true });
+    if (role == "customer") {
+      navigate("/restaurants", { replace: true });
+    } else if (role == "owner") {
+      navigate("/admin/dashboard", { replace: true });
+    }
+
     callback?.();
   } catch (error) {
     const errorMessage = getErrorMessage(error);
