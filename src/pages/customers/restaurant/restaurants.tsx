@@ -8,26 +8,66 @@ import RestaurantListingSkeleton from "../../../components/restaurants/Restauran
 import {} from "../../../service/restaurants/customer.service";
 import { useRestaurants } from "../../../service/restaurants/customer.provider";
 import { IRestaurant } from "../../../types";
+import { Meta } from "@solidjs/meta";
 
 export default function Restaurants() {
   const navigate = useNavigate();
 
-  const [search, setsearch] = createSignal("&limit=50");
+  // searching states
+  // infinite scroll states
+  const [search, setsearch] = createSignal("");
+  const [observerDiv, setobserverDiv] = createSignal<HTMLElement>();
 
   // listing api
   const restaurantsData = useRestaurants(search);
+  const [restaurantListing, setrestaurantListing] = createSignal<IRestaurant[]>(
+    [],
+  );
   const [mostVisitedRestaurants, setmostVisitedRestaurants] = createSignal<
     IRestaurant[] | []
   >([]);
 
-  // restaurant states
-
   createEffect(() => {
-    const sorted = [...(restaurantsData.data ?? [])].sort(
-      (a, b) => b.views - a.views,
+    const allList = restaurantsData.data?.pages.flatMap(
+      (pageItem) => pageItem.data,
     );
 
+    console.info("aurantsData.data?.pages:===>", restaurantsData.data?.pages);
+
+    if (allList && allList?.length > 0) {
+      setrestaurantListing(allList);
+    } else {
+      setrestaurantListing([]);
+    }
+
+    console.info("restaurantsData:===>", allList);
+  });
+
+  // restaurant states
+  createEffect(() => {
+    const sorted = [...(restaurantListing() ?? [])].sort(
+      (a, b) => b.views - a.views,
+    );
     setmostVisitedRestaurants(sorted.slice(0, 5));
+  });
+
+  // infinite scroll pagination increment
+  createEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && restaurantsData.hasNextPage) {
+          restaurantsData.fetchNextPage();
+        }
+      },
+      { threshold: 0.5 },
+    );
+
+    const observeEle = observerDiv();
+    if (observeEle) {
+      observer.observe(observeEle);
+    }
+
+    return () => observer.disconnect();
   });
 
   function gotoDetailsPage(id: string) {
@@ -36,11 +76,12 @@ export default function Restaurants() {
 
   // search on change handler
   async function onSearchChange(value: string) {
-    setsearch(value + "&limit=50");
+    setsearch(value);
   }
 
   return (
     <div class="min-h-screen">
+      <Meta name="restaurant listing" content="lists all restaurants" />
       <div
         class="absolute h-full w-full"
         style={{
@@ -85,16 +126,16 @@ export default function Restaurants() {
           <div class="font-bold text-2xl">All Restaurants</div>
           <SearchBar onChange={onSearchChange} />
         </div>
-        <div class="flex flex-col mt-2">
+        <div class="flex flex-col mt-2 md:px-0 px-4">
           {/* listing */}
 
           <Show when={restaurantsData.isPending}>
             <RestaurantListingSkeleton />
           </Show>
 
-          <Show when={restaurantsData.data && restaurantsData.data.length > 0}>
+          <Show when={restaurantsData.data}>
             <div class="grid xl:grid-cols-2 lg:grid-cols-1 gap-4">
-              <For each={restaurantsData.data}>
+              <For each={restaurantListing()}>
                 {(restaurantItem) => (
                   <Card
                     onClick={() => {
@@ -105,10 +146,21 @@ export default function Restaurants() {
                   />
                 )}
               </For>
+
+              <Show when={restaurantsData.isFetchingNextPage}>
+                <RestaurantListingSkeleton />
+              </Show>
+
+              <div ref={setobserverDiv} class="h-10"></div>
             </div>
           </Show>
 
-          <Show when={restaurantsData.data && restaurantsData.data.length == 0}>
+          <Show
+            when={
+              restaurantsData.data?.pages &&
+              restaurantsData.data?.pages.length == 0
+            }
+          >
             <div>No restaurants found</div>
           </Show>
         </div>

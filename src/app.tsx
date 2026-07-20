@@ -5,6 +5,7 @@ import { CustomToast } from "./components/custom/CustomToast";
 import ModalPortal from "./components/ModalPortal";
 import { SideMenu } from "./components/Header/SideMenu";
 import { QueryClient, QueryClientProvider } from "@tanstack/solid-query";
+import { Meta, MetaProvider, Title } from "@solidjs/meta";
 
 const queryClient = new QueryClient();
 
@@ -15,28 +16,32 @@ const App: ParentComponent = (props) => {
   const [burgerMenuOpen, setburgerMenuOpen] = createSignal(false);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <div class="flex flex-col relative min-h-screen bg-white app-class">
-        <SideMenu
-          open={burgerMenuOpen()}
-          setburgerMenuOpen={setburgerMenuOpen}
-        />
-
-        {!isAdminRoute && (
-          <Header
-            burgerMenuOpen={burgerMenuOpen()}
+    <MetaProvider>
+      <Title>Restaurants inc</Title>
+      <Meta name="description" content="Browse restaurants" />
+      <QueryClientProvider client={queryClient}>
+        <div class="flex flex-col relative min-h-screen bg-white app-class">
+          <SideMenu
+            open={burgerMenuOpen()}
             setburgerMenuOpen={setburgerMenuOpen}
           />
-        )}
-        <main class="h-full">
-          <Suspense>{props.children}</Suspense>
-        </main>
 
-        {/* toast */}
-        <CustomToast />
-        <ModalPortal setburgerMenuOpen={setburgerMenuOpen} />
-      </div>
-    </QueryClientProvider>
+          {!isAdminRoute && (
+            <Header
+              burgerMenuOpen={burgerMenuOpen()}
+              setburgerMenuOpen={setburgerMenuOpen}
+            />
+          )}
+          <main class="h-full">
+            <Suspense>{props.children}</Suspense>
+          </main>
+
+          {/* toast */}
+          <CustomToast />
+          <ModalPortal setburgerMenuOpen={setburgerMenuOpen} />
+        </div>
+      </QueryClientProvider>
+    </MetaProvider>
   );
 };
 

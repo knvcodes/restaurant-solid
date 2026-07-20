@@ -1,18 +1,31 @@
-import { IResponse, IRestaurant } from "../../types";
+import { IResponse, IRestaurant, IRestaurantResponse } from "../../types";
 import api from "../../utils/axios";
 import { getErrorMessage, isEmpty, showToastErrors } from "../../utils/helpers";
 
-export const restaurantListing = async (search?: string) => {
+export const restaurantListing = async (search?: string, page?: number) => {
   try {
     let url = "/restaurants/list";
 
+    let params: Record<string, string | number> = {};
+
     // add search params if present
-    if (!isEmpty(search)) {
-      url += `?search=${search}`;
+    if (!isEmpty(search) && search) {
+      params["search"] = search;
+    }
+    if (!isEmpty(page) && page) {
+      params["page"] = page;
     }
 
-    const response: IResponse<IRestaurant[]> = await api.get(url);
-    return response.data.data;
+    const response: IResponse<IRestaurantResponse> = await api.get(url, {
+      params: {
+        ...params,
+        limit: 10,
+      },
+    });
+    return {
+      data: response.data.data.data,
+      hasNextPage: response.data.data.hasNextPage,
+    };
   } catch (error) {
     const errorMessage = getErrorMessage(error);
 
@@ -21,7 +34,10 @@ export const restaurantListing = async (search?: string) => {
     }
 
     // if error send empty list
-    return [];
+    return {
+      data: [],
+      hasNextPage: false,
+    };
   }
 };
 

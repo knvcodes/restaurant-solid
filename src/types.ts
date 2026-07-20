@@ -12,6 +12,11 @@ export interface ICardProps {
   trending?: boolean;
 }
 
+export interface IRestaurantResponse {
+  data: IRestaurant[];
+  hasNextPage: boolean;
+}
+
 export interface IRestaurant {
   id: string;
   address: Address;

@@ -14,6 +14,7 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.13",
     "@types/sharp": "^0.31.1",
+    "glob": "^13.0.6",
     "postcss": "^8.4.49",
     "sharp": "^0.35.2",
     "tailwindcss": "^4.1.13",
@@ -24,6 +25,7 @@
     "@formisch/solid": "^0.13.0",
     "@kobalte/core": "^0.13.11",
     "@solid-primitives/storage": "^4.3.5",
+    "@solidjs/meta": "^0.29.4",
     "@solidjs/router": "^0.15.3",
     "@tanstack/solid-query": "^5.101.2",
     "@types/google.accounts": "^0.0.18",
