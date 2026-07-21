@@ -9,7 +9,7 @@ const AdminLayout = (props: { children?: JSX.Element }) => {
       <div class="h-full absolute w-full bg-black/95">
         <div class="w-full h-screen bottom-0 top-0 flex-center text-white fullpage">
           <AdminSidebar />
-          <div class="w-full h-full p-8">{props.children}</div>
+          <div class="w-full h-full p-8 ml-[300px]">{props.children}</div>
         </div>
       </div>
     </div>

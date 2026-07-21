@@ -5,10 +5,10 @@ const AdminSidebar = () => {
   const navigate = useNavigate();
 
   return (
-    <div class="w-[300px] h-full gradient-glass-dark flex-col flex p-8 justify-between">
+    <div class="w-[300px] h-full gradient-glass-dark flex-col flex p-8 justify-between fixed left-0">
       <div class="heading-2 mb-24">Title</div>
       <div class="flex-col gap-4 flex label-container-dark">
-        <div>Dashboard</div>
+        <div onclick={() => navigate("/admin/dashboard")}>Dashboard</div>
         <div onclick={() => navigate("/admin/restaurants")}>My restaurants</div>
         <div>Settings</div>
       </div>

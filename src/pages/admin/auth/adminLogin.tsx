@@ -39,8 +39,8 @@ export default function AdminLogin() {
         Welcome to Restaurant Management
       </div>
 
-      <div class="lg:w-1/3 md:w-1/2 ">
-        <h2 class="heading-2">Login</h2>
+      <div class="lg:w-1/3 md:w-1/2 w-full">
+        <h2 class="heading-2 mb-12">Login</h2>
 
         <CustomForm of={loginForm} onSubmit={formSubmit}>
           <div class="my-4">
