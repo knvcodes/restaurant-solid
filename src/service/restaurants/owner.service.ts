@@ -2,7 +2,10 @@ import { IResponse, IRestaurant, IRestaurantResponse } from "../../types";
 import api from "../../utils/axios";
 import { getErrorMessage, isEmpty, showToastErrors } from "../../utils/helpers";
 
-export const restaurantListing = async (search?: string, page?: number) => {
+export const restaurantListing = async (
+  search?: string,
+  page?: number,
+): Promise<IRestaurant[] | []> => {
   try {
     let url = "/owner/dashboard";
 
@@ -16,12 +19,13 @@ export const restaurantListing = async (search?: string, page?: number) => {
       params["page"] = page;
     }
 
-    const response: IResponse<IRestaurantResponse> = await api.get(url, {
+    const response: IResponse<IRestaurant[]> = await api.get(url, {
       params: {
         ...params,
         limit: 10,
       },
     });
+
     return response.data.data;
   } catch (error) {
     const errorMessage = getErrorMessage(error);
@@ -31,10 +35,7 @@ export const restaurantListing = async (search?: string, page?: number) => {
     }
 
     // if error send empty list
-    return {
-      data: [],
-      hasNextPage: false,
-    };
+    return [];
   }
 };
 

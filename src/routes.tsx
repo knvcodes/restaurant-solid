@@ -81,8 +81,29 @@ export const routes: RouteDefinition[] = [
     children: [
       {
         path: "/dashboard",
-        component: lazy(() => import("./pages/admin/dashboard/dashboard")),
-        load: AdminLogin,
+        component: () => {
+          const Dashboard = lazy(
+            () => import("./pages/admin/dashboard/dashboard"),
+          );
+          return (
+            <ProtectedRoute allowedRoles={["owner"]}>
+              <Dashboard />
+            </ProtectedRoute>
+          );
+        },
+      },
+      {
+        path: "/restaurants",
+        component: () => {
+          const Restaurants = lazy(
+            () => import("./pages/admin/restaurants/restaurants"),
+          );
+          return (
+            <ProtectedRoute allowedRoles={["owner"]}>
+              <Restaurants />
+            </ProtectedRoute>
+          );
+        },
       },
     ],
   },

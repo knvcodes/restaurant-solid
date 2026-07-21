@@ -9,8 +9,6 @@ interface ProtectedRouteProps {
 }
 
 export function ProtectedRoute(props: ProtectedRouteProps) {
-  console.info("userStore.role:===>", userStore.role);
-
   return (
     <Show
       when={

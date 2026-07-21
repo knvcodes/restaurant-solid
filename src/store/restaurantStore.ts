@@ -36,8 +36,6 @@ export const handleAddingDish = (
     (dishItem) => dishItem._id == dish._id,
   );
 
-  console.info("restaurantName:===>", restaurantName);
-
   if (dishExist) {
     const newList = restaurantStore.dishes.map((dishItem) => {
       if (dishItem.restaurantId == restaurant_id) {

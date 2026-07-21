@@ -1,31 +1,89 @@
 import { SolidApexCharts } from "solid-apexcharts";
-import { createSignal, onMount } from "solid-js";
+import { createEffect, createSignal, onMount, Show } from "solid-js";
 import { userStore } from "../../../store/userStore";
 import { useRestaurants } from "../../../service/restaurants/owner.provider";
+import { IRestaurant } from "../../../types";
+import { ApexChart, ApexOptions } from "apexcharts";
 
 const AdminDashboard = () => {
   const user = userStore.name;
 
   const data = useRestaurants();
 
-  console.info("data:===>", data);
-
-  const options = {
-    xaxis: {
-      categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998],
+  // Initialize with empty/default values
+  const [options, setOptions] = createSignal<ApexOptions>({
+    chart: {
+      type: "bar",
     },
-  };
+    plotOptions: {
+      bar: {
+        horizontal: true,
+        // distributed: true,
+        borderRadius: 4,
+      },
+    },
+    xaxis: {
+      categories: ["a"],
+      title: {
+        text: "Views",
+      },
+    },
+    yaxis: {
+      title: {
+        text: "Restaurant",
+      },
+    },
+    title: {
+      text: "Most Visited Restaurants",
+      align: "left",
+      style: {
+        color: "#fff",
+      },
+    },
+    tooltip: {
+      theme: "dark",
+      style: {
+        background: "black",
+      },
+      y: {
+        formatter: (value: number) => `${value} views`,
+      },
+    },
+    grid: {
+      borderColor: "#333",
+    },
+  });
+
   const [series, setSeries] = createSignal([
     {
-      name: "series-1",
-      data: [30, 40, 35, 50, 49, 60, 70, 91],
+      name: "Views",
+      data: [1, 2, 3],
     },
   ]);
 
-  onMount(() => {
-    ``;
-    const max = 90;
-    const min = 20;
+  // Update chart when data changes
+  createEffect(() => {
+    if (data.data && data.data.length > 0) {
+      // Sort by views descending to show most visited first
+      const sortedData = [...data.data].sort((a, b) => b.views - a.views);
+
+      setOptions((prev) => ({
+        ...prev,
+        xaxis: {
+          categories: sortedData.map((item) => item.name),
+          title: {
+            text: "Views",
+          },
+        },
+      }));
+
+      setSeries([
+        {
+          name: "Views",
+          data: sortedData.map((item) => item.views),
+        },
+      ]);
+    }
   });
 
   return (
@@ -37,13 +95,15 @@ const AdminDashboard = () => {
         <hr class="mb-8" />
 
         <div class="p-8 bg-gray-950">
-          <SolidApexCharts
-            type="bar"
-            options={options}
-            series={series()}
-            width={"100%"}
-            height={300}
-          />
+          <Show when={data.data && data.data.length > 0}>
+            <SolidApexCharts
+              type="bar"
+              options={options()}
+              series={series()}
+              width={"100%"}
+              height={300}
+            />
+          </Show>
         </div>
       </div>
     </div>

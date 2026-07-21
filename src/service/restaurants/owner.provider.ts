@@ -12,7 +12,6 @@ export const useRestaurants = (search?: Accessor<string>) =>
   createQuery(() => ({
     queryKey: ["restaurants", "list", search?.()],
     queryFn: () => restaurantListing(search?.()),
-    ...default_timer,
   }));
 
 export const useRestaurantsDetails = (id: Accessor<string>) =>

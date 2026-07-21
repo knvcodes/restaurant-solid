@@ -5,7 +5,6 @@ import SearchBar from "../../../components/SearchBar";
 import { useNavigate } from "@solidjs/router";
 import { foodbg } from "../../../assets/assets";
 import RestaurantListingSkeleton from "../../../components/restaurants/RestaurantListingSkeleton";
-import {} from "../../../service/restaurants/customer.service";
 import { useRestaurants } from "../../../service/restaurants/customer.provider";
 import { IRestaurant } from "../../../types";
 import { Meta } from "@solidjs/meta";
@@ -32,15 +31,11 @@ export default function Restaurants() {
       (pageItem) => pageItem.data,
     );
 
-    console.info("aurantsData.data?.pages:===>", restaurantsData.data?.pages);
-
     if (allList && allList?.length > 0) {
       setrestaurantListing(allList);
     } else {
       setrestaurantListing([]);
     }
-
-    console.info("restaurantsData:===>", allList);
   });
 
   // restaurant states
